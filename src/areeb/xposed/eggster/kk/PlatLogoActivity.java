@@ -21,10 +21,13 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -37,15 +40,18 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import areeb.xposed.eggster.R;
+
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
+
 
 public class PlatLogoActivity extends Activity {
 	FrameLayout mContent;
 	int mCount;
 	final Handler mHandler = new Handler();
 	static final int BGCOLOR = 0xffed1d24;
-
+	@SuppressLint("NewApi")
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,37 +90,32 @@ public class PlatLogoActivity extends Activity {
 
 		letter.setTypeface(bold);
 		letter.setTextSize(300);
-		letter.setTextColor(0xFFFFFFFF);
+		letter.setTextColor(Color.WHITE);
 		letter.setGravity(Gravity.CENTER);
 		letter.setText("K");
 
 		final int p = (int) (4 * metrics.density);
 
 		final TextView tv = new TextView(this);
-		if (light != null)
-			tv.setTypeface(light);
-		tv.setTextSize(30);
-		tv.setPadding(p, p, p, p);
-		tv.setTextColor(0xFFFFFFFF);
-		tv.setGravity(Gravity.CENTER);
-		tv.setText("ANDROID 4.4");
-		tv.setVisibility(View.INVISIBLE);
+        if (light != null) tv.setTypeface(light);
+        tv.setTextSize(30);
+        tv.setPadding(p, p, p, p);
+        tv.setTextColor(0xFFFFFFFF);
+        tv.setGravity(Gravity.CENTER);
+        tv.setText("ANDROID 4.4.2");
+        tv.setVisibility(View.INVISIBLE);
 
 		mContent.addView(bg);
 		mContent.addView(letter, lp);
 		mContent.addView(logo, lp);
-
-		/*final FrameLayout.LayoutParams lp2 = new FrameLayout.LayoutParams(lp);
-		lp2.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-		lp2.bottomMargin = 10 * p;*/
 		
-		final FrameLayout.LayoutParams lapar = new FrameLayout.LayoutParams(
+	
+			final FrameLayout.LayoutParams lapar = new FrameLayout.LayoutParams(
 				FrameLayout.LayoutParams.WRAP_CONTENT,
 				FrameLayout.LayoutParams.WRAP_CONTENT);
 		lapar.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
 		lapar.bottomMargin = 10 * p;
 
-		//mContent.addView(tv, lp2);
 		mContent.addView(tv, lapar);
 
 		mContent.setOnClickListener(new View.OnClickListener() {
@@ -170,6 +171,10 @@ public class PlatLogoActivity extends Activity {
 					v.setVisibility(0);
 					ViewPropertyAnimator.animate(tv).alpha(1.0F)
 							.setDuration(1000L).setStartDelay(1000L).start();
+
+                    tv.setAlpha(0f);
+                    tv.setVisibility(View.VISIBLE);
+                    tv.animate().alpha(1f).setDuration(1000).setStartDelay(1000).start();
 					check = true;
 				}
 				return check;

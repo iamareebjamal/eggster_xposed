@@ -18,8 +18,10 @@ package areeb.xposed.eggster.hc;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -29,7 +31,7 @@ import areeb.xposed.eggster.R;
 public class PlatLogoActivity extends Activity {
     Toast mToast;
 
-    @SuppressLint("ShowToast")
+    @SuppressLint({ "ShowToast", "NewApi", "InlinedApi" })
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,15 @@ public class PlatLogoActivity extends Activity {
 
         content.setImageResource(R.drawable.platlogohc);
         content.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        if (Build.VERSION.SDK_INT >= 19) {
+            content.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); }
+            
         setContentView(content);
 
         }

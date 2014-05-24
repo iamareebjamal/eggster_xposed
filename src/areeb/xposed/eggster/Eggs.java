@@ -23,7 +23,7 @@ import android.content.SharedPreferences;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
-import android.view.View;
+import android.view.*;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
@@ -44,6 +44,8 @@ public class Eggs extends Activity {
 	ImageView icsImg;
 	ImageView jbImg;
 	ImageView kkImg;
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	ImageView openLayout;
 	RelativeLayout logLayout;
@@ -499,7 +501,6 @@ public class Eggs extends Activity {
 		iv.setColorFilter(colorFilter);
 
 	}
-
 }
 
 /*
@@ -536,7 +537,7 @@ public class Eggs extends Activity {
  * # Geo Piskas for Jelly Bean Flinger code saving me time to port that
  * # Zhuowei for his NyanDream project, which enabled me to take peeks
  *   for some non-functional code fixing in Kitkat Easter Egg and ICS one
- * # Giupy99 for his support and trolls
+ * # Giupy 99 for his support and trolls
  * # BoD for Android Switch backport library
  * # Photoshop, AIDE, and other tools, etc
  * # Please remind me if I forgot someone

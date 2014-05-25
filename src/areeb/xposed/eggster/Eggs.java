@@ -23,7 +23,7 @@ import android.content.SharedPreferences;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
-import android.view.*;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
@@ -199,6 +199,12 @@ public class Eggs extends Activity {
 			openLayout.setVisibility(View.VISIBLE);
 			
 		}
+		
+	}
+	
+	public void settings(View view){
+		
+		startActivity(new Intent(this, PrefSettings.class));
 		
 	}
 	

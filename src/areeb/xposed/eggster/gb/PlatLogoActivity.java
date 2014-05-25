@@ -18,6 +18,8 @@ package areeb.xposed.eggster.gb;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -28,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import areeb.xposed.eggster.R;
 
+@SuppressLint("ShowToast")
 public class PlatLogoActivity extends Activity {
     Toast mToast;
 
@@ -37,9 +40,13 @@ public class PlatLogoActivity extends Activity {
         super.onCreate(savedInstanceState);
         
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
+        		
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        mToast = Toast.makeText(this, "Zombie art by Jack Larson", Toast.LENGTH_SHORT);
+        
+        SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+        String gbToast = pref.getString("gb_toast_text", getString(R.string.pref_default_gb_text));
+        
+        mToast = Toast.makeText(this, gbToast, Toast.LENGTH_SHORT);
         ImageView content = new ImageView(this);
         content.setImageResource(R.drawable.platlogogb);
         content.setScaleType(ImageView.ScaleType.FIT_CENTER);

@@ -22,10 +22,14 @@
 package areeb.xposed.eggster.jb;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -70,13 +74,17 @@ public class PlatLogoActivity extends Activity {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
         lp.bottomMargin = (int) (-1*metrics.density);
+        
+        SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+        String jbVer = pref.getString("jb_text_1", getString(R.string.pref_default_jb_text_1));
+        String jbName = pref.getString("jb_text_2", getString(R.string.pref_default_jb_text_2));
 
         TextView tv = new TextView(this);
         if (light != null) tv.setTypeface(light);
         tv.setTextSize(1.25f*size);
         tv.setTextColor(0xFFFFFFFF);
         tv.setShadowLayer(4*metrics.density, 0, 2*metrics.density, 0x66000000);
-        tv.setText("Android 4.3");
+        tv.setText(jbVer);
         view.addView(tv, lp);
    
         tv = new TextView(this);
@@ -84,7 +92,7 @@ public class PlatLogoActivity extends Activity {
         tv.setTextSize(size);
         tv.setTextColor(0xFFFFFFFF);
         tv.setShadowLayer(4*metrics.density, 0, 2*metrics.density, 0x66000000);
-        tv.setText("JELLY BEAN");
+        tv.setText(jbName);
         view.addView(tv, lp);
 
         return view;
@@ -122,7 +130,8 @@ public class PlatLogoActivity extends Activity {
         });
 
         mContent.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+			@Override
             public boolean onLongClick(View v) {
                 try {
                     startActivity(new Intent(Intent.ACTION_MAIN)

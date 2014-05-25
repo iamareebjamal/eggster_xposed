@@ -16,10 +16,13 @@
 package areeb.xposed.eggster.ics;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -48,6 +51,7 @@ public class PlatLogoActivity extends Activity {
 	Runnable mSuperLongPress = new Runnable() {
 		
 		
+		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 		@SuppressLint("InlinedApi")
 		public void run() {
 			mCount++;
@@ -87,7 +91,10 @@ public class PlatLogoActivity extends Activity {
 		
 		mZzz = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
 		
-		mToast = Toast.makeText(this, "Android 4.0: Ice Cream Sandwich",
+		SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+        String icsToast = pref.getString("ics_toast_text", getString(R.string.pref_default_ics_text));
+		
+		mToast = Toast.makeText(this, icsToast,
 				Toast.LENGTH_SHORT);
 		mContent = new ImageView(this);
 		mContent.setImageResource(R.drawable.platlogoics);

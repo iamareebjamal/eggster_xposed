@@ -1,0 +1,27 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_jb_text_1"
+        android:inputType="text"
+        android:key="jb_text_1"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_version_num" />
+    
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_jb_text_2"
+        android:inputType="text"
+        android:key="jb_text_2"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_version_text" />
+
+    
+  
+
+</PreferenceScreen>

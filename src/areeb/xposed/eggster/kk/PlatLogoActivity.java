@@ -20,6 +20,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -27,7 +28,6 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -51,7 +51,6 @@ public class PlatLogoActivity extends Activity {
 	final Handler mHandler = new Handler();
 	static final int BGCOLOR = 0xffed1d24;
 	@SuppressLint("NewApi")
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,6 +67,10 @@ public class PlatLogoActivity extends Activity {
 				.createFromAsset(getAssets(), "Roboto-Bold.ttf");
 		Typeface light = Typeface.createFromAsset(getAssets(),
 				"Roboto-Light.ttf");
+		
+		SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+        String kkLetter = pref.getString("kk_letter", getString(R.string.pref_default_kk_letter));
+        String kkText = pref.getString("kk_text", getString(R.string.pref_default_kk_text));
 
 		mContent = new FrameLayout(this);
 		mContent.setBackgroundColor(0xC0000000);
@@ -92,7 +95,7 @@ public class PlatLogoActivity extends Activity {
 		letter.setTextSize(300);
 		letter.setTextColor(Color.WHITE);
 		letter.setGravity(Gravity.CENTER);
-		letter.setText("K");
+		letter.setText(kkLetter);
 
 		final int p = (int) (4 * metrics.density);
 
@@ -102,7 +105,7 @@ public class PlatLogoActivity extends Activity {
         tv.setPadding(p, p, p, p);
         tv.setTextColor(0xFFFFFFFF);
         tv.setGravity(Gravity.CENTER);
-        tv.setText("ANDROID 4.4.2");
+        tv.setText(kkText);
         tv.setVisibility(View.INVISIBLE);
 
 		mContent.addView(bg);
@@ -167,14 +170,14 @@ public class PlatLogoActivity extends Activity {
 							.setInterpolator(
 									new AnticipateOvershootInterpolator())
 							.start();
-					ViewHelper.setAlpha(tv, 0.0F);
+					ViewHelper.setAlpha(tv, 0F);
 					v.setVisibility(0);
-					ViewPropertyAnimator.animate(tv).alpha(1.0F)
-							.setDuration(1000L).setStartDelay(1000L).start();
+					ViewPropertyAnimator.animate(tv).alpha(1f)
+							.setDuration(1000).setStartDelay(1000).start();
 
-                    tv.setAlpha(0f);
+					//removed original API methods from Giupy as they were already handled by nineolddroid helpers
+                    
                     tv.setVisibility(View.VISIBLE);
-                    tv.animate().alpha(1f).setDuration(1000).setStartDelay(1000).start();
 					check = true;
 				}
 				return check;

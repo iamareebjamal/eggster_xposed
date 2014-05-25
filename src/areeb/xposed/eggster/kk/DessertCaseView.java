@@ -499,13 +499,13 @@ public class DessertCaseView extends FrameLayout {
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                     | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                     | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                     | SYSTEM_UI_MODE_800
             );
             }
         }
 
-        public void setView(DessertCaseView v) {
+        @SuppressLint("InlinedApi")
+		public void setView(DessertCaseView v) {
             addView(v);
             mView = v;
         }

@@ -132,13 +132,26 @@ public class Nyandroid extends Activity {
             super(context, as);
             
             String numCats = context.getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString("number_of_cats", "10");
+            
+            try{
+            	
             int temp = Integer.parseInt(numCats);
-    		
-    		if (numCats != null && numCats.length() > 0 && numCats.matches("\\d*") && Integer.parseInt(numCats) > 0) {
+            
+            if (numCats != null && numCats.length() > 0 && numCats.matches("\\d*") && Integer.parseInt(numCats) > 0) {
     			
     			NUM_CATS = temp;
     			
     		}
+            
+            } catch (NumberFormatException e){
+            	
+            	NUM_CATS = 10;
+            	e.printStackTrace();
+            	
+            }
+            
+            
+    		
 
             //setLayerType(View.LAYER_TYPE_HARDWARE, null);
             //setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);

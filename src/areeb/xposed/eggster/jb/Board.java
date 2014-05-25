@@ -86,11 +86,20 @@ public class Board extends RelativeLayout {
 		super(context, as);
 		setWillNotDraw(true);
 		String numBeans = context.getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString("number_of_jb", "20");
+		
+		try{
 		int temp = Integer.parseInt(numBeans);
 		
 		if (numBeans != null && numBeans.length() > 0 && numBeans.matches("\\d*") && Integer.parseInt(numBeans) > 0) {
 			
 			NUM_BEANS = temp;
+			
+		}
+		
+		} catch (NumberFormatException e){
+			
+			NUM_BEANS = 20;
+			e.printStackTrace();
 			
 		}
 		

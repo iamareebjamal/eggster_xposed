@@ -3,21 +3,21 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="areeb.xposed.eggster.PrefSettings$GBPreferenceFagment"
+        android:fragment="areeb.xposed.eggster.PrefSettings$GBPreferenceFragment"
         android:title="@string/pref_header_gb" />
     <header
-        android:fragment="areeb.xposed.eggster.PrefSettings$HCPreferenceFagment"
+        android:fragment="areeb.xposed.eggster.PrefSettings$HCPreferenceFragment"
         android:title="@string/pref_header_hc" />
     <header
-        android:fragment="areeb.xposed.eggster.PrefSettings$ICSPreferenceFagment"
+        android:fragment="areeb.xposed.eggster.PrefSettings$ICSPreferenceFragment"
         android:title="@string/pref_header_ics" />
     
     <header
-        android:fragment="areeb.xposed.eggster.PrefSettings$JBPreferenceFagment"
+        android:fragment="areeb.xposed.eggster.PrefSettings$JBPreferenceFragment"
         android:title="@string/pref_header_jb" />
     
     <header
-        android:fragment="areeb.xposed.eggster.PrefSettings$KKPreferenceFagment"
+        android:fragment="areeb.xposed.eggster.PrefSettings$KKPreferenceFragment"
         android:title="@string/pref_header_kk" />
 
 </preference-headers>

@@ -11,6 +11,16 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_title_toast_text" />
+    
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_ics_int"
+        android:inputType="phone"
+        android:key="number_of_cats"
+        android:digits="0123456789"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_cats_int" />
 
     
   

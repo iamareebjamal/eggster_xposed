@@ -17,6 +17,7 @@
 package areeb.xposed.eggster.hc;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -30,12 +31,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import areeb.xposed.eggster.R;
 
-@SuppressLint("ShowToast")
+@SuppressLint({ "ShowToast", "InlinedApi" })
 public class PlatLogoActivity extends Activity {
     Toast mToast;
     int BGCOLOR = 0xD0000000;
 
-    @SuppressLint({ "ShowToast", "NewApi", "InlinedApi" })
+   
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

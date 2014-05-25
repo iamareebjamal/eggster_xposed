@@ -38,6 +38,7 @@ import areeb.xposed.eggster.R;
 
 import com.nineoldandroids.view.ViewHelper;
 
+@SuppressLint("ShowToast")
 public class PlatLogoActivity extends Activity {
 	
 	

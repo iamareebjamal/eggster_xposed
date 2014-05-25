@@ -23,28 +23,17 @@ package areeb.xposed.eggster.jb;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.text.InputType;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 import areeb.xposed.eggster.R;
 
 public class BeanBag extends Activity {
 
 	private Board board;
-	private SharedPreferences prefs;
 
 	@SuppressLint({ "NewApi", "InlinedApi" })
 	@Override
@@ -67,8 +56,6 @@ public class BeanBag extends Activity {
 	                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); }
 	        
 		((FrameLayout) findViewById(R.id.gameview)).addView(board, 0);
-		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		prefs.edit().clear().commit();
 	}
 
 	@Override
@@ -87,74 +74,5 @@ public class BeanBag extends Activity {
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.bean_bag, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-		if (item.getItemId() == R.id.number_of_jb) {
-			final EditText input = new EditText(this);
-			input.setInputType(InputType.TYPE_CLASS_NUMBER);
-			alertDialogBuilder
-					.setView(input)
-					.setTitle("Number of Beans")
-					.setMessage(
-							"Choose a rational number of beans!")
-					.setCancelable(true)
-					.setIcon(R.drawable.ic_launcher)
-					.setNegativeButton("Cancel",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int whichButton) {
-								}
-							})
-					.setPositiveButton("Ok",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-									String newValue = input.getText()
-											.toString();
-									if (newValue != null
-											&& newValue.length() > 0
-											&& newValue.matches("\\d*")
-											&& Integer.parseInt(newValue) > 0) {
-										prefs.edit()
-												.putInt("number_of_jb",
-														Integer.parseInt(newValue))
-												.commit();
-										Intent i = getIntent();
-										finish();
-										startActivity(i);
-									} else {
-										Toast.makeText(BeanBag.this,
-												"Invalid Input",
-												Toast.LENGTH_SHORT).show();
-									}
-								}
-							});
-
-			alertDialogBuilder.show();
-		} else {
-			alertDialogBuilder
-					.setTitle("About")
-					.setMessage(
-							"This is a port of the JellyBean-Settings Easter Egg to lower android versions, with a couple additional features.\n\nModified by George Piskas!\ngeopiskas@gmail.com")
-					.setCancelable(true)
-					.setIcon(R.drawable.ic_launcher)
-					.setNeutralButton("Ok",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int id) {
-									dialog.dismiss();
-								}
-							});
-			alertDialogBuilder.show();
-		}
-		return super.onOptionsItemSelected(item);
-	}
+	
 }

@@ -145,6 +145,7 @@ public class PlatLogoActivity extends Activity {
 		});
 
 		mContent.setOnLongClickListener(new View.OnLongClickListener() {
+			@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 			@Override
 			public boolean onLongClick(View v) {
 				boolean check = true;

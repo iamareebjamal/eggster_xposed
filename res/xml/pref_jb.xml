@@ -20,6 +20,16 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_title_version_text" />
+    
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_jb_int"
+        android:inputType="phone"
+        android:key="number_of_jb"
+        android:digits="0123456789"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_jb_int" />
 
     
   

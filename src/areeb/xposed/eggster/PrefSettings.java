@@ -11,6 +11,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 
 import java.util.List;
 
@@ -68,12 +69,20 @@ public class PrefSettings extends PreferenceActivity {
 		// In the simplified UI, fragments are not used at all and we instead
 		// use the older PreferenceActivity APIs.
 
-		// Add GB preferences.
+		// Add Base preference
 		
+		PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(this);
+        setPreferenceScreen(screen);
+		
+		
+		// Add GB preferences, and a corresponding header.
+		PreferenceCategory fakeHeader = new PreferenceCategory(this);
+		fakeHeader.setTitle(R.string.pref_header_gb);
+		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_gb);
 
 		// Add HC preferences, and a corresponding header.
-		PreferenceCategory fakeHeader = new PreferenceCategory(this);
+		fakeHeader = new PreferenceCategory(this);
 		fakeHeader.setTitle(R.string.pref_header_hc);
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_hc);
@@ -102,8 +111,10 @@ public class PrefSettings extends PreferenceActivity {
 		bindPreferenceSummaryToValue(findPreference("gb_toast_text"));
 		bindPreferenceSummaryToValue(findPreference("hc_toast_text"));
 		bindPreferenceSummaryToValue(findPreference("ics_toast_text"));
+		bindPreferenceSummaryToValue(findPreference("number_of_cats"));
 		bindPreferenceSummaryToValue(findPreference("jb_text_1"));
 		bindPreferenceSummaryToValue(findPreference("jb_text_2"));
+		bindPreferenceSummaryToValue(findPreference("number_of_jb"));
 		bindPreferenceSummaryToValue(findPreference("kk_text"));
 		bindPreferenceSummaryToValue(findPreference("kk_letter"));
 	}
@@ -151,9 +162,6 @@ public class PrefSettings extends PreferenceActivity {
 	
 	/*
 	 * We are not having any other preference than EditText Preference so removed unnecessary binding code
-	 * 
-	 * 
-	 *
 	 */
 	private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
 		@Override
@@ -187,7 +195,7 @@ public class PrefSettings extends PreferenceActivity {
 		sBindPreferenceSummaryToValueListener.onPreferenceChange(
 				
 				
-				preference, pref.getString(preference.getKey(),""));
+				preference, preference.getContext().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString(preference.getKey(),""));
 	}
 
 	/**
@@ -245,6 +253,7 @@ public class PrefSettings extends PreferenceActivity {
 			// updated to reflect the new value, per the Android Design
 			// guidelines.
 			bindPreferenceSummaryToValue(findPreference("ics_toast_text"));
+			bindPreferenceSummaryToValue(findPreference("number_of_cats"));
 		}
 	}
 	
@@ -261,6 +270,8 @@ public class PrefSettings extends PreferenceActivity {
 			// guidelines.
 			bindPreferenceSummaryToValue(findPreference("jb_text_1"));
 			bindPreferenceSummaryToValue(findPreference("jb_text_2"));
+			bindPreferenceSummaryToValue(findPreference("number_of_jb"));
+			
 		}
 	}
 	

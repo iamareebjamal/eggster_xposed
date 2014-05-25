@@ -17,11 +17,9 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     
-    <style name="Theme" parent="@android:style/Theme.Light">
+    <style name="Theme" parent="@android:style/Theme.Holo.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="switchStyle">@style/Widget.Holo.Light.CompoundButton.Switch</item>
     </style>
-    
-    
 
 </resources>

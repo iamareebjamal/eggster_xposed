@@ -51,6 +51,8 @@ public class Nyandroid extends Activity {
         public int NUM_CATS = 10;
         
         
+        
+        
 
         static Random sRNG = new Random();
 
@@ -128,6 +130,15 @@ public class Nyandroid extends Activity {
 
         public Board(Context context, AttributeSet as) {
             super(context, as);
+            
+            String numCats = context.getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString("number_of_cats", "10");
+            int temp = Integer.parseInt(numCats);
+    		
+    		if (numCats != null && numCats.length() > 0 && numCats.matches("\\d*") && Integer.parseInt(numCats) > 0) {
+    			
+    			NUM_CATS = temp;
+    			
+    		}
 
             //setLayerType(View.LAYER_TYPE_HARDWARE, null);
             //setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
@@ -167,18 +178,10 @@ public class Nyandroid extends Activity {
                 }
             }
             
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-        	{
-        		NUM_CATS = 5;
-        	}
+            
 
             for(int i=0; i<NUM_CATS; i++) {
-            	
-            	if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-            	{
-            		NUM_CATS = 5;
-            	}
-            	
+ 
             	
                 FlyingCat nv = new FlyingCat(getContext(), null);
                 addView(nv, wrap);

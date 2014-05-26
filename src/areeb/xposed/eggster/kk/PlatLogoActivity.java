@@ -50,7 +50,6 @@ public class PlatLogoActivity extends Activity {
 	int mCount;
 	final Handler mHandler = new Handler();
 	static final int BGCOLOR = 0xffed1d24;
-	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -125,27 +124,22 @@ public class PlatLogoActivity extends Activity {
 			int clicks;
 
 			@Override
-			public void onClick(View v) {
-				clicks++;
-				if (clicks >= 6) {
-					mContent.performLongClick();
-					return;
-				}
-				ViewPropertyAnimator.animate(letter).cancel();
-				ViewPropertyAnimator vpa = ViewPropertyAnimator.animate(letter);
-				if (Math.random() > 0.5D)
-					;
-				for (int i = 360;;) {
-					vpa.rotationBy(i)
-							.setInterpolator(new DecelerateInterpolator())
-							.setDuration(700L).start();
-					return;
-				}
-			}
-		});
+            public void onClick(View v) {
+                clicks++;
+                if (clicks >= 6) {
+                    mContent.performLongClick();
+                    return;
+                }
+                ViewPropertyAnimator.animate(letter).cancel();
+                final float offset = (int) ViewHelper.getRotation(letter) % 360;
+                ViewPropertyAnimator.animate(letter)
+                    .rotationBy((Math.random() > 0.5f ? 360 : -360) - offset)
+                    .setInterpolator(new DecelerateInterpolator())
+                    .setDuration(700).start();
+            }
+        });
 
 		mContent.setOnLongClickListener(new View.OnLongClickListener() {
-			@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 			@Override
 			public boolean onLongClick(View v) {
 				boolean check = true;

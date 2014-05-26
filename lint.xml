@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
+    <issue id="DefaultLocale">
+        <ignore path="src/areeb/xposed/eggster/PrefSettings.java" />
+    </issue>
     <issue id="NewApi">
         <ignore path="src/areeb/xposed/eggster/kk/DessertCaseDream.java" />
     </issue>

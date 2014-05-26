@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string name="pref_header_gb">GINGERBREAD</string>
-    <string name="pref_header_hc">HONEYCOMB</string>
-    <string name="pref_header_ics">ICE CREAM SANDWICH</string>
-    <string name="pref_header_jb">JELLY BEAN</string>
-    <string name="pref_header_kk">KITKAT</string>
+    <string name="pref_header_gb">GingerBread</string>
+    <string name="pref_header_hc">HoneyComb</string>
+    <string name="pref_header_ics">Ice Cream Sandwich</string>
+    <string name="pref_header_ics_short">ICS</string>
+    <string name="pref_header_jb">Jelly Bean</string>
+    <string name="pref_header_kk">Kitkat</string>
     
     
     <string name="pref_default_gb_text">Zombie Art by Jack Larson</string>

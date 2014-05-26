@@ -6,5 +6,6 @@
     <string name="title_activity_plat_logo">PlatLogoActivity</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="logging">Logging</string>
 
 </resources>

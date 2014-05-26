@@ -99,7 +99,6 @@
         </activity>
         <activity
             android:name="areeb.xposed.eggster.PrefSettings"
-            android:theme="@style/Theme.ListView"
             android:label="@string/action_settings" >
         </activity>
     </application>

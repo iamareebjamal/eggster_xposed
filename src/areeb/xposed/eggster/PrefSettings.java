@@ -1,8 +1,8 @@
 package areeb.xposed.eggster;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +26,7 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
+@SuppressLint("DefaultLocale")
 public class PrefSettings extends PreferenceActivity {
 	/**
 	 * Determines whether to always show the simplified settings UI, where
@@ -33,25 +34,33 @@ public class PrefSettings extends PreferenceActivity {
 	 * as a master/detail two-pane view on tablets. When true, a single pane is
 	 * shown on tablets.
 	 */
-	static SharedPreferences pref;
 	
 	private static final boolean ALWAYS_SIMPLE_PREFS = false;
+	
+	@Override
+	protected boolean isValidFragment(String fragmentName){
+		
+		//Fix FC by vulnerability fixing code
+		
+		if (GBPreferenceFragment.class.getName().equals(fragmentName) || HCPreferenceFragment.class.getName().equals(fragmentName) || ICSPreferenceFragment.class.getName().equals(fragmentName) || JBPreferenceFragment.class.getName().equals(fragmentName) || KKPreferenceFragment.class.getName().equals(fragmentName))
+		{
+			return true;
+			
+		}
+		
+		
+		return false;
+	}
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 
-		//Set up a custom name for preferences
-		
-		@SuppressWarnings("deprecation")
-		PreferenceManager prefMgr = getPreferenceManager();
-		prefMgr.setSharedPreferencesName("preferenceggs");
-		prefMgr.setSharedPreferencesMode(Context.MODE_PRIVATE);
-		
-		pref = prefMgr.getSharedPreferences();
+
 		
 		
 		setupSimplePreferencesScreen();
+		
 	}
 
 	/**
@@ -59,12 +68,16 @@ public class PrefSettings extends PreferenceActivity {
 	 * device configuration dictates that a simplified, single-pane UI should be
 	 * shown.
 	 */
+	
 	@SuppressWarnings("deprecation")
 	private void setupSimplePreferencesScreen() {
 		if (!isSimplePreferences(this)) {
 			return;
 		}
 		
+		//Set up a custom name for preferences
+		PreferenceManager prefMgr = getPreferenceManager();
+		setPreferenceName(prefMgr);
 
 		// In the simplified UI, fragments are not used at all and we instead
 		// use the older PreferenceActivity APIs.
@@ -77,35 +90,35 @@ public class PrefSettings extends PreferenceActivity {
 		
 		// Add GB preferences, and a corresponding header.
 		PreferenceCategory fakeHeader = new PreferenceCategory(this);
-		fakeHeader.setTitle(R.string.pref_header_gb);
+		fakeHeader.setTitle(getString(R.string.pref_header_gb).toUpperCase());
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_gb);
 
 		// Add HC preferences, and a corresponding header.
 		fakeHeader = new PreferenceCategory(this);
-		fakeHeader.setTitle(R.string.pref_header_hc);
+		fakeHeader.setTitle(getString(R.string.pref_header_hc).toUpperCase());
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_hc);
 
 		// Add ICS preferences, and a corresponding header.
 		fakeHeader = new PreferenceCategory(this);
-		fakeHeader.setTitle(R.string.pref_header_ics);
+		fakeHeader.setTitle(getString(R.string.pref_header_ics).toUpperCase());
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_ics);
 		
 		// Add JB preferences, and a corresponding header.
 		fakeHeader = new PreferenceCategory(this);
-		fakeHeader.setTitle(R.string.pref_header_jb);
+		fakeHeader.setTitle(getString(R.string.pref_header_jb).toUpperCase());
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_jb);
 		
 		// Add KK preferences, and a corresponding header.
 		fakeHeader = new PreferenceCategory(this);
-		fakeHeader.setTitle(R.string.pref_header_kk);
+		fakeHeader.setTitle(getString(R.string.pref_header_kk).toUpperCase());
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_kk);
 
-		// Bind the summaries of EditText/List/Dialog/Ringtone preferences to
+		// Bind the summaries of preferences to
 		// their values. When their values change, their summaries are updated
 		// to reflect the new value, per the Android Design guidelines.
 		bindPreferenceSummaryToValue(findPreference("gb_toast_text"));
@@ -122,28 +135,46 @@ public class PrefSettings extends PreferenceActivity {
 	/** {@inheritDoc} */
 	@Override
 	public boolean onIsMultiPane() {
-		return isXLargeTablet(this) && !isSimplePreferences(this);
+		return true;
 	}
 
 	/**
 	 * Helper method to determine if the device has an extra-large screen. For
 	 * example, 10" tablets are extra-large.
 	 */
-	private static boolean isXLargeTablet(Context context) {
+	private static boolean isLargeTablet(Context context) {
 		return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
+	}
+	
+	
+	/**
+	 * Determine if the device is extra Large, if it is not, then shows
+	 * Multi Pane Window only in LandScape mode.
+	 */
+	private static boolean isOk(Context context){
+		
+		if (!isLargeTablet(context)){
+			
+			return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+				
+			
+		}
+		return false;
+		
 	}
 
 	/**
 	 * Determines whether the simplified settings UI should be shown. This is
 	 * true if this is forced via {@link #ALWAYS_SIMPLE_PREFS}, or the device
 	 * doesn't have newer APIs like {@link PreferenceFragment}, or the device
-	 * doesn't have an extra-large screen. In these cases, a single-pane
+	 * doesn't have an extra-large screen, or it is in portrait mode. In these cases, a single-pane
 	 * "simplified" settings UI should be shown.
 	 */
+	
 	private static boolean isSimplePreferences(Context context) {
 		return ALWAYS_SIMPLE_PREFS
 				|| Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
-				|| !isXLargeTablet(context);
+				|| !isOk(context);
 	}
 
 	/** {@inheritDoc} */
@@ -151,6 +182,8 @@ public class PrefSettings extends PreferenceActivity {
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void onBuildHeaders(List<Header> target) {
 		if (!isSimplePreferences(this)) {
+			
+			
 			loadHeadersFromResource(R.xml.pref_egg_headers, target);
 		}
 	}
@@ -202,11 +235,16 @@ public class PrefSettings extends PreferenceActivity {
 	 * This fragment shows GingerBread preferences only. It is used when the
 	 * activity is showing a two-pane settings UI.
 	 */
+	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public static class GBPreferenceFragment extends PreferenceFragment {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
+
+			PreferenceManager prefMgr = getPreferenceManager();
+			setPreferenceName(prefMgr);
+			
 			addPreferencesFromResource(R.xml.pref_gb);
 
 			// Bind the summaries of EditText/List/Dialog/Ringtone preferences
@@ -227,7 +265,12 @@ public class PrefSettings extends PreferenceActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
+
+			PreferenceManager prefMgr = getPreferenceManager();
+			setPreferenceName(prefMgr);
+			
 			addPreferencesFromResource(R.xml.pref_hc);
+			
 
 			// Bind the summaries of EditText/List/Dialog/Ringtone preferences
 			// to their values. When their values change, their summaries are
@@ -246,6 +289,10 @@ public class PrefSettings extends PreferenceActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
+			
+			PreferenceManager prefMgr = getPreferenceManager();
+			setPreferenceName(prefMgr);
+			
 			addPreferencesFromResource(R.xml.pref_ics);
 
 			// Bind the summaries of EditText/List/Dialog/Ringtone preferences
@@ -257,11 +304,19 @@ public class PrefSettings extends PreferenceActivity {
 		}
 	}
 	
+	/**
+	 * This fragment shows JB preference only. It is used when the
+	 * activity is showing a two-pane settings UI.
+	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public static class JBPreferenceFragment extends PreferenceFragment {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
+			
+			PreferenceManager prefMgr = getPreferenceManager();
+			setPreferenceName(prefMgr);
+			
 			addPreferencesFromResource(R.xml.pref_jb);
 
 			// Bind the summaries of EditText/List/Dialog/Ringtone preferences
@@ -275,12 +330,21 @@ public class PrefSettings extends PreferenceActivity {
 		}
 	}
 	
+	/**
+	 * This fragment shows KK preference only. It is used when the
+	 * activity is showing a two-pane settings UI.
+	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public static class KKPreferenceFragment extends PreferenceFragment {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			addPreferencesFromResource(R.xml.pref_jb);
+			
+			
+			PreferenceManager prefMgr = getPreferenceManager();
+			setPreferenceName(prefMgr);
+			
+			addPreferencesFromResource(R.xml.pref_kk);
 
 			// Bind the summaries of EditText/List/Dialog/Ringtone preferences
 			// to their values. When their values change, their summaries are
@@ -289,6 +353,13 @@ public class PrefSettings extends PreferenceActivity {
 			bindPreferenceSummaryToValue(findPreference("kk_letter"));
 			bindPreferenceSummaryToValue(findPreference("kk_text"));
 		}
+	}
+	
+	public static void setPreferenceName(PreferenceManager prefMgr){
+		
+		prefMgr.setSharedPreferencesName("preferenceggs");
+		prefMgr.setSharedPreferencesMode(Context.MODE_PRIVATE);
+		
 	}
 	
 }

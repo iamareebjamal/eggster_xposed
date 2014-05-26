@@ -43,7 +43,7 @@
 
 	        <LinearLayout
 	            android:layout_width="fill_parent"
-	            android:layout_height="fill_parent"
+	            android:layout_height="wrap_content"
 	            android:orientation="vertical"
 	            android:padding="16dp" >
 
@@ -67,12 +67,13 @@
 	                    android:layout_height="40dp"
 	                    android:layout_centerVertical="true"
 	                    android:onClick="ginger"
+	                    android:contentDescription="@string/hello_world"
 	                    android:src="@drawable/dessert_gingerbread" />
 
 	                <LinearLayout
 	                    android:id="@+id/divider0"
 	                    android:layout_width="1dp"
-	                    android:layout_height="35dp"
+	                    android:layout_height="20dp"
 	                    android:layout_centerVertical="true"
 	                    android:layout_marginLeft="5dp"
 	                    android:layout_toRightOf="@+id/gbImg"
@@ -85,13 +86,13 @@
 	                    android:layout_centerVertical="true"
 	                    android:layout_toRightOf="@+id/divider0"
 	                    android:padding="8dp"
-	                    android:text="Gingerbread"
+	                    android:text="@string/pref_header_gb"
 	                    android:textColor="#333333"
 	                    android:textStyle="bold" />
 
 	                <LinearLayout
 	                    android:layout_width="1dp"
-	                    android:layout_height="35dp"
+	                    android:layout_height="20dp"
 	                    android:layout_centerVertical="true"
 	                    android:layout_marginRight="5dp"
 	                    android:layout_toLeftOf="@+id/gbCheck"
@@ -118,12 +119,13 @@
 	                    android:layout_height="40dp"
 	                    android:layout_centerVertical="true"
 	                    android:onClick="honey"
+	                    android:contentDescription="@string/hello_world"
 	                    android:src="@drawable/dessert_honeycomb" />
 
 	                <LinearLayout
 	                    android:id="@+id/divider1"
 	                    android:layout_width="1dp"
-	                    android:layout_height="35dp"
+	                    android:layout_height="20dp"
 	                    android:layout_centerVertical="true"
 	                    android:layout_marginLeft="5dp"
 	                    android:layout_toRightOf="@+id/hcImg"
@@ -136,13 +138,13 @@
 	                    android:layout_centerVertical="true"
 	                    android:layout_toRightOf="@+id/divider1"
 	                    android:padding="8dp"
-	                    android:text="HoneyComb"
+	                    android:text="@string/pref_header_hc"
 	                    android:textColor="#333333"
 	                    android:textStyle="bold" />
 
 	                <LinearLayout
 	                    android:layout_width="1dp"
-	                    android:layout_height="35dp"
+	                    android:layout_height="20dp"
 	                    android:layout_centerVertical="true"
 	                    android:layout_marginRight="5dp"
 	                    android:layout_toLeftOf="@+id/hcCheck"
@@ -169,12 +171,13 @@
 	                    android:layout_height="40dp"
 	                    android:layout_centerVertical="true"
 	                    android:onClick="ics"
+	                    android:contentDescription="@string/hello_world"
 	                    android:src="@drawable/dessert_ics" />
 
 	                <LinearLayout
 	                    android:id="@+id/divider2"
 	                    android:layout_width="1dp"
-	                    android:layout_height="35dp"
+	                    android:layout_height="20dp"
 	                    android:layout_centerVertical="true"
 	                    android:layout_marginLeft="5dp"
 	                    android:layout_toRightOf="@+id/icsImg"
@@ -187,13 +190,13 @@
 	                    android:layout_centerVertical="true"
 	                    android:layout_toRightOf="@+id/divider2"
 	                    android:padding="8dp"
-	                    android:text="ICS"
+	                    android:text="@string/pref_header_ics_short"
 	                    android:textColor="#333333"
 	                    android:textStyle="bold" />
 
 	                <LinearLayout
 	                    android:layout_width="1dp"
-	                    android:layout_height="35dp"
+	                    android:layout_height="20dp"
 	                    android:layout_centerVertical="true"
 	                    android:layout_marginRight="5dp"
 	                    android:layout_toLeftOf="@+id/icsCheck"
@@ -220,12 +223,13 @@
 	                    android:layout_height="40dp"
 	                    android:layout_centerVertical="true"
 	                    android:onClick="jelly"
+	                    android:contentDescription="@string/hello_world"
 	                    android:src="@drawable/dessert_jellybean" />
 
 	                <LinearLayout
 	                    android:id="@+id/divider3"
 	                    android:layout_width="1dp"
-	                    android:layout_height="35dp"
+	                    android:layout_height="20dp"
 	                    android:layout_centerVertical="true"
 	                    android:layout_marginLeft="5dp"
 	                    android:layout_toRightOf="@+id/jbImg"
@@ -238,13 +242,13 @@
 	                    android:layout_centerVertical="true"
 	                    android:layout_toRightOf="@+id/divider3"
 	                    android:padding="8dp"
-	                    android:text="JellyBean"
+	                    android:text="@string/pref_header_jb"
 	                    android:textColor="#333333"
 	                    android:textStyle="bold" />
 
 	                <LinearLayout
 	                    android:layout_width="1dp"
-	                    android:layout_height="35dp"
+	                    android:layout_height="20dp"
 	                    android:layout_centerVertical="true"
 	                    android:layout_marginRight="5dp"
 	                    android:layout_toLeftOf="@+id/jbCheck"
@@ -271,12 +275,13 @@
 	                    android:layout_height="40dp"
 	                    android:layout_centerVertical="true"
 	                    android:onClick="kitkat"
+	                    android:contentDescription="@string/hello_world"
 	                    android:src="@drawable/dessert_kitkat" />
 
 	                <LinearLayout
 	                    android:id="@+id/divider4"
 	                    android:layout_width="1dp"
-	                    android:layout_height="35dp"
+	                    android:layout_height="20dp"
 	                    android:layout_centerVertical="true"
 	                    android:layout_marginLeft="5dp"
 	                    android:layout_toRightOf="@+id/kkImg"
@@ -289,13 +294,13 @@
 	                    android:layout_centerVertical="true"
 	                    android:layout_toRightOf="@+id/divider4"
 	                    android:padding="8dp"
-	                    android:text="Kitkat"
+	                    android:text="@string/pref_header_kk"
 	                    android:textColor="#333333"
 	                    android:textStyle="bold" />
 
 	                <LinearLayout
 	                    android:layout_width="1dp"
-	                    android:layout_height="35dp"
+	                    android:layout_height="20dp"
 	                    android:layout_centerVertical="true"
 	                    android:layout_marginRight="5dp"
 	                    android:layout_toLeftOf="@+id/kkCheck"
@@ -318,6 +323,7 @@
 	        android:layout_alignParentBottom="true"
 	        android:layout_centerHorizontal="true"
 	        android:onClick="toggleView"
+	        android:contentDescription="@string/hello_world"
 	        android:src="@drawable/expander_close_holo_light" />
 
 	    <RelativeLayout
@@ -345,6 +351,7 @@
 	            android:layout_alignParentRight="true"
 	            android:background="#22000000"
 	            android:onClick="toggleView"
+	            android:contentDescription="@string/hello_world"
 	            android:src="@drawable/expander_open_holo_light" />
 
 	        <org.jraf.android.backport.switchwidget.Switch
@@ -366,7 +373,7 @@
 	            android:shadowColor="#444444"
 	            android:shadowDx="1"
 	            android:shadowDy="1"
-	            android:text="Logging"
+	            android:text="@string/logging"
 	            android:textColor="#dddddd"
 	            android:textSize="18sp"
 	            android:textStyle="bold|italic" />
@@ -387,6 +394,7 @@
 	            android:layout_centerVertical="true"
 	            android:layout_toLeftOf="@+id/closeLayout"
 	            android:src="@drawable/settings"
+	            android:contentDescription="@string/hello_world"
 	            android:layout_marginRight="5dp"
 	            android:layout_marginLeft="5dp"
 	            android:onClick="settings" />

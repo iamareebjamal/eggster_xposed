@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -184,6 +185,21 @@ public class Eggs extends Activity {
 		logLayout.setVisibility(View.GONE);
 		
 
+	}
+	
+	
+	@Override
+	public boolean onKeyDown(int keycode, KeyEvent e){
+		
+		switch (keycode){
+			case KeyEvent.KEYCODE_MENU :
+				toggleView(this.getWindow().getCurrentFocus());
+			
+		
+		}
+		
+		
+		return super.onKeyDown(keycode, e);
 	}
 	
 	public void toggleView(View view){

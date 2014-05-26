@@ -178,7 +178,7 @@ public class PlatLogoActivity extends Activity {
 
 					//removed original API methods from Giupy as they were already handled by nineolddroid helpers
                     
-                    tv.setVisibility(View.VISIBLE);
+                    tv.setVisibility(View.VISIBLE);  //Noob Error
 					check = true;
 				}
 				return check;

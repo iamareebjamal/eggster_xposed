@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <PreferenceCategory android:key="prefcateg" android:title="Current easter egg: KitKat">
-        <EditTextPreference android:key="lettchar" android:title="Spinning text" android:summary="K"/>
-        <EditTextPreference android:key="platkktxt" android:summary="ANDROID 4.4.2" android:title="Text under the logo"/>
-    </PreferenceCategory>
-    
-
-</PreferenceScreen>

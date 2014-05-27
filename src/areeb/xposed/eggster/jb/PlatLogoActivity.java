@@ -135,9 +135,7 @@ public class PlatLogoActivity extends Activity {
             public boolean onLongClick(View v) {
                 try {
                     startActivity(new Intent(Intent.ACTION_MAIN)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                            | Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         //.addCategory("com.android.internal.category.PLATLOGO"));
                         .setClassName("areeb.xposed.eggster","areeb.xposed.eggster.jb.BeanBag"));
                 } catch (ActivityNotFoundException ex) {

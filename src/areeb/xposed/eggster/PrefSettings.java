@@ -112,6 +112,7 @@ public class PrefSettings extends PreferenceActivity {
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_jb);
 		
+		
 		// Add KK preferences, and a corresponding header.
 		fakeHeader = new PreferenceCategory(this);
 		fakeHeader.setTitle(getString(R.string.pref_header_kk).toUpperCase());
@@ -130,6 +131,8 @@ public class PrefSettings extends PreferenceActivity {
 		bindPreferenceSummaryToValue(findPreference("number_of_jb"));
 		bindPreferenceSummaryToValue(findPreference("kk_text"));
 		bindPreferenceSummaryToValue(findPreference("kk_letter"));
+		bindPreferenceSummaryToValue(findPreference("kk_clicks"));
+		bindPreferenceSummaryToValue(findPreference("kk_letter_size"));
 	}
 
 	/** {@inheritDoc} */
@@ -352,6 +355,8 @@ public class PrefSettings extends PreferenceActivity {
 			// guidelines.
 			bindPreferenceSummaryToValue(findPreference("kk_letter"));
 			bindPreferenceSummaryToValue(findPreference("kk_text"));
+			bindPreferenceSummaryToValue(findPreference("kk_clicks"));
+			bindPreferenceSummaryToValue(findPreference("kk_letter_size"));
 		}
 	}
 	

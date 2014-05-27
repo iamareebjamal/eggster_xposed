@@ -23,7 +23,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,9 +47,10 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
 public class PlatLogoActivity extends Activity {
 	FrameLayout mContent;
 	int mCount;
+	int MAX_CLICKS = 6;
+	int LETTER_SIZE = 300;
 	final Handler mHandler = new Handler();
 	static final int BGCOLOR = 0xffed1d24;
-	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,14 +63,51 @@ public class PlatLogoActivity extends Activity {
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-		Typeface bold = Typeface
-				.createFromAsset(getAssets(), "Roboto-Bold.ttf");
-		Typeface light = Typeface.createFromAsset(getAssets(),
-				"Roboto-Light.ttf");
+		Typeface bold = Typeface.createFromAsset(getAssets(), "Roboto-Bold.ttf");
+		Typeface light = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
 		
 		SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
         String kkLetter = pref.getString("kk_letter", getString(R.string.pref_default_kk_letter));
         String kkText = pref.getString("kk_text", getString(R.string.pref_default_kk_text));
+        String kkClicks = pref.getString("kk_clicks", getString(R.string.pref_default_kk_clicks));
+        String kkLetterSize = pref.getString("kk_letter_size", getString(R.string.pref_default_kk_letter_size));
+        
+        try{
+        	
+            int temp = Integer.parseInt(kkClicks);
+            
+            if (kkClicks != null && kkClicks.length() > 0 && kkClicks.matches("\\d*") && Integer.parseInt(kkClicks) > 0) {
+    			
+    			MAX_CLICKS = temp;
+    			
+    		}
+            
+            } catch (NumberFormatException e){
+            	
+            	MAX_CLICKS = 6;
+            	e.printStackTrace();
+            	
+            }
+        
+        try{
+        	
+            int temp = Integer.parseInt(kkLetterSize);
+            
+            if (kkLetterSize != null && kkLetterSize.length() > 0 && kkLetterSize.matches("\\d*") && Integer.parseInt(kkLetterSize) > 0) {
+    			
+            	if (temp > 999 || temp < 15)
+            		return;
+    			LETTER_SIZE = temp;
+    			
+    		}
+            
+            } catch (NumberFormatException e){
+            	
+            	LETTER_SIZE = 300;
+            	e.printStackTrace();
+            	
+            }
+            
 
 		mContent = new FrameLayout(this);
 		mContent.setBackgroundColor(0xC0000000);
@@ -92,8 +129,8 @@ public class PlatLogoActivity extends Activity {
 		final TextView letter = new TextView(this);
 
 		letter.setTypeface(bold);
-		letter.setTextSize(300);
-		letter.setTextColor(Color.WHITE);
+		letter.setTextSize(LETTER_SIZE);
+		letter.setTextColor(0xFFFFFFFF);
 		letter.setGravity(Gravity.CENTER);
 		letter.setText(kkLetter);
 
@@ -125,27 +162,22 @@ public class PlatLogoActivity extends Activity {
 			int clicks;
 
 			@Override
-			public void onClick(View v) {
-				clicks++;
-				if (clicks >= 6) {
-					mContent.performLongClick();
-					return;
-				}
-				ViewPropertyAnimator.animate(letter).cancel();
-				ViewPropertyAnimator vpa = ViewPropertyAnimator.animate(letter);
-				if (Math.random() > 0.5D)
-					;
-				for (int i = 360;;) {
-					vpa.rotationBy(i)
-							.setInterpolator(new DecelerateInterpolator())
-							.setDuration(700L).start();
-					return;
-				}
-			}
-		});
+            public void onClick(View v) {
+                clicks++;
+                if (clicks >= MAX_CLICKS) {
+                    mContent.performLongClick();
+                    return;
+                }
+                ViewPropertyAnimator.animate(letter).cancel();
+                final float offset = (int) ViewHelper.getRotation(letter) % 360;
+                ViewPropertyAnimator.animate(letter)
+                    .rotationBy((Math.random() > 0.5f ? 360 : -360) - offset)
+                    .setInterpolator(new DecelerateInterpolator())
+                    .setDuration(700).start();
+            }
+        });
 
 		mContent.setOnLongClickListener(new View.OnLongClickListener() {
-			@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 			@Override
 			public boolean onLongClick(View v) {
 				boolean check = true;
@@ -172,7 +204,6 @@ public class PlatLogoActivity extends Activity {
 									new AnticipateOvershootInterpolator())
 							.start();
 					ViewHelper.setAlpha(tv, 0F);
-					v.setVisibility(0);
 					ViewPropertyAnimator.animate(tv).alpha(1f)
 							.setDuration(1000).setStartDelay(1000).start();
 
@@ -195,9 +226,7 @@ public class PlatLogoActivity extends Activity {
 					try {
 						startActivity(new Intent(Intent.ACTION_MAIN)
 								.setFlags(
-										Intent.FLAG_ACTIVITY_NEW_TASK
-												| Intent.FLAG_ACTIVITY_CLEAR_TASK
-												| Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+										Intent.FLAG_ACTIVITY_NEW_TASK)
 								// .addCategory("com.android.internal.category.PLATLOGO"));
 								.setClassName("areeb.xposed.eggster",
 										"areeb.xposed.eggster.kk.DessertCase"));

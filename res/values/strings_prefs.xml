@@ -18,11 +18,19 @@
     <string name="pref_default_jb_int">20</string>
     <string name="pref_default_kk_letter">K</string>
     <string name="pref_default_kk_text">ANDROID 4.4.2</string>
+    <string name="pref_default_kk_clicks">6</string>
+    <string name="pref_default_kk_dur">500</string>
+    <string name="pref_default_kk_letter_size">300</string>
     <string name="pref_title_toast_text">Toast Text</string>
     <string name="pref_title_version_text">Version Name</string>
     <string name="pref_title_version_num">Version Number</string>
     <string name="pref_title_version_letter">Version Letter</string>
     <string name="pref_title_jb_int">Number of Beans</string>
     <string name="pref_title_cats_int">Number of Cats</string>
+    <string name="pref_title_clicks_int">Maximum Clicks</string>
+    <string name="pref_title_anim_int">Animation Duration</string>
+    <string name="pref_title_letter_size">Letter Size</string>
+    <string name="pref_sum_anim_int">Kitkat Tiles duration</string>
+    <string name="pref_diag_anim_int">Higher the duration, slower the animation speed</string>
     
 </resources>

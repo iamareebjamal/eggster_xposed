@@ -58,7 +58,7 @@ public class DessertCaseView extends FrameLayout {
 
     static final int START_DELAY = 5000;
     static final int DELAY = 2000;
-    static final int DURATION = 500;
+    static int DURATION = 500;
 
     private static final int TAG_POS = 0x2000001;
     private static final int TAG_SPAN = 0x2000002;
@@ -116,13 +116,6 @@ public class DessertCaseView extends FrameLayout {
             0f,  0f,  0f,  1f, 0f
     };
 
-    private static final float[] WHITE_MASK = {
-            0f,  0f,  0f,  0f, 255f,
-            0f,  0f,  0f,  0f, 255f,
-            0f,  0f,  0f,  0f, 255f,
-            -1f,  0f,  0f,  0f, 255f
-    };
-
     public static final float SCALE = 0.25f; // natural display size will be SCALE*mCellSize
 
     private static final float PROB_2X = 0.33f;
@@ -161,6 +154,26 @@ public class DessertCaseView extends FrameLayout {
 
     public DessertCaseView(Context context) {
         this(context, null);
+        
+        int katDuration = context.getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("kk_duration", Integer.parseInt(context.getString(R.string.pref_default_kk_dur)));
+        
+        try{
+        	
+        
+        
+        if (String.valueOf(katDuration) != null && katDuration > 0 && String.valueOf(katDuration).matches("\\d*") && String.valueOf(katDuration).length() > 0) {
+			
+			DURATION = katDuration;
+			
+		}
+        
+        } catch (NumberFormatException e){
+        	
+        	DURATION = 500;
+        	e.printStackTrace();
+        	
+        }
+        
     }
 
     public DessertCaseView(Context context, AttributeSet attrs) {
@@ -517,7 +530,8 @@ public class DessertCaseView extends FrameLayout {
             mView = v;
         }
 
-        @Override
+        @SuppressWarnings("static-access")
+		@Override
         protected void onLayout (boolean changed, int left, int top, int right, int bottom) {
             final float w = right-left;
             final float h = bottom-top;

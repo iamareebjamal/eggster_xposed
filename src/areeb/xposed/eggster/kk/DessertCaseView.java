@@ -155,7 +155,7 @@ public class DessertCaseView extends FrameLayout {
     public DessertCaseView(Context context) {
         this(context, null);
         
-        int katDuration = context.getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("kk_duration", Integer.parseInt(context.getString(R.string.pref_default_kk_dur)));
+        int katDuration = context.getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("kk_duration", 500);
         
         try{
         	
@@ -329,6 +329,12 @@ public class DessertCaseView extends FrameLayout {
                 d = null;
             }
             if (d != null) {
+            	if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT){
+            		
+            		v.getOverlay().add(d);
+            		
+            	}
+            	
             	v.setImageDrawable(d);
             }
 

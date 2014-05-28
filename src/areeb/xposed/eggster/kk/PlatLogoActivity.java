@@ -49,6 +49,7 @@ public class PlatLogoActivity extends Activity {
 	int mCount;
 	int MAX_CLICKS = 6;
 	int LETTER_SIZE = 300;
+	int TEXT_SIZE = 30;
 	final Handler mHandler = new Handler();
 	static final int BGCOLOR = 0xffed1d24;
 	@Override
@@ -70,7 +71,8 @@ public class PlatLogoActivity extends Activity {
         String kkLetter = pref.getString("kk_letter", getString(R.string.pref_default_kk_letter));
         String kkText = pref.getString("kk_text", getString(R.string.pref_default_kk_text));
         String kkClicks = pref.getString("kk_clicks", getString(R.string.pref_default_kk_clicks));
-        String kkLetterSize = pref.getString("kk_letter_size", getString(R.string.pref_default_kk_letter_size));
+        int kkSize = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("kk_letter_size", 300);
+        int kkTextSize = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("kk_text_size", 30);
         
         try{
         	
@@ -89,24 +91,39 @@ public class PlatLogoActivity extends Activity {
             	
             }
         
+
+        
         try{
         	
-            int temp = Integer.parseInt(kkLetterSize);
-            
-            if (kkLetterSize != null && kkLetterSize.length() > 0 && kkLetterSize.matches("\\d*") && Integer.parseInt(kkLetterSize) > 0) {
-    			
-            	if (temp > 999 || temp < 15)
-            		return;
-    			LETTER_SIZE = temp;
-    			
-    		}
-            
-            } catch (NumberFormatException e){
-            	
-            	LETTER_SIZE = 300;
-            	e.printStackTrace();
-            	
-            }
+        
+        
+        if (String.valueOf(kkSize) != null && kkSize > 0 && String.valueOf(kkSize).matches("\\d*") && String.valueOf(kkSize).length() > 0) {
+			
+        	LETTER_SIZE = kkSize;
+			
+		}
+        
+        } catch (NumberFormatException e){
+        	
+        	LETTER_SIZE = 300;
+        	e.printStackTrace();
+        	
+        }
+        
+        try{
+        
+        if (String.valueOf(kkTextSize) != null && kkTextSize > 0 && String.valueOf(kkTextSize).matches("\\d*") && String.valueOf(kkTextSize).length() > 0) {
+			
+        	TEXT_SIZE = kkTextSize;
+			
+		}
+        
+        } catch (NumberFormatException e){
+        	
+        	TEXT_SIZE = 30;
+        	e.printStackTrace();
+        	
+        }
             
 
 		mContent = new FrameLayout(this);
@@ -138,7 +155,7 @@ public class PlatLogoActivity extends Activity {
 
 		final TextView tv = new TextView(this);
         if (light != null) tv.setTypeface(light);
-        tv.setTextSize(30);
+        tv.setTextSize(TEXT_SIZE);
         tv.setPadding(p, p, p, p);
         tv.setTextColor(0xFFFFFFFF);
         tv.setGravity(Gravity.CENTER);
@@ -225,8 +242,7 @@ public class PlatLogoActivity extends Activity {
 				if (Build.VERSION.SDK_INT > 10) {
 					try {
 						startActivity(new Intent(Intent.ACTION_MAIN)
-								.setFlags(
-										Intent.FLAG_ACTIVITY_NEW_TASK)
+								.setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
 								// .addCategory("com.android.internal.category.PLATLOGO"));
 								.setClassName("areeb.xposed.eggster",
 										"areeb.xposed.eggster.kk.DessertCase"));

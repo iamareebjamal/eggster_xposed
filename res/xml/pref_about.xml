@@ -1,0 +1,30 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+<Preference
+    android:title="@string/app_name"
+    android:summary="@string/app_ver" />
+
+<Preference
+    android:title="@string/dev"
+    android:summary="@string/dev_name" />
+
+<PreferenceScreen android:title="@string/support_thread" android:summary="@string/forum">
+        <intent android:action="android.intent.action.VIEW" android:data="http://forum.xda-developers.com/xposed/modules/xposed-eggster-1-0-replace-easter-eggs-t2758583" />
+</PreferenceScreen>
+
+
+<PreferenceScreen android:title="@string/check_updates" android:summary="@string/xposed_repo">
+        <intent android:action="android.intent.action.VIEW" android:data="http://repo.xposed.info/module/areeb.xposed.eggster" />
+</PreferenceScreen>
+
+<PreferenceScreen android:title="@string/source" android:summary="@string/github">
+        <intent android:action="android.intent.action.VIEW" android:data="https://github.com/iamareebjamal/eggster_xposed" />
+</PreferenceScreen>
+
+<PreferenceScreen android:title="@string/contact" android:summary="@string/forum">
+        <intent android:action="android.intent.action.VIEW" android:data="http://forum.xda-developers.com/member.php?u=4782403" />
+</PreferenceScreen>
+
+
+
+</PreferenceScreen>

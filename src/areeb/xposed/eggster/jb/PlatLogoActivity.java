@@ -48,6 +48,7 @@ public class PlatLogoActivity extends Activity {
     Toast mToast;
     ImageView mContent;
     int mCount;
+    int mSize;
     final Handler mHandler = new Handler();
 
     private View makeView() {
@@ -68,16 +69,39 @@ public class PlatLogoActivity extends Activity {
         Typeface normal = Typeface.createFromAsset(getAssets(), "Roboto-Bold.ttf");
         Typeface light = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
 
-        final float size = 14 * metrics.density;
+        SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+        String jbVer = pref.getString("jb_text_1", getString(R.string.pref_default_jb_text_1));
+        String jbName = pref.getString("jb_text_2", getString(R.string.pref_default_jb_text_2));
+        
+       
+		
+        int jbSize = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("jb_size", 14);
+        
+        try{
+        	
+        
+        
+        if (String.valueOf(jbSize) != null && jbSize > 0 && String.valueOf(jbSize).matches("\\d*") && String.valueOf(jbSize).length() > 0) {
+			
+			mSize = jbSize;
+			
+		}
+        
+        } catch (NumberFormatException e){
+        	
+        	mSize = 14;
+        	e.printStackTrace();
+        	
+        }
+        
+        final float size = mSize * metrics.density;
         final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
         lp.bottomMargin = (int) (-1*metrics.density);
         
-        SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
-        String jbVer = pref.getString("jb_text_1", getString(R.string.pref_default_jb_text_1));
-        String jbName = pref.getString("jb_text_2", getString(R.string.pref_default_jb_text_2));
+        
 
         TextView tv = new TextView(this);
         if (light != null) tv.setTypeface(light);
@@ -135,7 +159,7 @@ public class PlatLogoActivity extends Activity {
             public boolean onLongClick(View v) {
                 try {
                     startActivity(new Intent(Intent.ACTION_MAIN)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                         //.addCategory("com.android.internal.category.PLATLOGO"));
                         .setClassName("areeb.xposed.eggster","areeb.xposed.eggster.jb.BeanBag"));
                 } catch (ActivityNotFoundException ex) {

@@ -19,5 +19,9 @@
     <header
         android:fragment="areeb.xposed.eggster.PrefSettings$KKPreferenceFragment"
         android:title="@string/pref_header_kk" />
+    
+    <header
+        android:fragment="areeb.xposed.eggster.PrefSettings$ABPreferenceFragment"
+        android:title="@string/pref_header_about" />
 
 </preference-headers>

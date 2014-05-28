@@ -22,34 +22,37 @@
         android:singleLine="true"
         android:title="@string/pref_title_version_num" />
     
-    <EditTextPreference
-        android:defaultValue="@string/pref_default_kk_letter_size"
-        android:inputType="phone"
-        android:digits="0123456789"
+    <areeb.xposed.eggster.SeekBarPreference
+        android:defaultValue="300"
         android:key="kk_letter_size"
-        android:maxLength="3"
-        android:maxLines="1"
-        android:hint="Enter value between 15 and 999"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
+        android:dialogMessage="Set to 0 for default"
+    	android:text=""
+    	android:max="999"
         android:title="@string/pref_title_letter_size" />
+    
+    <areeb.xposed.eggster.SeekBarPreference
+        android:defaultValue="30"
+        android:key="kk_text_size"
+        android:dialogMessage="Set to 0 for default"
+    	android:text=""
+    	android:max="100"
+        android:title="@string/pref_title_text_size" />
     
     <EditTextPreference
         android:defaultValue="@string/pref_default_kk_clicks"
         android:inputType="phone"
         android:digits="0123456789"
         android:key="kk_clicks"
-        android:maxLength="9"
+        android:maxLength="8"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_title_clicks_int" />
     
     <areeb.xposed.eggster.SeekBarPreference
-        android:defaultValue="@string/pref_default_kk_dur"
+        android:defaultValue="500"
 		android:key="kk_duration"
 		android:dialogMessage="Higher the duration, slower the animation speed"
-    	android:summary="Kitkat Tiles duration"
     	android:text=""
     	android:max="2000"
     	android:title="@string/pref_title_anim_int"

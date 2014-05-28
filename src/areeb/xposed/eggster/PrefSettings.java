@@ -28,6 +28,8 @@ import java.util.List;
  */
 @SuppressLint("DefaultLocale")
 public class PrefSettings extends PreferenceActivity {
+	
+	
 	/**
 	 * Determines whether to always show the simplified settings UI, where
 	 * settings are presented in a single list. When false, settings are shown
@@ -42,7 +44,7 @@ public class PrefSettings extends PreferenceActivity {
 		
 		//Fix FC by vulnerability fixing code
 		
-		if (GBPreferenceFragment.class.getName().equals(fragmentName) || HCPreferenceFragment.class.getName().equals(fragmentName) || ICSPreferenceFragment.class.getName().equals(fragmentName) || JBPreferenceFragment.class.getName().equals(fragmentName) || KKPreferenceFragment.class.getName().equals(fragmentName))
+		if (GBPreferenceFragment.class.getName().equals(fragmentName) || HCPreferenceFragment.class.getName().equals(fragmentName) || ICSPreferenceFragment.class.getName().equals(fragmentName) || JBPreferenceFragment.class.getName().equals(fragmentName) || KKPreferenceFragment.class.getName().equals(fragmentName) || ABPreferenceFragment.class.getName().equals(fragmentName))
 		{
 			return true;
 			
@@ -51,13 +53,26 @@ public class PrefSettings extends PreferenceActivity {
 		
 		return false;
 	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	    // TODO Auto-generated method stub
+	    super.onConfigurationChanged(newConfig);
+	    
+	    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+	    	return;
+	    
+	    getPreferenceScreen().removeAll();
+	    setupSimplePreferencesScreen();
+	    
+	}
+
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 
-
-		
 		
 		setupSimplePreferencesScreen();
 		
@@ -118,6 +133,11 @@ public class PrefSettings extends PreferenceActivity {
 		fakeHeader.setTitle(getString(R.string.pref_header_kk).toUpperCase());
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_kk);
+		
+		fakeHeader = new PreferenceCategory(this);
+		fakeHeader.setTitle(getString(R.string.pref_header_about).toUpperCase());
+		getPreferenceScreen().addPreference(fakeHeader);
+		addPreferencesFromResource(R.xml.pref_about);
 
 		// Bind the summaries of preferences to
 		// their values. When their values change, their summaries are updated
@@ -129,17 +149,24 @@ public class PrefSettings extends PreferenceActivity {
 		bindPreferenceSummaryToValue(findPreference("jb_text_1"));
 		bindPreferenceSummaryToValue(findPreference("jb_text_2"));
 		bindPreferenceSummaryToValue(findPreference("number_of_jb"));
+		bindPreferenceSummaryToValue(findPreference("jb_size"));
 		bindPreferenceSummaryToValue(findPreference("kk_text"));
 		bindPreferenceSummaryToValue(findPreference("kk_letter"));
 		bindPreferenceSummaryToValue(findPreference("kk_clicks"));
+		bindPreferenceSummaryToValue(findPreference("kk_duration"));
 		bindPreferenceSummaryToValue(findPreference("kk_letter_size"));
+		bindPreferenceSummaryToValue(findPreference("kk_text_size"));
 	}
+	
+	
 
 	/** {@inheritDoc} */
 	@Override
 	public boolean onIsMultiPane() {
 		return true;
 	}
+	
+	
 
 	/**
 	 * Helper method to determine if the device has an extra-large screen. For
@@ -202,11 +229,19 @@ public class PrefSettings extends PreferenceActivity {
 	private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
 		@Override
 		public boolean onPreferenceChange(Preference preference, Object value) {
-			String stringValue = value.toString();
+			
+		
+			String stringValue = String.valueOf(value);
 
-				// For all other preferences, set the summary to the value's
-				// simple string representation.
-				preference.setSummary(stringValue);
+			// For all other preferences, set the summary to the value's
+			// simple string representation.
+			
+			preference.setSummary(stringValue);
+			
+			if(stringValue.equals("999999999")){
+				preference.setSummary("Default Value");
+			}
+			
 			
 			return true;
 		}
@@ -227,11 +262,18 @@ public class PrefSettings extends PreferenceActivity {
 				.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 
 		// Trigger the listener immediately with the preference's
-		// current value.
-		sBindPreferenceSummaryToValueListener.onPreferenceChange(
-				
-				
-				preference, preference.getContext().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString(preference.getKey(),""));
+		// current value according to the instance type.
+		
+		if (preference instanceof SeekBarPreference){
+			
+			sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, preference.getContext().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt(preference.getKey(),999999999));
+			
+		} else {
+			
+			sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, preference.getContext().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString(preference.getKey(),""));
+			
+		}
+		
 	}
 
 	/**
@@ -329,6 +371,7 @@ public class PrefSettings extends PreferenceActivity {
 			bindPreferenceSummaryToValue(findPreference("jb_text_1"));
 			bindPreferenceSummaryToValue(findPreference("jb_text_2"));
 			bindPreferenceSummaryToValue(findPreference("number_of_jb"));
+			bindPreferenceSummaryToValue(findPreference("jb_size"));
 			
 		}
 	}
@@ -356,7 +399,29 @@ public class PrefSettings extends PreferenceActivity {
 			bindPreferenceSummaryToValue(findPreference("kk_letter"));
 			bindPreferenceSummaryToValue(findPreference("kk_text"));
 			bindPreferenceSummaryToValue(findPreference("kk_clicks"));
+			bindPreferenceSummaryToValue(findPreference("kk_duration"));
 			bindPreferenceSummaryToValue(findPreference("kk_letter_size"));
+			bindPreferenceSummaryToValue(findPreference("kk_text_size"));
+		}
+	}
+	
+	/**
+	 * This fragment shows About preferences only. It is used when the
+	 * activity is showing a two-pane settings UI.
+	 */
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	public static class ABPreferenceFragment extends
+			PreferenceFragment {
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+
+			PreferenceManager prefMgr = getPreferenceManager();
+			setPreferenceName(prefMgr);
+			
+			addPreferencesFromResource(R.xml.pref_about);
+			
+			
 		}
 	}
 	

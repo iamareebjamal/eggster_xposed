@@ -238,11 +238,6 @@ public class PrefSettings extends PreferenceActivity {
 			
 			preference.setSummary(stringValue);
 			
-			if(stringValue.equals("999999999")){
-				preference.setSummary("Default Value");
-			}
-			
-			
 			return true;
 		}
 	};
@@ -266,7 +261,9 @@ public class PrefSettings extends PreferenceActivity {
 		
 		if (preference instanceof SeekBarPreference){
 			
-			sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, preference.getContext().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt(preference.getKey(),999999999));
+			//Display default value if no preference chosen
+			
+			sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, preference.getContext().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt(preference.getKey(), ((SeekBarPreference) preference).getDefaultValue()));
 			
 		} else {
 			

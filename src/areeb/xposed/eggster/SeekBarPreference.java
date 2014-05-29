@@ -46,6 +46,12 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 
   }
   
+  public int getDefaultValue(){
+	  
+	  return mDefault;
+	  
+  }
+  
  
   
   

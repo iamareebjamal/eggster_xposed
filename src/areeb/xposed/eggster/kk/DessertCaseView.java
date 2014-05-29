@@ -333,9 +333,11 @@ public class DessertCaseView extends FrameLayout {
             		
             		v.getOverlay().add(d);
             		
-            	}
+            	} else {
             	
             	v.setImageDrawable(d);
+            	
+            	}
             }
 
             v.setLayerType(View.LAYER_TYPE_HARDWARE, null);

@@ -3,6 +3,7 @@ package areeb.xposed.eggster;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -54,19 +55,6 @@ public class PrefSettings extends PreferenceActivity {
 		return false;
 	}
 	
-	@SuppressWarnings("deprecation")
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-	    // TODO Auto-generated method stub
-	    super.onConfigurationChanged(newConfig);
-	    
-	    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-	    	return;
-	    
-	    getPreferenceScreen().removeAll();
-	    setupSimplePreferencesScreen();
-	    
-	}
 
 
 	@Override
@@ -74,7 +62,19 @@ public class PrefSettings extends PreferenceActivity {
 		super.onPostCreate(savedInstanceState);
 
 		
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+		
+		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		
+		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		
+		}
+		
 		setupSimplePreferencesScreen();
+		
+		
 		
 	}
 

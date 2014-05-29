@@ -12,7 +12,7 @@
     <string name="xposed_repo">Xposed Repo</string>
     <string name="source">Source</string>
     <string name="github">GitHub</string>
-    <string name="support_xda">http://forum.xda&#8211;developers.com/xposed/modules/xposed&#8211;eggster&#8211;1&#8211;0&#8211;replace&#8211;easter&#8211;eggs&#8211;t2758583</string>
+    <string name="support_xda">http://forum.xda-developers.com/xposed/modules/xposed-eggster-1-0-replace-easter-eggs-t2758583</string>
     <string name="support_repo">http://repo.xposed.info/module/areeb.xposed.eggster</string>
     <string name="support_source">https://github.com/iamareebjamal/eggster_xposed</string>
     <string name="contact">Contact</string>
@@ -20,9 +20,9 @@
     <string name="twitter">Twitter</string>
     <string name="google_plus">Google +</string>
     <string name="email">Email</string>
-    <string name="contact_fb">http://on.fb.me/iamareebjamal</string>
+    <string name="contact_fb">http://fb.me/iamareebjamal</string>
     <string name="contact_twitter">http://twitter.com/iamareebjamal</string>
-    <string name="contact_xda">http://forum.xda&#8211;developers.com/member.php?u=4782403</string>
+    <string name="contact_xda">http://forum.xda-developers.com/member.php?u=4782403</string>
     <string name="contact_google_plus">http://plus.google.com/101187817179546867616</string>
     <string name="contact_iamareebjamal">iamareebjamal</string>
     <string name="contact_jamal">jamal.areeb</string>

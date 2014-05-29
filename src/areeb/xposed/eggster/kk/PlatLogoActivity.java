@@ -20,14 +20,13 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -48,10 +47,11 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
 public class PlatLogoActivity extends Activity {
 	FrameLayout mContent;
 	int mCount;
+	int MAX_CLICKS = 6;
+	int LETTER_SIZE = 300;
+	int TEXT_SIZE = 30;
 	final Handler mHandler = new Handler();
 	static final int BGCOLOR = 0xffed1d24;
-	@SuppressLint("NewApi")
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,10 +64,67 @@ public class PlatLogoActivity extends Activity {
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-		Typeface bold = Typeface
-				.createFromAsset(getAssets(), "Roboto-Bold.ttf");
-		Typeface light = Typeface.createFromAsset(getAssets(),
-				"Roboto-Light.ttf");
+		Typeface bold = Typeface.createFromAsset(getAssets(), "Roboto-Bold.ttf");
+		Typeface light = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
+		
+		SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+        String kkLetter = pref.getString("kk_letter", getString(R.string.pref_default_kk_letter));
+        String kkText = pref.getString("kk_text", getString(R.string.pref_default_kk_text));
+        String kkClicks = pref.getString("kk_clicks", getString(R.string.pref_default_kk_clicks));
+        int kkSize = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("kk_letter_size", 300);
+        int kkTextSize = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("kk_text_size", 30);
+        
+        try{
+        	
+            int temp = Integer.parseInt(kkClicks);
+            
+            if (kkClicks != null && kkClicks.length() > 0 && kkClicks.matches("\\d*") && Integer.parseInt(kkClicks) > 0) {
+    			
+    			MAX_CLICKS = temp;
+    			
+    		}
+            
+            } catch (NumberFormatException e){
+            	
+            	MAX_CLICKS = 6;
+            	e.printStackTrace();
+            	
+            }
+        
+
+        
+        try{
+        	
+        
+        
+        if (String.valueOf(kkSize) != null && kkSize > 0 && String.valueOf(kkSize).matches("\\d*") && String.valueOf(kkSize).length() > 0) {
+			
+        	LETTER_SIZE = kkSize;
+			
+		}
+        
+        } catch (NumberFormatException e){
+        	
+        	LETTER_SIZE = 300;
+        	e.printStackTrace();
+        	
+        }
+        
+        try{
+        
+        if (String.valueOf(kkTextSize) != null && kkTextSize > 0 && String.valueOf(kkTextSize).matches("\\d*") && String.valueOf(kkTextSize).length() > 0) {
+			
+        	TEXT_SIZE = kkTextSize;
+			
+		}
+        
+        } catch (NumberFormatException e){
+        	
+        	TEXT_SIZE = 30;
+        	e.printStackTrace();
+        	
+        }
+            
 
 		mContent = new FrameLayout(this);
 		mContent.setBackgroundColor(0xC0000000);
@@ -89,20 +146,20 @@ public class PlatLogoActivity extends Activity {
 		final TextView letter = new TextView(this);
 
 		letter.setTypeface(bold);
-		letter.setTextSize(300);
-		letter.setTextColor(Color.WHITE);
+		letter.setTextSize(LETTER_SIZE);
+		letter.setTextColor(0xFFFFFFFF);
 		letter.setGravity(Gravity.CENTER);
-		letter.setText("K");
+		letter.setText(kkLetter);
 
 		final int p = (int) (4 * metrics.density);
 
 		final TextView tv = new TextView(this);
         if (light != null) tv.setTypeface(light);
-        tv.setTextSize(30);
+        tv.setTextSize(TEXT_SIZE);
         tv.setPadding(p, p, p, p);
         tv.setTextColor(0xFFFFFFFF);
         tv.setGravity(Gravity.CENTER);
-        tv.setText("ANDROID 4.4.2");
+        tv.setText(kkText);
         tv.setVisibility(View.INVISIBLE);
 
 		mContent.addView(bg);
@@ -122,24 +179,20 @@ public class PlatLogoActivity extends Activity {
 			int clicks;
 
 			@Override
-			public void onClick(View v) {
-				clicks++;
-				if (clicks >= 6) {
-					mContent.performLongClick();
-					return;
-				}
-				ViewPropertyAnimator.animate(letter).cancel();
-				ViewPropertyAnimator vpa = ViewPropertyAnimator.animate(letter);
-				if (Math.random() > 0.5D)
-					;
-				for (int i = 360;;) {
-					vpa.rotationBy(i)
-							.setInterpolator(new DecelerateInterpolator())
-							.setDuration(700L).start();
-					return;
-				}
-			}
-		});
+            public void onClick(View v) {
+                clicks++;
+                if (clicks >= MAX_CLICKS) {
+                    mContent.performLongClick();
+                    return;
+                }
+                ViewPropertyAnimator.animate(letter).cancel();
+                final float offset = (int) ViewHelper.getRotation(letter) % 360;
+                ViewPropertyAnimator.animate(letter)
+                    .rotationBy((Math.random() > 0.5f ? 360 : -360) - offset)
+                    .setInterpolator(new DecelerateInterpolator())
+                    .setDuration(700).start();
+            }
+        });
 
 		mContent.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
@@ -167,14 +220,13 @@ public class PlatLogoActivity extends Activity {
 							.setInterpolator(
 									new AnticipateOvershootInterpolator())
 							.start();
-					ViewHelper.setAlpha(tv, 0.0F);
-					v.setVisibility(0);
-					ViewPropertyAnimator.animate(tv).alpha(1.0F)
-							.setDuration(1000L).setStartDelay(1000L).start();
+					ViewHelper.setAlpha(tv, 0F);
+					ViewPropertyAnimator.animate(tv).alpha(1f)
+							.setDuration(1000).setStartDelay(1000).start();
 
-                    tv.setAlpha(0f);
-                    tv.setVisibility(View.VISIBLE);
-                    tv.animate().alpha(1f).setDuration(1000).setStartDelay(1000).start();
+					//removed original API methods from Giupy as they were already handled by nineolddroid helpers
+                    
+                    tv.setVisibility(View.VISIBLE);  //Noob Error
 					check = true;
 				}
 				return check;
@@ -190,10 +242,7 @@ public class PlatLogoActivity extends Activity {
 				if (Build.VERSION.SDK_INT > 10) {
 					try {
 						startActivity(new Intent(Intent.ACTION_MAIN)
-								.setFlags(
-										Intent.FLAG_ACTIVITY_NEW_TASK
-												| Intent.FLAG_ACTIVITY_CLEAR_TASK
-												| Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+								.setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
 								// .addCategory("com.android.internal.category.PLATLOGO"));
 								.setClassName("areeb.xposed.eggster",
 										"areeb.xposed.eggster.kk.DessertCase"));

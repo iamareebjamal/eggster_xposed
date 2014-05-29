@@ -18,6 +18,7 @@
 			android:layout_height="40dp"
 			android:layout_marginLeft="5dp"
 			android:padding="3.0dip"
+			android:contentDescription="@string/hello"
 			android:src="@drawable/ic_launcher" />
 
 		<TextView
@@ -33,400 +34,369 @@
 	</LinearLayout>
 	
 	<RelativeLayout
-		    android:layout_width="fill_parent"
-		    android:layout_height="fill_parent" >
-		
-<ScrollView
-		android:layout_height="wrap_content"
-		android:layout_width="fill_parent">
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:padding="16dp"
-		android:orientation="vertical">
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" >
 
-	
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:gravity="center_vertical"
-		android:orientation="horizontal">
+	    <ScrollView
+	        android:id="@+id/scrollView1"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content" >
 
-		
+	        <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical"
+	            android:padding="16dp" >
 
-	</LinearLayout>
-	
-	<RelativeLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="20dp"
-		android:gravity="center_vertical"
-		android:orientation="horizontal">
-		
-		<ImageView
-			android:id="@+id/gbImg"
-			android:layout_height="40dp"
-			android:layout_width="40dp"
-			android:src="@drawable/dessert_gingerbread"
-			android:onClick="ginger"
-			android:layout_centerVertical="true"
-			
-			/>
-		
-		<LinearLayout
-			android:id="@+id/divider0"
-			android:layout_height="35dp"
-			android:layout_width="1dp"
-			android:background="#55333333"
-			android:layout_marginLeft="5dp"
-			android:layout_centerVertical="true"
-			android:orientation="horizontal"
-			android:layout_toRightOf="@+id/gbImg"
-		/>
-		
-		
-		<TextView
-			android:layout_centerVertical="true"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:textColor="#333333"
-			android:padding="8dp"
-			android:layout_toRightOf="@+id/divider0"
-			android:text="Gingerbread"
-			android:textStyle="bold"
-		/>
-		
-		
-		<LinearLayout
-			android:layout_height="35dp"
-			android:layout_width="1dp"
-			android:background="#55333333"
-			android:layout_marginRight="5dp"
-			android:layout_centerVertical="true"
-			android:layout_toLeftOf="@+id/gbCheck"
-		/>
-	
-	<org.jraf.android.backport.switchwidget.Switch
-		android:id="@+id/gbCheck"
-		android:layout_centerVertical="true"
-		android:layout_alignParentRight="true"
-		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
-		/>
-	
+	            
+
+	            <RelativeLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="20dp"
+	                android:gravity="center_vertical"
+	                android:orientation="horizontal" >
+
+	                <ImageView
+	                    android:id="@+id/gbImg"
+	                    android:layout_width="40dp"
+	                    android:layout_height="40dp"
+	                    android:layout_centerVertical="true"
+	                    android:onClick="ginger"
+	                    android:contentDescription="@string/hello_world"
+	                    android:src="@drawable/dessert_gingerbread" />
+
+	                <LinearLayout
+	                    android:id="@+id/divider0"
+	                    android:layout_width="1dp"
+	                    android:layout_height="20dp"
+	                    android:layout_centerVertical="true"
+	                    android:layout_marginLeft="5dp"
+	                    android:layout_toRightOf="@+id/gbImg"
+	                    android:background="#55333333"
+	                    android:orientation="horizontal" />
+
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_centerVertical="true"
+	                    android:layout_toRightOf="@+id/divider0"
+	                    android:padding="8dp"
+	                    android:text="@string/pref_header_gb"
+	                    android:textColor="#333333"
+	                    android:textStyle="bold" />
+
+	                <LinearLayout
+	                    android:layout_width="1dp"
+	                    android:layout_height="20dp"
+	                    android:layout_centerVertical="true"
+	                    android:layout_marginRight="5dp"
+	                    android:layout_toLeftOf="@+id/gbCheck"
+	                    android:background="#55333333" />
+
+	                <org.jraf.android.backport.switchwidget.Switch
+	                    android:id="@+id/gbCheck"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_alignParentRight="true"
+	                    android:layout_centerVertical="true" />
+	            </RelativeLayout>
+
+	            <RelativeLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="10dp"
+	                android:gravity="center_vertical"
+	                android:orientation="horizontal" >
+
+	                <ImageView
+	                    android:id="@+id/hcImg"
+	                    android:layout_width="40dp"
+	                    android:layout_height="40dp"
+	                    android:layout_centerVertical="true"
+	                    android:onClick="honey"
+	                    android:contentDescription="@string/hello_world"
+	                    android:src="@drawable/dessert_honeycomb" />
+
+	                <LinearLayout
+	                    android:id="@+id/divider1"
+	                    android:layout_width="1dp"
+	                    android:layout_height="20dp"
+	                    android:layout_centerVertical="true"
+	                    android:layout_marginLeft="5dp"
+	                    android:layout_toRightOf="@+id/hcImg"
+	                    android:background="#55333333"
+	                    android:orientation="horizontal" />
+
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_centerVertical="true"
+	                    android:layout_toRightOf="@+id/divider1"
+	                    android:padding="8dp"
+	                    android:text="@string/pref_header_hc"
+	                    android:textColor="#333333"
+	                    android:textStyle="bold" />
+
+	                <LinearLayout
+	                    android:layout_width="1dp"
+	                    android:layout_height="20dp"
+	                    android:layout_centerVertical="true"
+	                    android:layout_marginRight="5dp"
+	                    android:layout_toLeftOf="@+id/hcCheck"
+	                    android:background="#55333333" />
+
+	                <org.jraf.android.backport.switchwidget.Switch
+	                    android:id="@+id/hcCheck"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_alignParentRight="true"
+	                    android:layout_centerVertical="true" />
+	            </RelativeLayout>
+
+	            <RelativeLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="10dp"
+	                android:gravity="center_vertical"
+	                android:orientation="horizontal" >
+
+	                <ImageView
+	                    android:id="@+id/icsImg"
+	                    android:layout_width="40dp"
+	                    android:layout_height="40dp"
+	                    android:layout_centerVertical="true"
+	                    android:onClick="ics"
+	                    android:contentDescription="@string/hello_world"
+	                    android:src="@drawable/dessert_ics" />
+
+	                <LinearLayout
+	                    android:id="@+id/divider2"
+	                    android:layout_width="1dp"
+	                    android:layout_height="20dp"
+	                    android:layout_centerVertical="true"
+	                    android:layout_marginLeft="5dp"
+	                    android:layout_toRightOf="@+id/icsImg"
+	                    android:background="#55333333"
+	                    android:orientation="horizontal" />
+
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_centerVertical="true"
+	                    android:layout_toRightOf="@+id/divider2"
+	                    android:padding="8dp"
+	                    android:text="@string/pref_header_ics_short"
+	                    android:textColor="#333333"
+	                    android:textStyle="bold" />
+
+	                <LinearLayout
+	                    android:layout_width="1dp"
+	                    android:layout_height="20dp"
+	                    android:layout_centerVertical="true"
+	                    android:layout_marginRight="5dp"
+	                    android:layout_toLeftOf="@+id/icsCheck"
+	                    android:background="#55333333" />
+
+	                <org.jraf.android.backport.switchwidget.Switch
+	                    android:id="@+id/icsCheck"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_alignParentRight="true"
+	                    android:layout_centerVertical="true" />
+	            </RelativeLayout>
+
+	            <RelativeLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="10dp"
+	                android:gravity="center_vertical"
+	                android:orientation="horizontal" >
+
+	                <ImageView
+	                    android:id="@+id/jbImg"
+	                    android:layout_width="40dp"
+	                    android:layout_height="40dp"
+	                    android:layout_centerVertical="true"
+	                    android:onClick="jelly"
+	                    android:contentDescription="@string/hello_world"
+	                    android:src="@drawable/dessert_jellybean" />
+
+	                <LinearLayout
+	                    android:id="@+id/divider3"
+	                    android:layout_width="1dp"
+	                    android:layout_height="20dp"
+	                    android:layout_centerVertical="true"
+	                    android:layout_marginLeft="5dp"
+	                    android:layout_toRightOf="@+id/jbImg"
+	                    android:background="#55333333"
+	                    android:orientation="horizontal" />
+
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_centerVertical="true"
+	                    android:layout_toRightOf="@+id/divider3"
+	                    android:padding="8dp"
+	                    android:text="@string/pref_header_jb"
+	                    android:textColor="#333333"
+	                    android:textStyle="bold" />
+
+	                <LinearLayout
+	                    android:layout_width="1dp"
+	                    android:layout_height="20dp"
+	                    android:layout_centerVertical="true"
+	                    android:layout_marginRight="5dp"
+	                    android:layout_toLeftOf="@+id/jbCheck"
+	                    android:background="#55333333" />
+
+	                <org.jraf.android.backport.switchwidget.Switch
+	                    android:id="@+id/jbCheck"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_alignParentRight="true"
+	                    android:layout_centerVertical="true" />
+	            </RelativeLayout>
+
+	            <RelativeLayout
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="10dp"
+	                android:gravity="center_vertical"
+	                android:orientation="horizontal" >
+
+	                <ImageView
+	                    android:id="@+id/kkImg"
+	                    android:layout_width="40dp"
+	                    android:layout_height="40dp"
+	                    android:layout_centerVertical="true"
+	                    android:onClick="kitkat"
+	                    android:contentDescription="@string/hello_world"
+	                    android:src="@drawable/dessert_kitkat" />
+
+	                <LinearLayout
+	                    android:id="@+id/divider4"
+	                    android:layout_width="1dp"
+	                    android:layout_height="20dp"
+	                    android:layout_centerVertical="true"
+	                    android:layout_marginLeft="5dp"
+	                    android:layout_toRightOf="@+id/kkImg"
+	                    android:background="#55333333"
+	                    android:orientation="horizontal" />
+
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_centerVertical="true"
+	                    android:layout_toRightOf="@+id/divider4"
+	                    android:padding="8dp"
+	                    android:text="@string/pref_header_kk"
+	                    android:textColor="#333333"
+	                    android:textStyle="bold" />
+
+	                <LinearLayout
+	                    android:layout_width="1dp"
+	                    android:layout_height="20dp"
+	                    android:layout_centerVertical="true"
+	                    android:layout_marginRight="5dp"
+	                    android:layout_toLeftOf="@+id/kkCheck"
+	                    android:background="#55333333" />
+
+	                <org.jraf.android.backport.switchwidget.Switch
+	                    android:id="@+id/kkCheck"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_alignParentRight="true"
+	                    android:layout_centerVertical="true" />
+	            </RelativeLayout>
+	        </LinearLayout>
+	    </ScrollView>
+
+	    <ImageView
+	        android:id="@+id/openLayout"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_centerHorizontal="true"
+	        android:onClick="toggleView"
+	        android:contentDescription="@string/hello_world"
+	        android:src="@drawable/expander_close_holo_light" />
+
+	    <RelativeLayout
+	        android:id="@+id/logLayout"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:layout_centerHorizontal="true"
+	        android:background="#77ff0000" >
+
+	        <LinearLayout
+	            android:id="@+id/divider5"
+	            android:layout_width="1dp"
+	            android:layout_height="20dp"
+	            android:layout_centerVertical="true"
+	            android:layout_marginLeft="5dp"
+	            android:layout_toLeftOf="@+id/logCheck"
+	            android:background="#55333333"
+	            android:orientation="horizontal" />
+
+	        <ImageView
+	            android:id="@+id/closeLayout"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:background="#22000000"
+	            android:onClick="toggleView"
+	            android:contentDescription="@string/hello_world"
+	            android:src="@drawable/expander_open_holo_light" />
+
+	        <org.jraf.android.backport.switchwidget.Switch
+	            android:id="@+id/logCheck"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+	            android:layout_toLeftOf="@+id/divider6"
+	            android:padding="5dp" />
+
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_centerVertical="true"
+	            android:layout_marginLeft="5dp"
+	            android:padding="5dp"
+	            android:shadowColor="#444444"
+	            android:shadowDx="1"
+	            android:shadowDy="1"
+	            android:text="@string/logging"
+	            android:textColor="#dddddd"
+	            android:textSize="18sp"
+	            android:textStyle="bold|italic" />
+	        
+	        <LinearLayout
+	            android:id="@+id/divider6"
+	            android:layout_width="1dp"
+	            android:layout_height="20dp"
+	            android:layout_centerVertical="true"
+	            android:layout_toLeftOf="@+id/button1"
+	            android:background="#55333333"
+	            android:orientation="horizontal" />
+
+	        <ImageView
+	            android:id="@+id/button1"
+	            android:layout_width="45dp"
+	            android:layout_height="45dp"
+	            android:layout_centerVertical="true"
+	            android:layout_toLeftOf="@+id/closeLayout"
+	            android:src="@drawable/settings"
+	            android:contentDescription="@string/hello_world"
+	            android:layout_marginRight="5dp"
+	            android:layout_marginLeft="5dp"
+	            android:onClick="settings" />
+
+	    </RelativeLayout>
+	    
 	</RelativeLayout>
-	
-	<RelativeLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="10dp"
-		android:gravity="center_vertical"
-		android:orientation="horizontal">
-		
-		<ImageView
-			android:id="@+id/hcImg"
-			android:layout_height="40dp"
-			android:layout_width="40dp"
-			android:src="@drawable/dessert_honeycomb"
-			android:onClick="honey"
-			android:layout_centerVertical="true"
-
-		/>
-	
-	<LinearLayout
-		android:id="@+id/divider1"
-		android:layout_height="35dp"
-		android:layout_width="1dp"
-		android:background="#55333333"
-		android:layout_marginLeft="5dp"
-		android:layout_centerVertical="true"
-		android:orientation="horizontal"
-		android:layout_toRightOf="@+id/hcImg"
-		/>
-
-		<TextView
-			android:layout_centerVertical="true"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:textColor="#333333"
-			android:padding="8dp"
-			android:layout_toRightOf="@+id/divider1"
-			android:text="HoneyComb"
-			android:textStyle="bold"
-		/>
-	
-	<LinearLayout
-		android:layout_height="35dp"
-		android:layout_width="1dp"
-		android:background="#55333333"
-		android:layout_marginRight="5dp"
-		android:layout_centerVertical="true"
-		android:layout_toLeftOf="@+id/hcCheck"
-		/>
-
-
-		<org.jraf.android.backport.switchwidget.Switch
-			android:id="@+id/hcCheck"
-			android:layout_alignParentRight="true"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:layout_centerVertical="true"
-			
-		/>
-
-	</RelativeLayout>
-	
-	<RelativeLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="10dp"
-		android:gravity="center_vertical"
-		android:orientation="horizontal">
-		
-		<ImageView
-			android:id="@+id/icsImg"
-			android:layout_height="40dp"
-			android:layout_width="40dp"
-			android:src="@drawable/dessert_ics"
-			android:layout_centerVertical="true"
-			android:onClick="ics"
-
-		/>
-	
-		<LinearLayout
-			android:id="@+id/divider2"
-			android:layout_height="35dp"
-			android:layout_width="1dp"
-			android:background="#55333333"
-			android:layout_marginLeft="5dp"
-			android:layout_centerVertical="true"
-			android:orientation="horizontal"
-			android:layout_toRightOf="@+id/icsImg"
-		/>
-
-		<TextView
-			android:layout_centerVertical="true"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:textColor="#333333"
-			android:padding="8dp"
-			android:layout_toRightOf="@+id/divider2"
-			android:text="ICS"
-			android:textStyle="bold"
-		/>
-	
-		<LinearLayout
-			android:layout_height="35dp"
-			android:layout_width="1dp"
-			android:background="#55333333"
-			android:layout_marginRight="5dp"
-			android:layout_centerVertical="true"
-			android:layout_toLeftOf="@+id/icsCheck"
-		/>
-
-
-		<org.jraf.android.backport.switchwidget.Switch
-			android:id="@+id/icsCheck"
-			android:layout_alignParentRight="true"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:layout_centerVertical="true"
-			
-		/>
-
-	</RelativeLayout>
-	
-	<RelativeLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="10dp"
-		android:gravity="center_vertical"
-		android:orientation="horizontal">
-		
-		<ImageView
-			android:id="@+id/jbImg"
-			android:layout_height="40dp"
-			android:layout_width="40dp"
-			android:src="@drawable/dessert_jellybean"
-			android:layout_centerVertical="true"
-			android:onClick="jelly"
-
-		/>
-	
-		<LinearLayout
-			android:id="@+id/divider3"
-			android:layout_height="35dp"
-			android:layout_width="1dp"
-			android:background="#55333333"
-			android:layout_marginLeft="5dp"
-			android:layout_centerVertical="true"
-			android:orientation="horizontal"
-			android:layout_toRightOf="@+id/jbImg"
-		/>
-
-		<TextView
-			android:layout_centerVertical="true"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:textColor="#333333"
-			android:padding="8dp"
-			android:layout_toRightOf="@+id/divider3"
-			android:text="JellyBean"
-			android:textStyle="bold"
-		/>
-	
-		<LinearLayout
-			android:layout_height="35dp"
-			android:layout_width="1dp"
-			android:background="#55333333"
-			android:layout_marginRight="5dp"
-			android:layout_centerVertical="true"
-			android:layout_toLeftOf="@+id/jbCheck"
-		/>
-
-
-		<org.jraf.android.backport.switchwidget.Switch
-			android:id="@+id/jbCheck"
-			android:layout_alignParentRight="true"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:layout_centerVertical="true"
-			
-		/>
-
-	</RelativeLayout>
-	
-	<RelativeLayout
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginTop="10dp"
-		android:gravity="center_vertical"
-		android:orientation="horizontal">
-		
-		<ImageView
-			android:id="@+id/kkImg"
-			android:layout_height="40dp"
-			android:layout_width="40dp"
-			android:src="@drawable/dessert_kitkat"
-			android:onClick="kitkat"
-			android:layout_centerVertical="true"
-
-		/>
-	
-		<LinearLayout
-			android:id="@+id/divider4"
-			android:layout_height="35dp"
-			android:layout_width="1dp"
-			android:background="#55333333"
-			android:layout_marginLeft="5dp"
-			android:layout_centerVertical="true"
-			android:orientation="horizontal"
-			android:layout_toRightOf="@+id/kkImg"
-		/>
-
-		<TextView
-			android:layout_centerVertical="true"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:textColor="#333333"
-			android:padding="8dp"
-			android:layout_toRightOf="@+id/divider4"
-			android:text="Kitkat"
-			android:textStyle="bold"
-		/>
-		<LinearLayout
-			android:layout_height="35dp"
-			android:layout_width="1dp"
-			android:background="#55333333"
-			android:layout_marginRight="5dp"
-			android:layout_centerVertical="true"
-			android:layout_toLeftOf="@+id/kkCheck"
-		/>
-	
-
-
-		<org.jraf.android.backport.switchwidget.Switch
-			android:id="@+id/kkCheck"
-			android:layout_alignParentRight="true"
-			android:layout_height="wrap_content"
-			android:layout_width="wrap_content"
-			android:layout_centerVertical="true"
-			
-		/>
-
-	</RelativeLayout>
-	
-	
-	</LinearLayout>
-	</ScrollView>
-	
-<ImageView
-    android:id="@+id/openLayout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/expander_close_holo_light"
-    android:onClick="toggleView"
-    android:layout_alignParentBottom="true"
-    android:layout_centerHorizontal="true" />
-
-<RelativeLayout
-    android:id="@+id/logLayout"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_centerHorizontal="true"
-    android:background="#77ff0000" >
-    
-    <LinearLayout
-			android:id="@+id/divider4"
-			android:layout_height="20dp"
-			android:layout_width="1dp"
-			android:background="#55333333"
-			android:layout_marginLeft="5dp"
-			android:layout_centerVertical="true"
-			android:orientation="horizontal"
-			android:layout_toLeftOf="@+id/logCheck"
-		/>
-    
-
-
-    <ImageView
-        android:id="@+id/closeLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:background="#22000000"
-        android:onClick="toggleView"
-        android:src="@drawable/expander_open_holo_light" />
-
-    <org.jraf.android.backport.switchwidget.Switch
-        android:id="@+id/logCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/closeLayout"
-        android:padding="5dp" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:padding="5dp"
-        android:layout_marginLeft="5dp"
-        android:shadowColor="#444444"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        android:text="Logging"
-        android:textColor="#dddddd"
-        android:textSize="18dp"
-        android:textStyle="bold|italic" />
-    
-</RelativeLayout>
-
-		</RelativeLayout>
-
-	
     
 </LinearLayout>

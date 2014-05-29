@@ -1,0 +1,27 @@
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- These settings headers are only used on tablets. -->
+
+    <header
+        android:fragment="areeb.xposed.eggster.PrefSettings$GBPreferenceFragment"
+        android:title="@string/pref_header_gb" />
+    <header
+        android:fragment="areeb.xposed.eggster.PrefSettings$HCPreferenceFragment"
+        android:title="@string/pref_header_hc" />
+    <header
+        android:fragment="areeb.xposed.eggster.PrefSettings$ICSPreferenceFragment"
+        android:title="@string/pref_header_ics" />
+    
+    <header
+        android:fragment="areeb.xposed.eggster.PrefSettings$JBPreferenceFragment"
+        android:title="@string/pref_header_jb" />
+    
+    <header
+        android:fragment="areeb.xposed.eggster.PrefSettings$KKPreferenceFragment"
+        android:title="@string/pref_header_kk" />
+    
+    <header
+        android:fragment="areeb.xposed.eggster.PrefSettings$ABPreferenceFragment"
+        android:title="@string/pref_header_about" />
+
+</preference-headers>

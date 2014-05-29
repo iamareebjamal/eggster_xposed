@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="areeb.xposed.eggster"
-    android:versionCode="1"
-    android:versionName="1.0_RC1" >
+    android:versionCode="3"
+    android:versionName="1.2" >
 
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="19" />
-    
-    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme" >
@@ -35,32 +36,32 @@
         </activity>
         <activity
             android:name="areeb.xposed.eggster.gb.PlatLogoActivity"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:label="@string/title_activity_plat_logo" >
+            android:label="@string/title_activity_plat_logo"
+            android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
             android:name="areeb.xposed.eggster.hc.PlatLogoActivity"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:label="@string/title_activity_plat_logo" >
+            android:label="@string/title_activity_plat_logo"
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
             android:name="areeb.xposed.eggster.ics.PlatLogoActivity"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:label="@string/title_activity_plat_logo" >
+            android:label="@string/title_activity_plat_logo"
+            android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
             android:name="areeb.xposed.eggster.ics.Nyandroid"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:label="@string/title_activity_plat_logo" >
+            android:label="@string/title_activity_plat_logo"
+            android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -82,19 +83,24 @@
         </activity>
         <activity
             android:name="areeb.xposed.eggster.kk.PlatLogoActivity"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar"
-            android:label="@string/title_activity_plat_logo" >
+            android:label="@string/title_activity_plat_logo"
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
             android:name="areeb.xposed.eggster.kk.DessertCase"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:label="@string/title_activity_plat_logo" >
+            android:label="@string/title_activity_plat_logo"
+            android:theme="@android:style/Theme.NoTitleBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="areeb.xposed.eggster.PrefSettings"
+            android:label="@string/action_settings"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
     </application>
 

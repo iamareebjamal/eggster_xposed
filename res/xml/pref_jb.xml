@@ -1,0 +1,45 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_jb_text_1"
+        android:inputType="text"
+        android:key="jb_text_1"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_version_num" />
+    
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_jb_text_2"
+        android:inputType="text"
+        android:key="jb_text_2"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_version_text" />
+    
+    <areeb.xposed.eggster.SeekBarPreference
+        android:defaultValue="14"
+        android:key="jb_size"
+        android:dialogMessage="Set to 0 for default"
+    	android:text=""
+    	android:max="100"
+        android:title="@string/pref_title_text_size" />
+    
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_jb_int"
+        android:inputType="phone"
+        android:key="number_of_jb"
+        android:digits="0123456789"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_jb_int" />
+
+    
+  
+
+</PreferenceScreen>

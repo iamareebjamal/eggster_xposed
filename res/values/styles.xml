@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -17,9 +17,42 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     
-    <style name="Theme" parent="@android:style/Theme.Holo.Light.NoActionBar">
+    <style name="Theme" parent="@android:style/Theme.Light">
         <item name="android:windowNoTitle">true</item>
         <item name="switchStyle">@style/Widget.Holo.Light.CompoundButton.Switch</item>
+        <item name="android:listViewStyle">@style/Widget.ListView.Holo.Light</item>
+        <item name="android:listSeparatorTextViewStyle">@style/Seperator</item>
     </style>
+
+
+    <style name="Widget.ListView.Holo.Light" parent="@android:style/Widget.ListView">
+        <item name="android:divider">@drawable/divider_horizontal_bright_opaque</item> 
+        <item name="android:listSelector">@drawable/list_selector_holo_light</item>
+        <item name="android:scrollbars">none</item> 
+        <item name="android:paddingLeft">15.0dip</item>   
+        <item name="android:paddingRight">15.0dip</item>           
+    </style>                    
+
+
+    <style name="TextAppearance.Preference.Summary" parent="@android:style/TextAppearance">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#ff777777</item>
+    </style>         
+    
+    <style name="Seperator">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#555555</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@drawable/list_section_divider_holo_light</item>
+        <item name="android:paddingLeft">8.0dip</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">30.0dip</item>
+    </style>   
+    
+
+    
+    
 
 </resources>

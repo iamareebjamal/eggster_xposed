@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="pref_header_gb">GingerBread</string>
+    <string name="pref_header_hc">HoneyComb</string>
+    <string name="pref_header_ics">Ice Cream Sandwich</string>
+    <string name="pref_header_ics_short">ICS</string>
+    <string name="pref_header_jb">Jelly Bean</string>
+    <string name="pref_header_kk">Kitkat</string>
+    <string name="pref_header_about">About</string>
+    
+    
+    <string name="pref_default_gb_text">Zombie Art by Jack Larson</string>
+    <string name="pref_default_hc_text">REZZZZZZZ&#8230;</string>
+    <string name="pref_default_ics_text">Android 4.0: Ice Cream Sandwich</string>
+    <string name="pref_default_jb_text_1">Android 4.3</string>
+    <string name="pref_default_jb_text_2">JELLY BEAN</string>
+    <string name="pref_default_ics_int">10</string>
+    <string name="pref_default_jb_int">20</string>
+    <string name="pref_default_kk_letter">K</string>
+    <string name="pref_default_kk_text">ANDROID 4.4.2</string>
+    <string name="pref_default_kk_clicks">6</string>
+    <string name="pref_default_kk_dur">500</string>
+    <string name="pref_default_kk_letter_size">300</string>
+    <string name="pref_title_toast_text">Toast Text</string>
+    <string name="pref_title_version_text">Version Name</string>
+    <string name="pref_title_version_num">Version Number</string>
+    <string name="pref_title_version_letter">Version Letter</string>
+    <string name="pref_title_jb_int">Number of Beans</string>
+    <string name="pref_title_cats_int">Number of Cats</string>
+    <string name="pref_title_clicks_int">Maximum Clicks</string>
+    <string name="pref_title_anim_int">Animation Duration</string>
+    <string name="pref_title_letter_size">Letter Size</string>
+    <string name="pref_title_text_size">Text Size</string>
+    <string name="pref_sum_anim_int">Kitkat Tiles duration</string>
+    <string name="pref_diag_anim_int">Higher the duration, slower the animation speed</string>
+    
+</resources>

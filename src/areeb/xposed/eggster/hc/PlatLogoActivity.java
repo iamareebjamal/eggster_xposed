@@ -17,7 +17,10 @@
 package areeb.xposed.eggster.hc;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -28,10 +31,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import areeb.xposed.eggster.R;
 
+@SuppressLint({ "ShowToast", "InlinedApi" })
 public class PlatLogoActivity extends Activity {
     Toast mToast;
+    int BGCOLOR = 0xD0000000;
 
-    @SuppressLint({ "ShowToast", "NewApi", "InlinedApi" })
+   
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +46,16 @@ public class PlatLogoActivity extends Activity {
         
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
-        mToast = Toast.makeText(this, "REZZZZZZZ...", Toast.LENGTH_SHORT);
+        getWindow().getDecorView().setBackgroundColor(BGCOLOR);
+        
+        SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+        String hcToast = pref.getString("hc_toast_text", getString(R.string.pref_default_hc_text));
+        
+        mToast = Toast.makeText(this, hcToast, Toast.LENGTH_SHORT);
 
         ImageView content = new ImageView(this);
 
-        content.setImageResource(R.drawable.platlogohc);
+        content.setImageResource(R.drawable.platlogo_hc);
         content.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         if (Build.VERSION.SDK_INT >= 19) {
             content.setSystemUiVisibility(

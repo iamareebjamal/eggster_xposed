@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
+import android.view.WindowManager;
 
 public class DessertCase extends Activity {
     DessertCaseView mView;
@@ -35,7 +36,12 @@ public class DessertCase extends Activity {
 
         DessertCaseView.RescalingContainer container = new DessertCaseView.RescalingContainer(this);
 
-        if (Build.VERSION.SDK_INT >= 19) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT){
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
+        } else{
+     
             mView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION

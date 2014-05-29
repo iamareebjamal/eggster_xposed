@@ -23,6 +23,7 @@ package areeb.xposed.eggster.jb;
 
 import java.util.Random;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.ColorMatrix;
@@ -31,7 +32,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
-import android.preference.PreferenceManager;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -84,7 +85,27 @@ public class Board extends RelativeLayout {
 	public Board(Context context, AttributeSet as) {
 		super(context, as);
 		setWillNotDraw(true);
-		NUM_BEANS = PreferenceManager.getDefaultSharedPreferences(context).getInt("number_of_jb", 20);
+		String numBeans = context.getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString("number_of_jb", "20");
+		
+		try{
+		int temp = Integer.parseInt(numBeans);
+		
+		if (numBeans != null && numBeans.length() > 0 && numBeans.matches("\\d*") && Integer.parseInt(numBeans) > 0) {
+			
+			NUM_BEANS = temp;
+			
+		}
+		
+		} catch (NumberFormatException e){
+			
+			NUM_BEANS = 20;
+			e.printStackTrace();
+			
+		}
+		
+		
+		
+		
 	}
 	
 	private Random sRNG = new Random();
@@ -142,6 +163,7 @@ public class Board extends RelativeLayout {
 			super(context, as);
 		}
 
+		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 		private void pickBean() {
 			int beanId; 
 			if (randfrange(0,1) <= LUCKY) {

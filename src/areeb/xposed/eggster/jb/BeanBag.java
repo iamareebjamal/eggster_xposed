@@ -21,10 +21,11 @@
 
 package areeb.xposed.eggster.jb;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -41,21 +42,30 @@ public class BeanBag extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
+		SharedPreferences shr = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+		String leMode = shr.getString("jb_sysui", getString(R.string.pref_none));
+		
+		if (leMode.equals(getString(R.string.pref_none)))
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        
+            		
 		setContentView(R.layout.activity_bean_bag);		
 		board = new Board(this, null);
-		if (Build.VERSION.SDK_INT >= 19) {
-	        board.setSystemUiVisibility(
-	                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-	                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-	                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-	                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-	                | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-	                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); }
-	        
-		((FrameLayout) findViewById(R.id.gameview)).addView(board, 0);
+		FrameLayout FML = (FrameLayout) findViewById(R.id.gameview);
+		
+		if (leMode.equals(getString(R.string.pref_translucent))) {
+		        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+		        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); }
+		
+	    		if (leMode.equals(getString(R.string.pref_immerge))) {
+	    			 FML.setSystemUiVisibility(
+	    	                   View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+	    	                   | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+	    	                   | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+	    	                   | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION 		// hide nav bar
+	    	                   | View.SYSTEM_UI_FLAG_FULLSCREEN 			// hide status bar
+	    	                   | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); 	// immerge
+	    		}	
+		FML.addView(board, 0);
 	}
 
 	@Override

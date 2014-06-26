@@ -3,12 +3,13 @@
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
  */
-package areeb.xposed.eggster;
 
+package areeb.xposed.eggster;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
@@ -51,10 +52,7 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 	  return mDefault;
 	  
   }
-  
- 
-  
-  
+    
   @SuppressWarnings("deprecation")
   @Override 
   protected View onCreateDialogView() {
@@ -63,17 +61,17 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
     layout.setOrientation(LinearLayout.VERTICAL);
     layout.setPadding(6,6,6,6);
     
-
+    if (mDialogMessage != null) {
     mSplashText = new TextView(mContext);
-    if (mDialogMessage != null)
       mSplashText.setText(mDialogMessage);
     mSplashText.setTextColor(Color.parseColor("#333333"));
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
     mSplashText.setTextColor(Color.parseColor("#ffffff"));
     mSplashText.setTextSize(17);
     mSplashText.setGravity(Gravity.CENTER_HORIZONTAL);
-    mSplashText.setPadding(6, 6, 6, 16);
+    mSplashText.setPadding(6, 6, 6, 16); 
     layout.addView(mSplashText);
+    }
     
     Typeface bold = Typeface
 			.createFromAsset(mContext.getAssets(), "Roboto-Bold.ttf");
@@ -108,7 +106,7 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
   @Override
   protected void onPrepareDialogBuilder(Builder builder) {
       super.onPrepareDialogBuilder(builder);
-      builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+      builder.setNegativeButton("Cancel", new OnClickListener() {
 		
     	//Fix saving preferences in both "OK" and "Cancel" cases  
     	  
@@ -118,15 +116,33 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 			arg0.dismiss();
 		}
 	});
-      builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+      builder.setNeutralButton("Reset", new OnClickListener() {
+		
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			// TODO Auto-generated method stub
+			callChangeListener(mDefault);
+			if (shouldPersist())
+			      persistInt(mDefault);
+		}
+	});
+      builder.setPositiveButton("OK", new OnClickListener() {
 		
 		@Override
 		public void onClick(DialogInterface arg0, int arg1) {
 			// TODO Auto-generated method stub
-			callChangeListener(new Integer(mSeekBar.getProgress()));
-			
+			Integer i = mSeekBar.getProgress();
+			if (i != 0) {
+			callChangeListener(i);
 			if (shouldPersist())
-			      persistInt(mSeekBar.getProgress());
+			      persistInt(i);
+			
+			} else {															//if the value will be 0, the default value will be set
+				
+				callChangeListener(mDefault);
+				if (shouldPersist())
+				      persistInt(mDefault);
+			}	
 		}
 	});
   }

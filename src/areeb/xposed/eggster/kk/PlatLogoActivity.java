@@ -32,9 +32,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AnticipateOvershootInterpolator;
-import android.view.animation.DecelerateInterpolator;
+import android.view.animation.*;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,30 +48,32 @@ public class PlatLogoActivity extends Activity {
 	int MAX_CLICKS = 6;
 	int LETTER_SIZE = 300;
 	int TEXT_SIZE = 30;
+	Interpolator whichinterp;
 	final Handler mHandler = new Handler();
 	static final int BGCOLOR = 0xffed1d24;
+	@SuppressLint({ "NewApi", "InlinedApi" })
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-		DisplayMetrics metrics = new DisplayMetrics();
+		DisplayMetrics metrics	= new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-		Typeface bold = Typeface.createFromAsset(getAssets(), "Roboto-Bold.ttf");
-		Typeface light = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
+		Typeface 			bold			= Typeface.createFromAsset(getAssets(), "Roboto-Bold.ttf");
+		Typeface			light			= Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
+		SharedPreferences	pref			= getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+        String				kkLetter		= pref.getString("kk_letter", getString(R.string.pref_default_kk_letter));
+        String				kkText			= pref.getString("kk_text", getString(R.string.pref_default_kk_text));
+        final String		interpol		= pref.getString("kk_interpolator", getString(R.string.pref_def_anim));
+        String				kkClicks		= pref.getString("kk_clicks", getString(R.string.pref_default_kk_clicks));
+        int					kkSize			= pref.getInt("kk_letter_size", 300);
+        int					kkTextSize		= pref.getInt("kk_text_size", 30);
+		String				leMode 			= pref.getString("kk_sysui", getString(R.string.pref_none));
 		
-		SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
-        String kkLetter = pref.getString("kk_letter", getString(R.string.pref_default_kk_letter));
-        String kkText = pref.getString("kk_text", getString(R.string.pref_default_kk_text));
-        String kkClicks = pref.getString("kk_clicks", getString(R.string.pref_default_kk_clicks));
-        int kkSize = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("kk_letter_size", 300);
-        int kkTextSize = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("kk_text_size", 30);
-        
+		if (leMode.equals(getString(R.string.pref_none)))
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
         try{
         	
             int temp = Integer.parseInt(kkClicks);
@@ -161,7 +161,7 @@ public class PlatLogoActivity extends Activity {
         tv.setGravity(Gravity.CENTER);
         tv.setText(kkText);
         tv.setVisibility(View.INVISIBLE);
-
+        
 		mContent.addView(bg);
 		mContent.addView(letter, lp);
 		mContent.addView(logo, lp);
@@ -171,15 +171,37 @@ public class PlatLogoActivity extends Activity {
 				FrameLayout.LayoutParams.WRAP_CONTENT,
 				FrameLayout.LayoutParams.WRAP_CONTENT);
 		lapar.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-		lapar.bottomMargin = 10 * p;
+		if (leMode.equals(getString(R.string.pref_none)))
+		lapar.bottomMargin = 10 * p; else lapar.bottomMargin = 15 * p;
 
 		mContent.addView(tv, lapar);
-
 		mContent.setOnClickListener(new View.OnClickListener() {
 			int clicks;
-
+			int dur = 700;
 			@Override
             public void onClick(View v) {
+				if (interpol == "Accelerate"){
+					whichinterp = new AccelerateInterpolator();
+					} else if (interpol.equals("Decelerate")) {
+						whichinterp = new DecelerateInterpolator();
+					} else if (interpol.equals("Accelerate + Decelerate")) {
+						whichinterp = new AccelerateDecelerateInterpolator();
+						dur = 1000;
+					} else if (interpol.equals("Anticipate")){
+						whichinterp = new AnticipateInterpolator((float) 0.8);
+						dur = 1500;
+					} else if (interpol.equals("Overshoot")){
+						whichinterp = new OvershootInterpolator((float) 0.95);
+						dur = 1500;
+					} else if (interpol.equals("Anticipate + Overshoot")){
+						whichinterp = new AnticipateOvershootInterpolator((float) 0.9);
+						dur = 1500;
+					} else if (interpol.equals("Linear")){
+						whichinterp = new LinearInterpolator();
+					} else if (interpol.equals("Bounce")){
+						whichinterp = new BounceInterpolator();
+						dur = 1800;
+					}
                 clicks++;
                 if (clicks >= MAX_CLICKS) {
                     mContent.performLongClick();
@@ -189,11 +211,13 @@ public class PlatLogoActivity extends Activity {
                 final float offset = (int) ViewHelper.getRotation(letter) % 360;
                 ViewPropertyAnimator.animate(letter)
                     .rotationBy((Math.random() > 0.5f ? 360 : -360) - offset)
-                    .setInterpolator(new DecelerateInterpolator())
-                    .setDuration(700).start();
+                    .setInterpolator(whichinterp)
+                    .setDuration(dur).start();
             }
         });
 
+
+		
 		mContent.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
@@ -212,13 +236,12 @@ public class PlatLogoActivity extends Activity {
 					ViewHelper.setScaleY(logo, 0.5F);
 					ViewPropertyAnimator
 							.animate(logo)
-							.alpha(1.0F)
 							.scaleX(1.0F)
+							.alpha(1.0F)
 							.scaleY(1.0F)
 							.setDuration(1000L)
+							.setInterpolator(new AnticipateOvershootInterpolator())
 							.setStartDelay(500L)
-							.setInterpolator(
-									new AnticipateOvershootInterpolator())
 							.start();
 					ViewHelper.setAlpha(tv, 0F);
 					ViewPropertyAnimator.animate(tv).alpha(1f)
@@ -255,7 +278,21 @@ public class PlatLogoActivity extends Activity {
 				return true;
 			}
 		});
+		
+		if (leMode.equals(getString(R.string.pref_translucent))) {
+	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); }
 
+        if (leMode.equals(getString(R.string.pref_immerge))) {
+    			 mContent.setSystemUiVisibility(
+    	                   View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+    	                   | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+    	                   | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+    	                   | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION 		// hide nav bar
+    	                   | View.SYSTEM_UI_FLAG_FULLSCREEN 			// hide status bar
+    	                   | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); 	// immerge
+    		}
+		
 		setContentView(mContent);
 	}
 }

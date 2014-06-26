@@ -1,40 +1,39 @@
-/* The following code was written by Matthew Wiggins and iamareebjamal
- * and is released under the APACHE 2.0 license 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- */
-
 package areeb.xposed.eggster;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.os.Build;
 import android.preference.DialogPreference;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.LinearLayout;
+import android.preference.Preference;
+import android.widget.*;
+import areeb.xposed.eggster.CenterBar;
+import areeb.xposed.eggster.PrefSettings.KKPreferenceFragment;
 
 
 @SuppressLint("UseValueOf")
-public class SeekBarPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener
+public class CenterSeekBarPreference extends DialogPreference implements SeekBar.OnSeekBarChangeListener
 {
+
   private static final String androidns="http://schemas.android.com/apk/res/android";
 
-  private SeekBar mSeekBar;
+  private CenterBar mSeekBar;
   private TextView mSplashText,mValueText;
   private Context mContext;
 
   private String mDialogMessage, mSuffix;
   private int mDefault, mMax, mValue = 0;
 
-  public SeekBarPreference(Context context, AttributeSet attrs) { 
+  public CenterSeekBarPreference(Context context, AttributeSet attrs) { 
     super(context,attrs); 
     mContext = context;
 
@@ -42,59 +41,50 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
     mSuffix = attrs.getAttributeValue(androidns,"text");
     mDefault = attrs.getAttributeIntValue(androidns,"defaultValue", 0);
     mMax = attrs.getAttributeIntValue(androidns,"max", 100);
-    
-    
-
-  }
-  
+  } 
+      
   public int getDefaultValue(){
-	  
 	  return mDefault;
-	  
-  }
+}
     
   @SuppressWarnings("deprecation")
   @Override 
   protected View onCreateDialogView() {
     LinearLayout.LayoutParams params;
-    LinearLayout layout = new LinearLayout(mContext);
-    layout.setOrientation(LinearLayout.VERTICAL);
+    View layout = View.inflate(mContext, R.layout.centerbar_dialog, null);
     layout.setPadding(6,6,6,6);
     
     if (mDialogMessage != null) {
     mSplashText = new TextView(mContext);
       mSplashText.setText(mDialogMessage);
     mSplashText.setTextColor(Color.parseColor("#333333"));
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+    if (Build.VERSION.SDK_INT < 11)
     mSplashText.setTextColor(Color.parseColor("#ffffff"));
     mSplashText.setTextSize(17);
     mSplashText.setGravity(Gravity.CENTER_HORIZONTAL);
     mSplashText.setPadding(6, 6, 6, 16); 
-    layout.addView(mSplashText);
+    ((ViewGroup) layout).addView(mSplashText);
     }
     
-    Typeface bold = Typeface
-			.createFromAsset(mContext.getAssets(), "Roboto-Bold.ttf");
+    Typeface bold = Typeface.createFromAsset(mContext.getAssets(), "Roboto-Bold.ttf");
 
     mValueText = new TextView(mContext);
     mValueText.setGravity(Gravity.CENTER_HORIZONTAL);
     mValueText.setTextSize(18);
     mValueText.setTypeface(bold);
     mValueText.setTextColor(Color.parseColor("#333333"));
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+    if (Build.VERSION.SDK_INT < 11)
     mValueText.setTextColor(Color.parseColor("#ffffff"));
-    
+    mValueText.setPadding(6, 6, 6, 16); 
+    mValueText.setText("0");
     params = new LinearLayout.LayoutParams(
         LinearLayout.LayoutParams.FILL_PARENT, 
         LinearLayout.LayoutParams.WRAP_CONTENT);
-    layout.addView(mValueText, params);
+    ((ViewGroup) layout).addView(mValueText, params);
 
-    mSeekBar = new SeekBar(mContext);
-    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-    mSeekBar.setPadding(20, 0, 20, 0);
+    mSeekBar = (CenterBar) layout.findViewById(R.id.CenterBarID);
     mSeekBar.setOnSeekBarChangeListener(this);
-    layout.addView(mSeekBar, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
+    
     if (shouldPersist())
       mValue = getPersistedInt(mDefault);
 
@@ -120,7 +110,6 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 		
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
-			// TODO Auto-generated method stub
 			callChangeListener(mDefault);
 			if (shouldPersist())
 			      persistInt(mDefault);
@@ -128,21 +117,13 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
 	});
       builder.setPositiveButton("OK", new OnClickListener() {
 		
+		@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 		@Override
 		public void onClick(DialogInterface arg0, int arg1) {
-			// TODO Auto-generated method stub
 			Integer i = mSeekBar.getProgress();
-			if (i != 0) {
 			callChangeListener(i);
 			if (shouldPersist())
-			      persistInt(i);
-			
-			} else {															//if the value will be 0, the default value will be set
-				
-				callChangeListener(mDefault);
-				if (shouldPersist())
-				      persistInt(mDefault);
-			}	
+			persistInt(i);
 		}
 	});
   }
@@ -170,6 +151,7 @@ public class SeekBarPreference extends DialogPreference implements SeekBar.OnSee
     }
   }
 
+  
   public void onProgressChanged(SeekBar seek, int value, boolean fromTouch)
   {
     String t = String.valueOf(value);

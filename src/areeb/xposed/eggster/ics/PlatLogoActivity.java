@@ -79,22 +79,36 @@ public class PlatLogoActivity extends Activity {
 		}
 	};
 
-	@SuppressLint("ShowToast")
+	@SuppressLint({ "ShowToast", "NewApi", "InlinedApi" })
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+		String daSys = pref.getString("ics_sysui_plat", getString(R.string.pref_none));
+		if (daSys.equals(getString(R.string.pref_translucent))) {
+			super.setTheme(R.style.Wallpaper_TranslucentDecor);
+		}
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		if (daSys == getString(R.string.pref_none))
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
 		mZzz = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
-		
-		SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
-        String icsToast = pref.getString("ics_toast_text", getString(R.string.pref_default_ics_text));
+		String icsToast = pref.getString("ics_toast_text", getString(R.string.pref_default_ics_text));
 		
 		mToast = Toast.makeText(this, icsToast,
 				Toast.LENGTH_SHORT);
 		mContent = new ImageView(this);
+		
+		if (daSys.equals(getString(R.string.pref_immerge))) {
+			mContent.setSystemUiVisibility(
+		            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+		            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+		            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+		            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION 		// hide nav bar
+		            | View.SYSTEM_UI_FLAG_FULLSCREEN 			// hide status bar
+		            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); 	// immerge
+				}
 		mContent.setImageResource(R.drawable.platlogoics);
 		mContent.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 		mContent.setOnTouchListener(new View.OnTouchListener() {

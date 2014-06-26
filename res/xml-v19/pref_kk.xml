@@ -7,7 +7,7 @@
         android:defaultValue="@string/pref_default_kk_letter"
         android:inputType="text"
         android:key="kk_letter"
-        android:maxLength="1"
+        android:maxLength="5"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
@@ -25,18 +25,24 @@
     <areeb.xposed.eggster.SeekBarPreference
         android:defaultValue="300"
         android:key="kk_letter_size"
-        android:dialogMessage="Set to 0 for default"
-    	android:text=""
+        android:text=""
     	android:max="999"
         android:title="@string/pref_title_letter_size" />
     
     <areeb.xposed.eggster.SeekBarPreference
         android:defaultValue="30"
         android:key="kk_text_size"
-        android:dialogMessage="Set to 0 for default"
     	android:text=""
     	android:max="100"
         android:title="@string/pref_title_text_size" />
+    
+    <ListPreference 
+        android:title="@string/pref_let_interpol" 
+        android:key="kk_interpolator" 
+        android:dialogTitle="Choose an interpolator for the rotating text" 
+        android:entryValues="@array/Interpolators" 
+        android:entries="@array/Interpolators"
+        android:defaultValue="@string/pref_def_anim"/>
     
     <EditTextPreference
         android:defaultValue="@string/pref_default_kk_clicks"
@@ -53,12 +59,22 @@
         android:defaultValue="500"
 		android:key="kk_duration"
 		android:dialogMessage="Higher the duration, slower the animation speed"
-    	android:text=""
     	android:max="2000"
     	android:title="@string/pref_title_anim_int"
     />
-
     
-  
-
+    <ListPreference
+        android:title="@string/pref_sysui_plat"
+        android:key="kk_sysui"
+        android:defaultValue="@string/pref_none"
+        android:dialogTitle="Choose System UI mode for the KitKat platlogo" 
+        android:entryValues="@array/SysUImodes"
+        android:entries="@array/SysUImodes"/>
+    
+    <areeb.xposed.eggster.CenterSeekBarPreference
+        android:defaultValue="50"
+		android:key="kk_freq"
+    	android:max="100"
+    	android:title="@string/pref_title_freq" />
+    
 </PreferenceScreen>

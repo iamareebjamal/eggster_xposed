@@ -51,6 +51,7 @@ public class PlatLogoActivity extends Activity {
     int mSize;
     final Handler mHandler = new Handler();
 
+        
     private View makeView() {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -64,14 +65,14 @@ public class PlatLogoActivity extends Activity {
                 ));
         final int p = (int)(8 * metrics.density);
         view.setPadding(p, p, p, p);
-
+        
+        SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+        String jbVer = pref.getString("jb_text_1", getString(R.string.pref_default_jb_text_1));
+        String jbName = pref.getString("jb_text_2", getString(R.string.pref_default_jb_text_2));
         
         Typeface normal = Typeface.createFromAsset(getAssets(), "Roboto-Bold.ttf");
         Typeface light = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
 
-        SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
-        String jbVer = pref.getString("jb_text_1", getString(R.string.pref_default_jb_text_1));
-        String jbName = pref.getString("jb_text_2", getString(R.string.pref_default_jb_text_2));
         
        
 		
@@ -122,15 +123,27 @@ public class PlatLogoActivity extends Activity {
         return view;
     }
 
-    @SuppressLint("ShowToast")
+    @SuppressLint({ "ShowToast", "NewApi", "InlinedApi" })
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        SharedPreferences shr = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+		String leMode = shr.getString("jb_sysui_plat", getString(R.string.pref_none));
+		
+		
+		if (leMode.equals(getString(R.string.pref_none)))
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+		if (leMode.equals(getString(R.string.pref_translucent))) {
+	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); }
+	
+    		
+    		
+		
         mToast = Toast.makeText(this, "", Toast.LENGTH_LONG);
         mToast.setView(makeView());
 
@@ -170,6 +183,15 @@ public class PlatLogoActivity extends Activity {
             }
         });
         
+        if (leMode.equals(getString(R.string.pref_immerge))) {
+    			 mContent.setSystemUiVisibility(
+    	                   View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+    	                   | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+    	                   | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+    	                   | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION 		// hide nav bar
+    	                   | View.SYSTEM_UI_FLAG_FULLSCREEN 			// hide status bar
+    	                   | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); 	// immerge
+    		}
         setContentView(mContent);
     }
 }

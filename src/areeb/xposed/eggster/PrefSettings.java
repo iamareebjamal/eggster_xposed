@@ -2,12 +2,15 @@ package areeb.xposed.eggster;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
@@ -69,21 +72,20 @@ public class PrefSettings extends PreferenceActivity {
 		
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		
 		}
 		
 		setupSimplePreferencesScreen();
-		
-		
-		
+				
 	}
-
+		
 	/**
 	 * Shows the simplified settings UI if the device configuration if the
 	 * device configuration dictates that a simplified, single-pane UI should be
 	 * shown.
 	 */
 	
+	
+		
 	@SuppressWarnings("deprecation")
 	private void setupSimplePreferencesScreen() {
 		if (!isSimplePreferences(this)) {
@@ -93,6 +95,7 @@ public class PrefSettings extends PreferenceActivity {
 		//Set up a custom name for preferences
 		PreferenceManager prefMgr = getPreferenceManager();
 		setPreferenceName(prefMgr);
+		int p = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("kk_freq", 50);
 
 		// In the simplified UI, fragments are not used at all and we instead
 		// use the older PreferenceActivity APIs.
@@ -108,7 +111,6 @@ public class PrefSettings extends PreferenceActivity {
 		fakeHeader.setTitle(getString(R.string.pref_header_gb).toUpperCase());
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_gb);
-
 		// Add HC preferences, and a corresponding header.
 		fakeHeader = new PreferenceCategory(this);
 		fakeHeader.setTitle(getString(R.string.pref_header_hc).toUpperCase());
@@ -143,21 +145,68 @@ public class PrefSettings extends PreferenceActivity {
 		// their values. When their values change, their summaries are updated
 		// to reflect the new value, per the Android Design guidelines.
 		bindPreferenceSummaryToValue(findPreference("gb_toast_text"));
+		bindPreferenceSummaryToValue(findPreference("gb_sysui"));
 		bindPreferenceSummaryToValue(findPreference("hc_toast_text"));
+		bindPreferenceSummaryToValue(findPreference("hc_sysui"));
 		bindPreferenceSummaryToValue(findPreference("ics_toast_text"));
+		bindPreferenceSummaryToValue(findPreference("ics_sysui_plat"));
+		bindPreferenceSummaryToValue(findPreference("ics_sysui"));		
 		bindPreferenceSummaryToValue(findPreference("number_of_cats"));
 		bindPreferenceSummaryToValue(findPreference("jb_text_1"));
 		bindPreferenceSummaryToValue(findPreference("jb_text_2"));
 		bindPreferenceSummaryToValue(findPreference("number_of_jb"));
 		bindPreferenceSummaryToValue(findPreference("jb_size"));
+		bindPreferenceSummaryToValue(findPreference("jb_sysui_plat"));
+		bindPreferenceSummaryToValue(findPreference("jb_sysui"));
 		bindPreferenceSummaryToValue(findPreference("kk_text"));
 		bindPreferenceSummaryToValue(findPreference("kk_letter"));
 		bindPreferenceSummaryToValue(findPreference("kk_clicks"));
 		bindPreferenceSummaryToValue(findPreference("kk_duration"));
+		bindPreferenceSummaryToValue(findPreference("kk_interpolator"));
 		bindPreferenceSummaryToValue(findPreference("kk_letter_size"));
 		bindPreferenceSummaryToValue(findPreference("kk_text_size"));
+		bindPreferenceSummaryToValue(findPreference("kk_sysui"));
+		final Preference pref = findPreference("kk_freq");
+		
+		if (p == 50)
+			pref.setSummary("Balanced");
+		else if (p == 0)
+			pref.setSummary("Special pastries will never be shown");
+		else if (p <= 40 && p > 20)
+			pref.setSummary("Special pastries will be rare");
+		else if (p <= 20 && p != 0)
+			pref.setSummary("Special pastries will be very rare");
+		else if (p >= 60 && p < 80)
+			pref.setSummary("Special pastries will be common");
+		else if (p >= 80 && p != 100)
+			pref.setSummary("Special pastries will be very common");
+		else if (p == 100)
+			pref.setSummary("Special pastries will be as common as normal ones");
+		
+		pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+			
+			@Override
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				int t = Integer.parseInt(newValue.toString());
+				if (t == 50)
+					preference.setSummary("Balanced");
+				else if (t == 0)
+					preference.setSummary("Special pastries will never be shown");
+				else if (t <= 40 && t > 20)
+					preference.setSummary("Special pastries will be rare");
+				else if (t <= 20 && t != 0)
+					preference.setSummary("Special pastries will be very rare");
+				else if (t >= 60 && t < 80)
+					preference.setSummary("Special pastries will be common");
+				else if (t >= 80 && t != 100)
+					preference.setSummary("Special pastries will be very common");
+				else if (t == 100)
+					preference.setSummary("Special pastries will be as common as normal ones");
+				return false;
+			}
+		});
+		
 	}
-	
 	
 
 	/** {@inheritDoc} */
@@ -253,8 +302,7 @@ public class PrefSettings extends PreferenceActivity {
 	 */
 	private static void bindPreferenceSummaryToValue(Preference preference) {
 		// Set the listener to watch for value changes.
-		preference
-				.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+		preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 
 		// Trigger the listener immediately with the preference's
 		// current value according to the instance type.
@@ -265,12 +313,16 @@ public class PrefSettings extends PreferenceActivity {
 			
 			sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, preference.getContext().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt(preference.getKey(), ((SeekBarPreference) preference).getDefaultValue()));
 			
+		} else if (preference instanceof CenterSeekBarPreference) {
+			sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, preference.getContext().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt(preference.getKey(), ((CenterSeekBarPreference) preference).getDefaultValue()));
 		} else {
 			
 			sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, preference.getContext().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString(preference.getKey(),""));
 			
 		}
 		
+		
+			
 	}
 
 	/**
@@ -294,6 +346,7 @@ public class PrefSettings extends PreferenceActivity {
 			// updated to reflect the new value, per the Android Design
 			// guidelines.
 			bindPreferenceSummaryToValue(findPreference("gb_toast_text"));
+			bindPreferenceSummaryToValue(findPreference("gb_sysui"));			
 		}
 	}
 
@@ -319,6 +372,7 @@ public class PrefSettings extends PreferenceActivity {
 			// updated to reflect the new value, per the Android Design
 			// guidelines.
 			bindPreferenceSummaryToValue(findPreference("hc_toast_text"));
+			bindPreferenceSummaryToValue(findPreference("hc_sysui"));
 		}
 	}
 
@@ -343,6 +397,8 @@ public class PrefSettings extends PreferenceActivity {
 			// guidelines.
 			bindPreferenceSummaryToValue(findPreference("ics_toast_text"));
 			bindPreferenceSummaryToValue(findPreference("number_of_cats"));
+			bindPreferenceSummaryToValue(findPreference("ics_sysui_plat"));
+			bindPreferenceSummaryToValue(findPreference("ics_sysui"));
 		}
 	}
 	
@@ -369,6 +425,8 @@ public class PrefSettings extends PreferenceActivity {
 			bindPreferenceSummaryToValue(findPreference("jb_text_2"));
 			bindPreferenceSummaryToValue(findPreference("number_of_jb"));
 			bindPreferenceSummaryToValue(findPreference("jb_size"));
+			bindPreferenceSummaryToValue(findPreference("jb_sysui_plat"));
+			bindPreferenceSummaryToValue(findPreference("jb_sysui"));
 			
 		}
 	}
@@ -379,14 +437,17 @@ public class PrefSettings extends PreferenceActivity {
 	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public static class KKPreferenceFragment extends PreferenceFragment {
+
+		
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			
 			
+			
 			PreferenceManager prefMgr = getPreferenceManager();
 			setPreferenceName(prefMgr);
-			
+
 			addPreferencesFromResource(R.xml.pref_kk);
 
 			// Bind the summaries of EditText/List/Dialog/Ringtone preferences
@@ -398,7 +459,49 @@ public class PrefSettings extends PreferenceActivity {
 			bindPreferenceSummaryToValue(findPreference("kk_clicks"));
 			bindPreferenceSummaryToValue(findPreference("kk_duration"));
 			bindPreferenceSummaryToValue(findPreference("kk_letter_size"));
+			bindPreferenceSummaryToValue(findPreference("kk_interpolator"));
 			bindPreferenceSummaryToValue(findPreference("kk_text_size"));
+			bindPreferenceSummaryToValue(findPreference("kk_sysui"));
+			final Preference pref = findPreference("kk_freq");
+			
+			int p = getActivity().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("kk_freq", 50);
+			if (p == 50)
+				pref.setSummary("Balanced");
+			else if (p == 0)
+				pref.setSummary("Special pastries will never be shown");
+			else if (p <= 40 && p > 20)
+				pref.setSummary("Special pastries will be rare");
+			else if (p <= 20 && p != 0)
+				pref.setSummary("Special pastries will be very rare");
+			else if (p >= 60 && p < 80)
+				pref.setSummary("Special pastries will be common");
+			else if (p >= 80 && p != 100)
+				pref.setSummary("Special pastries will be very common");
+			else if (p == 100)
+				pref.setSummary("Special pastries will be as common as normal ones");
+			
+			pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+				
+				@Override
+				public boolean onPreferenceChange(Preference preference, Object newValue) {
+					int t = Integer.parseInt(newValue.toString());
+					if (t == 50)
+						preference.setSummary("Balanced");
+					else if (t == 0)
+						preference.setSummary("Special pastries will never be shown");
+					else if (t <= 40 && t > 20)
+						preference.setSummary("Special pastries will be rare");
+					else if (t <= 20 && t != 0)
+						preference.setSummary("Special pastries will be very rare");
+					else if (t >= 60 && t < 80)
+						preference.setSummary("Special pastries will be common");
+					else if (t >= 80 && t != 100)
+						preference.setSummary("Special pastries will be very common");
+					else if (t == 100)
+						preference.setSummary("Special pastries will be as common as normal ones");
+					return false;
+				}
+			});
 		}
 	}
 	
@@ -407,8 +510,7 @@ public class PrefSettings extends PreferenceActivity {
 	 * activity is showing a two-pane settings UI.
 	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	public static class ABPreferenceFragment extends
-			PreferenceFragment {
+	public static class ABPreferenceFragment extends PreferenceFragment {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
@@ -421,6 +523,8 @@ public class PrefSettings extends PreferenceActivity {
 			
 		}
 	}
+	
+	
 	
 	public static void setPreferenceName(PreferenceManager prefMgr){
 		

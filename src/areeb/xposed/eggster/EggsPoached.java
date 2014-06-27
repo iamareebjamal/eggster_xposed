@@ -62,14 +62,15 @@ public class EggsPoached implements IXposedHookLoadPackage, IXposedHookZygoteIni
 	int ICS = 2;
 	int JB = 3;
 	int KK = 4;
+	int L = 5;
 
-	String[] versionName = {"Gingerbread", "Honeycomb", "Ice Cream Sandwich", "Jelly Bean", "Kitkat"};
-	String[] versionSName = {"GB", "HC", "ICS", "JB", "KK"};
-	int[] versionCode = {10, 11, 14, 16, 19};
+	String[] versionName = {"Gingerbread", "Honeycomb", "Ice Cream Sandwich", "Jelly Bean", "Kitkat", "Android L Preview"};
+	String[] versionSName = {"GB", "HC", "ICS", "JB", "KK", "L"};
+	int[] versionCode = {10, 11, 14, 16, 19, 20};
 
 
 	private static final String PACKAGE = "areeb.xposed.eggster";
-	private static final String[] platActs = {"areeb.xposed.eggster.gb.PlatLogoActivity", "areeb.xposed.eggster.hc.PlatLogoActivity", "areeb.xposed.eggster.ics.PlatLogoActivity", "areeb.xposed.eggster.jb.PlatLogoActivity", "areeb.xposed.eggster.kk.PlatLogoActivity"};
+	private static final String[] platActs = {"areeb.xposed.eggster.gb.PlatLogoActivity", "areeb.xposed.eggster.hc.PlatLogoActivity", "areeb.xposed.eggster.ics.PlatLogoActivity", "areeb.xposed.eggster.jb.PlatLogoActivity", "areeb.xposed.eggster.kk.PlatLogoActivity", "areeb.xposed.eggster.l.PlatLogoActivity"};
 
 	private static final int version = Build.VERSION.SDK_INT;
 	String CURRENT_VERSION;
@@ -119,7 +120,12 @@ public class EggsPoached implements IXposedHookLoadPackage, IXposedHookZygoteIni
 					CURRENT_VERSION = versionSName[KK];
 
 				}
+				else if (version >= versionCode[L])
+				{
 
+					CURRENT_VERSION = versionSName[L];
+
+				}
 
 				xpref.reload();
 				enabled = xpref.getBoolean("enabled", true);
@@ -156,6 +162,12 @@ public class EggsPoached implements IXposedHookLoadPackage, IXposedHookZygoteIni
 				{
 
 					chosenAct = platActs[KK];
+
+				}
+				else if (chosenEgg.equals(versionSName[L]))
+				{
+
+					chosenAct = platActs[L];
 
 				}
 

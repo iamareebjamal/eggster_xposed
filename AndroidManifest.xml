@@ -98,6 +98,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="areeb.xposed.eggster.l.PlatLogoActivity"
+            android:label="@string/title_activity_plat_logo"
+            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="areeb.xposed.eggster.PrefSettings"
             android:label="@string/action_settings" 
             android:configChanges="keyboardHidden|orientation|screenSize" />

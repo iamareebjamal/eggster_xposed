@@ -1,0 +1,66 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_kk_letter"
+        android:inputType="text"
+        android:key="kk_letter"
+        android:maxLength="5"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_version_letter" />
+    
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_kk_text"
+        android:inputType="text"
+        android:key="kk_text"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_version_num" />
+    
+    <areeb.xposed.eggster.SeekBarPreference
+        android:defaultValue="300"
+        android:key="kk_letter_size"
+        android:text=""
+    	android:max="999"
+        android:title="@string/pref_title_letter_size" />
+    
+    <areeb.xposed.eggster.SeekBarPreference
+        android:defaultValue="30"
+        android:key="kk_text_size"
+    	android:text=""
+    	android:max="100"
+        android:title="@string/pref_title_text_size" />
+    
+    <ListPreference 
+        android:title="@string/pref_let_interpol" 
+        android:key="kk_interpolator" 
+        android:dialogTitle="Choose an interpolator for the rotating text" 
+        android:entryValues="@array/Interpolators" 
+        android:entries="@array/Interpolators"
+        android:defaultValue="@string/pref_def_anim"/>
+    
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_kk_clicks"
+        android:inputType="phone"
+        android:digits="0123456789"
+        android:key="kk_clicks"
+        android:maxLength="8"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_clicks_int" />
+    
+    <areeb.xposed.eggster.SeekBarPreference
+        android:defaultValue="500"
+		android:key="kk_duration"
+		android:dialogMessage="Higher the duration, slower the animation speed"
+    	android:max="2000"
+    	android:title="@string/pref_title_anim_int"
+    />
+    
+</PreferenceScreen>

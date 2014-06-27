@@ -48,7 +48,7 @@ public class PrefSettings extends PreferenceActivity {
 		
 		//Fix FC by vulnerability fixing code
 		
-		if (GBPreferenceFragment.class.getName().equals(fragmentName) || HCPreferenceFragment.class.getName().equals(fragmentName) || ICSPreferenceFragment.class.getName().equals(fragmentName) || JBPreferenceFragment.class.getName().equals(fragmentName) || KKPreferenceFragment.class.getName().equals(fragmentName) || ABPreferenceFragment.class.getName().equals(fragmentName))
+		if (GBPreferenceFragment.class.getName().equals(fragmentName) || HCPreferenceFragment.class.getName().equals(fragmentName) || ICSPreferenceFragment.class.getName().equals(fragmentName) || JBPreferenceFragment.class.getName().equals(fragmentName) || KKPreferenceFragment.class.getName().equals(fragmentName) || ALPreferenceFragment.class.getName().equals(fragmentName) || ABPreferenceFragment.class.getName().equals(fragmentName))
 		{
 			return true;
 			
@@ -137,10 +137,15 @@ public class PrefSettings extends PreferenceActivity {
 		addPreferencesFromResource(R.xml.pref_kk);
 		
 		fakeHeader = new PreferenceCategory(this);
+		fakeHeader.setTitle(getString(R.string.pref_header_l).toUpperCase());
+		getPreferenceScreen().addPreference(fakeHeader);
+		addPreferencesFromResource(R.xml.pref_l);
+
+		fakeHeader = new PreferenceCategory(this);
 		fakeHeader.setTitle(getString(R.string.pref_header_about).toUpperCase());
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_about);
-
+		
 		// Bind the summaries of preferences to
 		// their values. When their values change, their summaries are updated
 		// to reflect the new value, per the Android Design guidelines.
@@ -166,6 +171,7 @@ public class PrefSettings extends PreferenceActivity {
 		bindPreferenceSummaryToValue(findPreference("kk_letter_size"));
 		bindPreferenceSummaryToValue(findPreference("kk_text_size"));
 		bindPreferenceSummaryToValue(findPreference("kk_sysui"));
+		bindPreferenceSummaryToValue(findPreference("andl_sysui"));
 		final Preference pref = findPreference("kk_freq");
 		
 		if (p == 50)
@@ -502,6 +508,29 @@ public class PrefSettings extends PreferenceActivity {
 					return false;
 				}
 			});
+		}
+	}
+	
+	/**
+	 * This fragment shows Android L preferences only. It is used when the
+	 * activity is showing a two-pane settings UI.
+	 */
+	@TargetApi(Build.VERSION_CODES.KITKAT)
+	public static class ALPreferenceFragment extends PreferenceFragment {
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+
+			PreferenceManager prefMgr = getPreferenceManager();
+			setPreferenceName(prefMgr);
+			
+			addPreferencesFromResource(R.xml.pref_l);
+
+			// Bind the summaries of EditText/List/Dialog/Ringtone preferences
+			// to their values. When their values change, their summaries are
+			// updated to reflect the new value, per the Android Design
+			// guidelines.
+			bindPreferenceSummaryToValue(findPreference("andl_sysui"));			
 		}
 	}
 	

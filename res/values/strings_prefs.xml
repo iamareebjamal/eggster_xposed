@@ -18,7 +18,7 @@
     <string name="pref_default_ics_int">10</string>
     <string name="pref_default_jb_int">20</string>
     <string name="pref_default_kk_letter">K</string>
-    <string name="pref_default_kk_text">ANDROID 4.4.2</string>
+    <string name="pref_default_kk_text">ANDROID 4.4.4</string>
     <string name="pref_default_kk_clicks">6</string>
     <string name="pref_default_kk_dur">500</string>
     <string name="pref_default_kk_letter_size">300</string>
@@ -29,10 +29,20 @@
     <string name="pref_title_jb_int">Number of Beans</string>
     <string name="pref_title_cats_int">Number of Cats</string>
     <string name="pref_title_clicks_int">Maximum Clicks</string>
+    <string name="pref_title_freq">Frequency of special pastries</string>
+    <string name="pref_let_interpol">Letter Interpolator</string>
     <string name="pref_title_anim_int">Animation Duration</string>
     <string name="pref_title_letter_size">Letter Size</string>
     <string name="pref_title_text_size">Text Size</string>
     <string name="pref_sum_anim_int">Kitkat Tiles duration</string>
+    <string name="pref_def_anim">Decelerate</string>
     <string name="pref_diag_anim_int">Higher the duration, slower the animation speed</string>
+    <string name="pref_none">Normal</string>
+    <string name="pref_immerge">Immersive Mode</string>
+    <string name="pref_translucent">Translucent Mode</string>
+    <string name="pref_sysui">System UI mode</string>
+    <string name="pref_sysui_plat">System UI mode (in the platlogo)</string>
+    <string name="pref_transbg">Behind the image there is a dark, translucid background</string>
+    <string name="pref_blackbg">Behind the image there is a black background</string>
     
 </resources>

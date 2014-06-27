@@ -25,7 +25,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -40,34 +39,35 @@ public class PlatLogoActivity extends Activity {
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+		String SysUImode = pref.getString("hc_sysui", getString(R.string.pref_none));
+		if (SysUImode.equals("Translucent Mode")) {
+		        setTheme(R.style.Wallpaper_TranslucentDecor);
+		            }
         super.onCreate(savedInstanceState);
-        
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
         getWindow().getDecorView().setBackgroundColor(BGCOLOR);
         
-        SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
         String hcToast = pref.getString("hc_toast_text", getString(R.string.pref_default_hc_text));
-        
         mToast = Toast.makeText(this, hcToast, Toast.LENGTH_SHORT);
 
+        if (SysUImode.equals(getString(R.string.pref_none))) 
+        		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
         ImageView content = new ImageView(this);
 
         content.setImageResource(R.drawable.platlogo_hc);
         content.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        if (Build.VERSION.SDK_INT >= 19) {
+        if (Build.VERSION.SDK_INT >= 19 && SysUImode.equals("Immersive Mode")) {
             content.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                     | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
                     | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); }
-            
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); 
+            }
         setContentView(content);
-
         }
 
     @Override

@@ -23,14 +23,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.Rect;
+import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -39,14 +32,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AnticipateOvershootInterpolator;
-import android.view.animation.DecelerateInterpolator;
+import android.view.animation.*;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import areeb.xposed.eggster.R;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 @SuppressLint("DrawAllocation")
@@ -66,9 +58,6 @@ public class DessertCaseView extends FrameLayout {
     private static final int[] PASTRIES = {
             R.drawable.dessert_kitkat,      // used with permission
             R.drawable.dessert_android,     // thx irina
-    };
-
-    private static final int[] RARE_PASTRIES = {
             R.drawable.dessert_cupcake,     // 2009
             R.drawable.dessert_donut,       // 2009
             R.drawable.dessert_eclair,      // 2009
@@ -79,7 +68,12 @@ public class DessertCaseView extends FrameLayout {
             R.drawable.dessert_jellybean,   // 2012
     };
 
-    private static final int[] XRARE_PASTRIES = {
+    private static final int[] RARE_PASTRIES = {
+    	
+    		R.drawable.dessert_zombiegingerbread, // thx hackbod
+    		R.drawable.dessert_dandroid,    // thx morrildl
+    		R.drawable.dessert_jandycane,   // thx nes
+    		
             R.drawable.dessert_petitfour,   // the original and still delicious
 
             R.drawable.dessert_donutburger, // remember kids, this was long before cronuts
@@ -91,14 +85,8 @@ public class DessertCaseView extends FrameLayout {
 
             R.drawable.dessert_keylimepie,  // from an alternative timeline
     };
-    private static final int[] XXRARE_PASTRIES = {
-            R.drawable.dessert_zombiegingerbread, // thx hackbod
-            R.drawable.dessert_dandroid,    // thx morrildl
-            R.drawable.dessert_jandycane,   // thx nes
-    };
 
-    private static final int NUM_PASTRIES = PASTRIES.length + RARE_PASTRIES.length
-            + XRARE_PASTRIES.length + XXRARE_PASTRIES.length;
+    private static final int NUM_PASTRIES = PASTRIES.length + RARE_PASTRIES.length;
 
     private SparseArray<Drawable> mDrawables = new SparseArray<Drawable>(NUM_PASTRIES);
 
@@ -157,6 +145,7 @@ public class DessertCaseView extends FrameLayout {
         
         int katDuration = context.getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("kk_duration", 500);
         
+        
         try{
         	
         
@@ -192,7 +181,7 @@ public class DessertCaseView extends FrameLayout {
         if (mCellSize < 512) { // assuming 512x512 images
             opts.inSampleSize = 2;
         }
-        for (int[] list : new int[][] { PASTRIES, RARE_PASTRIES, XRARE_PASTRIES, XXRARE_PASTRIES }) {
+        for (int[] list : new int[][] { PASTRIES, RARE_PASTRIES}) {
             for (int resid : list) {
                 final BitmapDrawable d = new BitmapDrawable(res,
                         convertToAlphaMask(BitmapFactory.decodeResource(res, resid, opts)));
@@ -311,23 +300,23 @@ public class DessertCaseView extends FrameLayout {
                     postDelayed(new Runnable() { public void run() { fillFreeList(); } }, DURATION/2);
                 }
             });
-
+            int frq = getContext().getSharedPreferences("preferenceggs", 0).getInt("kk_freq", 50);
             final int c = random_color();
             v.setBackgroundColor(c);
 
-            final float which = frand();
+            final int which = new Random().nextInt(100); 
             final Drawable d;
-            if (which < 0.0005f) {
-                d = mDrawables.get(pick(XXRARE_PASTRIES));
-            } else if (which < 0.005f) {
-                d = mDrawables.get(pick(XRARE_PASTRIES));
-            } else if (which < 0.5f) {
+            if (which < frq - 15) {
                 d = mDrawables.get(pick(RARE_PASTRIES));
-            } else if (which < 0.7f) {
+            } else if (which < frq - 20) {
                 d = mDrawables.get(pick(PASTRIES));
             } else {
+            	if (new Random().nextInt(10) < 8)
+            	d = mDrawables.get(pick(PASTRIES));
+            	else
                 d = null;
             }
+            
             if (d != null) {
             	if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT){
             		

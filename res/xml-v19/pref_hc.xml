@@ -3,20 +3,22 @@
 
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
-    
-    
     <EditTextPreference
-        android:defaultValue="@string/pref_default_gb_text"
+        android:defaultValue="@string/pref_default_hc_text"
         android:inputType="text"
-        android:key="gb_toast_text"
+        android:key="hc_toast_text"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_title_toast_text" />
-    <CheckBoxPreference 
-        android:summaryOn="@string/pref_transbg" 
-        android:summaryOff="@string/pref_blackbg" 
-        android:defaultValue="false" 
-        android:key="gb_transp_bg" 
-        android:title="Translucid Background"/>
+
+    <ListPreference
+        android:title="@string/pref_sysui"
+        android:key="hc_sysui"
+        android:defaultValue="@string/pref_none"
+        android:dialogTitle="Choose System UI mode for HoneyComb" 
+        android:entryValues="@array/SysUImodes"
+        android:entries="@array/SysUImodes"/>
+  
+
 </PreferenceScreen>

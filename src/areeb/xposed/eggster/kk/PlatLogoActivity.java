@@ -34,6 +34,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.*;
 import android.widget.FrameLayout;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 import areeb.xposed.eggster.R;
@@ -129,9 +130,9 @@ public class PlatLogoActivity extends Activity {
 		mContent = new FrameLayout(this);
 		mContent.setBackgroundColor(0xC0000000);
 
-		final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-				FrameLayout.LayoutParams.WRAP_CONTENT,
-				FrameLayout.LayoutParams.WRAP_CONTENT);
+		final LayoutParams lp = new LayoutParams(
+				LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
 		lp.gravity = Gravity.CENTER;
 
 		final ImageView logo = new ImageView(this);
@@ -167,9 +168,9 @@ public class PlatLogoActivity extends Activity {
 		mContent.addView(logo, lp);
 		
 	
-			final FrameLayout.LayoutParams lapar = new FrameLayout.LayoutParams(
-				FrameLayout.LayoutParams.WRAP_CONTENT,
-				FrameLayout.LayoutParams.WRAP_CONTENT);
+			final LayoutParams lapar = new LayoutParams(
+				LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
 		lapar.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
 		if (leMode.equals(getString(R.string.pref_none)))
 		lapar.bottomMargin = 10 * p; else lapar.bottomMargin = 15 * p;

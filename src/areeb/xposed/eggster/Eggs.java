@@ -40,29 +40,26 @@ public class Eggs extends Activity {
 	Boolean enabled;
 	String current_egg;
 
-	ImageView gbImg;
-	ImageView hcImg;
-	ImageView icsImg;
-	ImageView jbImg;
-	ImageView kkImg;
+	ImageView gbImg, hcImg, icsImg, jbImg, kkImg, lImg;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	ImageView openLayout;
 	RelativeLayout logLayout;
 
-	Switch GB_Check, HC_Check, ICS_Check, JB_Check, KK_Check;
+	Switch GB_Check, HC_Check, ICS_Check, JB_Check, KK_Check, L_Check;
 
 	int GB = 0;
 	int HC = 1;
 	int ICS = 2;
 	int JB = 3;
 	int KK = 4;
+	int L = 5;
 
 	String[] versionName = { "Gingerbread", "Honeycomb", "Ice Cream Sandwich",
-			"Jelly Bean", "Kitkat" };
-	String[] versionSName = { "GB", "HC", "ICS", "JB", "KK" };
-	int[] versionCode = { 10, 11, 14, 16, 19 };
+			"Jelly Bean", "Kitkat", "Android L (Preview)" };
+	String[] versionSName = { "GB", "HC", "ICS", "JB", "KK", "L" };
+	int[] versionCode = { 10, 11, 14, 16, 19, 20 };
 
 	@SuppressLint("CommitPrefEdits")
 	@SuppressWarnings("deprecation")
@@ -85,12 +82,14 @@ public class Eggs extends Activity {
 		ICS_Check = (Switch) findViewById(R.id.icsCheck);
 		JB_Check = (Switch) findViewById(R.id.jbCheck);
 		KK_Check = (Switch) findViewById(R.id.kkCheck);
+		L_Check = (Switch) findViewById(R.id.ldpCheck);
 
 		gbImg = (ImageView) findViewById(R.id.gbImg);
 		hcImg = (ImageView) findViewById(R.id.hcImg);
 		icsImg = (ImageView) findViewById(R.id.icsImg);
 		jbImg = (ImageView) findViewById(R.id.jbImg);
 		kkImg = (ImageView) findViewById(R.id.kkImg);
+		lImg = (ImageView) findViewById(R.id.ldpImg);
 
 		/*
 		 * int count = 4;
@@ -140,6 +139,10 @@ public class Eggs extends Activity {
 
 				KK_Check.setChecked(true);
 
+			} else if (current_egg.equals("L")) {
+
+				L_Check.setChecked(true);
+
 			}
 			
 		}
@@ -153,6 +156,7 @@ public class Eggs extends Activity {
 		ICS_Check.setOnCheckedChangeListener(toggleIt(ICS));
 		JB_Check.setOnCheckedChangeListener(toggleIt(JB));
 		KK_Check.setOnCheckedChangeListener(toggleIt(KK));
+		L_Check.setOnCheckedChangeListener(toggleIt(L));
 		
 		Switch logCheck = (Switch) findViewById(R.id.logCheck);
 		
@@ -229,7 +233,7 @@ public class Eggs extends Activity {
 
 	public OnCheckedChangeListener toggleIt(int ver) {
 
-		if (ver > 4)
+		if (ver > 5)
 			return null;
 
 		final int version = ver;
@@ -287,6 +291,9 @@ public class Eggs extends Activity {
 
 		if (KK_Check.isChecked() == true)
 			return true;
+		
+		if (L_Check.isChecked() == true)
+			return true;
 
 		return false;
 	}
@@ -316,7 +323,7 @@ public class Eggs extends Activity {
 	public void toggleEgg(int i) {
 
 		// Enable i
-		if (i > 4)
+		if (i > 5)
 			return; // Return if i is greater than array index
 
 		disableExcept(i);
@@ -328,7 +335,7 @@ public class Eggs extends Activity {
 
 	public void disableExcept(int i) {
 
-		if (i > 4)
+		if (i > 5)
 			return; // Return if i is greater than array index
 
 		for (int j = 0; j < i; j++) {
@@ -358,11 +365,16 @@ public class Eggs extends Activity {
 				// disable KK
 				KK_Check.setChecked(false);
 
+			} else if (versionSName[j].equals("L")) {
+
+				// disable L
+				L_Check.setChecked(false);
+
 			}
 
 		}
 
-		for (int j = 4; j > i; j--) {
+		for (int j = 5; j > i; j--) {
 
 			if (versionSName[j].equals("GB")) {
 
@@ -388,6 +400,11 @@ public class Eggs extends Activity {
 
 				// disable KK
 				KK_Check.setChecked(false);
+
+			} else if (versionSName[j].equals("L")) {
+
+				// disable L
+				L_Check.setChecked(false);
 
 			}
 
@@ -431,6 +448,13 @@ public class Eggs extends Activity {
 
 	}
 
+	public void androidl(View view) {
+
+		startActivity(new Intent(this,
+				areeb.xposed.eggster.l.PlatLogoActivity.class));
+
+	}
+	
 	public void disableAll() {
 
 		GB_Check.setEnabled(false);
@@ -438,6 +462,7 @@ public class Eggs extends Activity {
 		ICS_Check.setEnabled(false);
 		JB_Check.setEnabled(false);
 		KK_Check.setEnabled(false);
+		L_Check.setEnabled(false);
 
 	}
 
@@ -448,6 +473,7 @@ public class Eggs extends Activity {
 		ICS_Check.setEnabled(true);
 		JB_Check.setEnabled(true);
 		KK_Check.setEnabled(true);
+		L_Check.setEnabled(true);
 
 	}
 
@@ -458,6 +484,7 @@ public class Eggs extends Activity {
 		setColorFilter(icsImg, 138, 90, 90);
 		setColorFilter(jbImg, 255, 68, 68);
 		setColorFilter(kkImg, 230, 87, 87);
+		setColorFilter(lImg, 255, 203, 47);
 
 	}
 
@@ -468,6 +495,7 @@ public class Eggs extends Activity {
 		setColorFilter(icsImg, 100, 100, 100);
 		setColorFilter(jbImg, 100, 100, 100);
 		setColorFilter(kkImg, 100, 100, 100);
+		setColorFilter(lImg, 100, 100, 100);
 
 	}
 

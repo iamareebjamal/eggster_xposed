@@ -1,0 +1,9 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <ListPreference
+        android:title="@string/pref_sysui"
+        android:key="andl_sysui"
+        android:defaultValue="@string/pref_none"
+        android:dialogTitle="Choose System UI mode for the Android L platlogo" 
+        android:entryValues="@array/SysUImodes"
+        android:entries="@array/SysUImodes"/>
+</PreferenceScreen>

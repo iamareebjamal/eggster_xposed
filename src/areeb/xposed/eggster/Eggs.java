@@ -40,14 +40,14 @@ public class Eggs extends Activity {
 	Boolean enabled;
 	String current_egg;
 
-	ImageView gbImg, hcImg, icsImg, jbImg, kkImg, lImg;
+	ImageView gbImg, hcImg, icsImg, jbImg, kkImg, lImg, lpImg;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	ImageView openLayout;
 	RelativeLayout logLayout;
 
-	Switch GB_Check, HC_Check, ICS_Check, JB_Check, KK_Check, L_Check;
+	Switch GB_Check, HC_Check, ICS_Check, JB_Check, KK_Check, L_Check, LP_Check;
 
 	int GB = 0;
 	int HC = 1;
@@ -55,11 +55,12 @@ public class Eggs extends Activity {
 	int JB = 3;
 	int KK = 4;
 	int L = 5;
+	int LP = 6;
 
 	String[] versionName = { "Gingerbread", "Honeycomb", "Ice Cream Sandwich",
-			"Jelly Bean", "Kitkat", "Android L (Preview)" };
-	String[] versionSName = { "GB", "HC", "ICS", "JB", "KK", "L" };
-	int[] versionCode = { 10, 11, 14, 16, 19, 20 };
+			"Jelly Bean", "Kitkat", "Android L Preview", "Lollipop" };
+	String[] versionSName = { "GB", "HC", "ICS", "JB", "KK", "L", "LP" };
+	int[] versionCode = { 10, 11, 14, 16, 19, L, 20 };	// Yeah it's actually this way. L preview API level was just "L", while now that it's lollipop it's "20"
 
 	@SuppressLint("CommitPrefEdits")
 	@SuppressWarnings("deprecation")
@@ -83,6 +84,7 @@ public class Eggs extends Activity {
 		JB_Check = (Switch) findViewById(R.id.jbCheck);
 		KK_Check = (Switch) findViewById(R.id.kkCheck);
 		L_Check = (Switch) findViewById(R.id.ldpCheck);
+		LP_Check = (Switch) findViewById(R.id.lollipopCheck);
 
 		gbImg = (ImageView) findViewById(R.id.gbImg);
 		hcImg = (ImageView) findViewById(R.id.hcImg);
@@ -90,7 +92,8 @@ public class Eggs extends Activity {
 		jbImg = (ImageView) findViewById(R.id.jbImg);
 		kkImg = (ImageView) findViewById(R.id.kkImg);
 		lImg = (ImageView) findViewById(R.id.ldpImg);
-
+		lpImg = (ImageView) findViewById(R.id.lollipopImg);
+		
 		/*
 		 * int count = 4;
 		 * 
@@ -143,6 +146,10 @@ public class Eggs extends Activity {
 
 				L_Check.setChecked(true);
 
+			} else if (current_egg.equals("LP")) {
+
+				LP_Check.setChecked(true);
+
 			}
 			
 		}
@@ -157,6 +164,7 @@ public class Eggs extends Activity {
 		JB_Check.setOnCheckedChangeListener(toggleIt(JB));
 		KK_Check.setOnCheckedChangeListener(toggleIt(KK));
 		L_Check.setOnCheckedChangeListener(toggleIt(L));
+		LP_Check.setOnCheckedChangeListener(toggleIt(LP));
 		
 		Switch logCheck = (Switch) findViewById(R.id.logCheck);
 		
@@ -233,7 +241,7 @@ public class Eggs extends Activity {
 
 	public OnCheckedChangeListener toggleIt(int ver) {
 
-		if (ver > 5)
+		if (ver > 6)
 			return null;
 
 		final int version = ver;
@@ -294,6 +302,9 @@ public class Eggs extends Activity {
 		
 		if (L_Check.isChecked() == true)
 			return true;
+		
+		if (LP_Check.isChecked() == true)
+			return true;
 
 		return false;
 	}
@@ -323,7 +334,7 @@ public class Eggs extends Activity {
 	public void toggleEgg(int i) {
 
 		// Enable i
-		if (i > 5)
+		if (i > 6)
 			return; // Return if i is greater than array index
 
 		disableExcept(i);
@@ -335,7 +346,7 @@ public class Eggs extends Activity {
 
 	public void disableExcept(int i) {
 
-		if (i > 5)
+		if (i > 6)
 			return; // Return if i is greater than array index
 
 		for (int j = 0; j < i; j++) {
@@ -370,11 +381,16 @@ public class Eggs extends Activity {
 				// disable L
 				L_Check.setChecked(false);
 
+			} else if (versionSName[j].equals("LP")) {
+
+				// disable L
+				LP_Check.setChecked(false);
+
 			}
 
 		}
 
-		for (int j = 5; j > i; j--) {
+		for (int j = 6; j > i; j--) {
 
 			if (versionSName[j].equals("GB")) {
 
@@ -405,6 +421,11 @@ public class Eggs extends Activity {
 
 				// disable L
 				L_Check.setChecked(false);
+
+			} else if (versionSName[j].equals("LP")) {
+
+				// disable L
+				LP_Check.setChecked(false);
 
 			}
 
@@ -455,28 +476,13 @@ public class Eggs extends Activity {
 
 	}
 	
-	public void disableAll() {
+	public void lollipop(View view) {
 
-		GB_Check.setEnabled(false);
-		HC_Check.setEnabled(false);
-		ICS_Check.setEnabled(false);
-		JB_Check.setEnabled(false);
-		KK_Check.setEnabled(false);
-		L_Check.setEnabled(false);
+		startActivity(new Intent(this,
+				areeb.xposed.eggster.lp.PlatLogoActivity.class));
 
 	}
-
-	public void enableAll() {
-
-		GB_Check.setEnabled(true);
-		HC_Check.setEnabled(true);
-		ICS_Check.setEnabled(true);
-		JB_Check.setEnabled(true);
-		KK_Check.setEnabled(true);
-		L_Check.setEnabled(true);
-
-	}
-
+	
 	public void colorize() {
 
 		setColorFilter(gbImg, 105, 206, 91);
@@ -484,7 +490,8 @@ public class Eggs extends Activity {
 		setColorFilter(icsImg, 138, 90, 90);
 		setColorFilter(jbImg, 255, 68, 68);
 		setColorFilter(kkImg, 230, 87, 87);
-		setColorFilter(lImg, 255, 203, 47);
+		setColorFilter(lImg, 140, 70, 240);
+		setColorFilter(lpImg, 255, 203, 47);
 
 	}
 
@@ -496,10 +503,11 @@ public class Eggs extends Activity {
 		setColorFilter(jbImg, 100, 100, 100);
 		setColorFilter(kkImg, 100, 100, 100);
 		setColorFilter(lImg, 100, 100, 100);
-
+		setColorFilter(lpImg, 100, 100, 100);
+		
 	}
 
-	public void setColorFilter(ImageView iv, float redValue, float greenValue,
+	public static void setColorFilter(ImageView iv, float redValue, float greenValue,
 			float blueValue) {
 
 		redValue = redValue / 255;

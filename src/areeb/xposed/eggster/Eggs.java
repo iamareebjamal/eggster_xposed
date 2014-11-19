@@ -60,7 +60,7 @@ public class Eggs extends Activity {
 	String[] versionName = { "Gingerbread", "Honeycomb", "Ice Cream Sandwich",
 			"Jelly Bean", "Kitkat", "Android L Preview", "Lollipop" };
 	String[] versionSName = { "GB", "HC", "ICS", "JB", "KK", "L", "LP" };
-	int[] versionCode = { 10, 11, 14, 16, 19, L, 20 };	// Yeah it's actually this way. L preview API level was just "L", while now that it's lollipop it's "20"
+	int[] versionCode = { 10, 11, 14, 16, 19, 20, 21};	// Yeah it's actually this way. L preview API level was just "L", while now that it's lollipop it's "20"
 
 	@SuppressLint("CommitPrefEdits")
 	@SuppressWarnings("deprecation")
@@ -590,12 +590,12 @@ public class Eggs extends Activity {
  * **Credits**
  * 
  * # rovo89 for Xposed
+ * # Giupy 99 for his ultimate commits when I couldn't handle it
  * # GermainZ for a small peek of code from Crappalinks
  * # AOSP for all easter eggs, their codes and resources
  * # Geo Piskas for Jelly Bean Flinger code saving me time to port that
  * # Zhuowei for his NyanDream project, which enabled me to take peeks
  *   for some non-functional code fixing in Kitkat Easter Egg and ICS one
- * # Giupy 99 for his support and trolls
  * # BoD for Android Switch backport library
  * # Photoshop, AIDE, and other tools, etc
  * # Please remind me if I forgot someone

@@ -11,6 +11,7 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -28,7 +29,8 @@ public class PlatLogoActivity extends Activity {
 
 	boolean firstClickDone = false;
 
-	@SuppressLint("NewApi") @Override
+	@SuppressLint("NewApi")
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
@@ -70,7 +72,7 @@ public class PlatLogoActivity extends Activity {
 		logo.setLayoutParams(LogoLP);
 
 		@SuppressWarnings("deprecation")
-		LayoutParams StickLP = new LayoutParams(LayoutParams.WRAP_CONTENT, (getWindowManager().getDefaultDisplay().getHeight() / 2) - lollipop.getBottom());
+		LayoutParams StickLP = new LayoutParams(LayoutParams.WRAP_CONTENT, (getWindowManager().getDefaultDisplay().getHeight() / 2) - lollipop.getBottom() + 5);
 		StickLP.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		StickLP.addRule(RelativeLayout.CENTER_HORIZONTAL);
 		stick.setLayoutParams(StickLP);
@@ -110,8 +112,8 @@ public class PlatLogoActivity extends Activity {
 				// TODO Auto-generated method stub	
 				if (!firstClickDone) {
 					firstClickDone = true;
-					ViewPropertyAnimator.animate(pop).scaleX(4.2F).scaleY(4.2F).setDuration(1700).setInterpolator(new DecelerateInterpolator()).start();
-					ViewPropertyAnimator.animate(logo).alpha(1).setDuration(1500).setStartDelay(500).start();
+					ViewPropertyAnimator.animate(pop).scaleX(4.2F).scaleY(4.2F).setDuration(700).setInterpolator(new DecelerateInterpolator()).start();
+					ViewPropertyAnimator.animate(logo).alpha(1).setDuration(700).setStartDelay(750).start();
 					ViewPropertyAnimator.animate(stick).translationYBy(pop.getMeasuredHeight()*2.1F).alpha(1).setDuration(1700).setStartDelay(1000).start();
 				} else {
 					lightning.startTransition(200);				//illuminati weren't here
@@ -122,24 +124,25 @@ public class PlatLogoActivity extends Activity {
 				}
 			}
 		});
+		if(Build.VERSION.SDK_INT>10){
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			String sysUIMode = (getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString("lollipopSysUI", getString(R.string.pref_none)));
 		
-		String sysUIMode = (getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString("lollipopSysUI", getString(R.string.pref_none)));
+			if (sysUIMode.equals(getString(R.string.pref_immerge)))
+				container.setSystemUiVisibility(
+						View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+						| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+						| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+						| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+						| View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+						| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+						);
 		
-		if (sysUIMode.equals(getString(R.string.pref_immerge)))
-			container.setSystemUiVisibility(
-					View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-					| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-					| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-					| View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-					| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-					);
-		
-		if (sysUIMode.equals(getString(R.string.pref_translucent)))	{
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+			if (sysUIMode.equals(getString(R.string.pref_translucent)))	{
+				getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+			}
 		}
 	}
 

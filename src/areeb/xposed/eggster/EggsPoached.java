@@ -23,7 +23,6 @@ package areeb.xposed.eggster;
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.callMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
-
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -51,26 +50,17 @@ public class EggsPoached implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
 
 
-	private static final String HOOKED_PACKAGE = "com.cosmic.mods";
-	private static final String HOOKED_CLASS = "com.cosmic.mods.PlatLogoActivity";
-	private static final String HOOK_CLASS = "com.android.internal.app.PlatLogoActivity";
-	private static final String HOOK_METHOD = "onCreate";
+	private static final String HOOKED_PACKAGE = "com.cosmic.mods", HOOKED_CLASS = "com.cosmic.mods.PlatLogoActivity", HOOK_CLASS = "com.android.internal.app.PlatLogoActivity", HOOK_METHOD = "onCreate";
 
 
-	int GB = 0;
-	int HC = 1;
-	int ICS = 2;
-	int JB = 3;
-	int KK = 4;
-	int L = 5;
+	int GB = 0, HC = 1, ICS = 2, JB = 3, KK = 4, L = 5, LP = 6;
 
-	String[] versionName = {"Gingerbread", "Honeycomb", "Ice Cream Sandwich", "Jelly Bean", "Kitkat", "Android L Preview"};
-	String[] versionSName = {"GB", "HC", "ICS", "JB", "KK", "L"};
-	int[] versionCode = {10, 11, 14, 16, 19, 20};
+	String[] versionName = {"Gingerbread", "Honeycomb", "Ice Cream Sandwich", "Jelly Bean", "Kitkat", "Android L Preview", "Lollipop"}, versionSName = {"GB", "HC", "ICS", "JB", "KK", "L", "LP"};
+	int[] versionCode = {10, 11, 14, 16, 19, 20, 21};
 
 
 	private static final String PACKAGE = "areeb.xposed.eggster";
-	private static final String[] platActs = {"areeb.xposed.eggster.gb.PlatLogoActivity", "areeb.xposed.eggster.hc.PlatLogoActivity", "areeb.xposed.eggster.ics.PlatLogoActivity", "areeb.xposed.eggster.jb.PlatLogoActivity", "areeb.xposed.eggster.kk.PlatLogoActivity", "areeb.xposed.eggster.l.PlatLogoActivity"};
+	private static final String[] platActs = {"areeb.xposed.eggster.gb.PlatLogoActivity", "areeb.xposed.eggster.hc.PlatLogoActivity", "areeb.xposed.eggster.ics.PlatLogoActivity", "areeb.xposed.eggster.jb.PlatLogoActivity", "areeb.xposed.eggster.kk.PlatLogoActivity", "areeb.xposed.eggster.l.PlatLogoActivity", "areeb.xposed.eggster.lp.PlatLogoActivity"};
 
 	private static final int version = Build.VERSION.SDK_INT;
 	String CURRENT_VERSION;
@@ -126,6 +116,12 @@ public class EggsPoached implements IXposedHookLoadPackage, IXposedHookZygoteIni
 					CURRENT_VERSION = versionSName[L];
 
 				}
+				else if (version >= versionCode[LP])
+				{
+
+					CURRENT_VERSION = versionSName[LP];
+
+				}
 
 				xpref.reload();
 				enabled = xpref.getBoolean("enabled", true);
@@ -168,6 +164,12 @@ public class EggsPoached implements IXposedHookLoadPackage, IXposedHookZygoteIni
 				{
 
 					chosenAct = platActs[L];
+
+				}
+				else if (chosenEgg.equals(versionSName[LP]))
+				{
+
+					chosenAct = platActs[LP];
 
 				}
 

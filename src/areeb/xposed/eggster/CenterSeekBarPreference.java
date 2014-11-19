@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -14,10 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.preference.DialogPreference;
-import android.preference.Preference;
 import android.widget.*;
 import areeb.xposed.eggster.CenterBar;
-import areeb.xposed.eggster.PrefSettings.KKPreferenceFragment;
 
 
 @SuppressLint("UseValueOf")

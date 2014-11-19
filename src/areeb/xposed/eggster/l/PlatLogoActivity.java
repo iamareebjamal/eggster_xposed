@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.*;
 import android.graphics.Color;
 import android.os.*;
-import android.util.DisplayMetrics;
 import android.view.*;
 import android.view.View.OnLongClickListener;
 import android.widget.*;
@@ -26,7 +25,6 @@ public class PlatLogoActivity extends Activity {
 		TextView build = new TextView(this);
 		final Random r = new Random();
 		String sui = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString("andl_sysui", getString(R.string.pref_none));
-		DisplayMetrics metrics	= new DisplayMetrics();
 			LayoutParams pos1 = new LayoutParams(r.nextInt(1000), r.nextInt(1000)),
 						 pos2 = new LayoutParams(r.nextInt(1000), r.nextInt(1000)), label = new LayoutParams(-2, -2);
 			
@@ -37,7 +35,6 @@ public class PlatLogoActivity extends Activity {
 		pos1.leftMargin = r.nextInt(500);
 		pos2.topMargin = r.nextInt(1000);
 		pos2.leftMargin = r.nextInt(500);
-		final int p = (int) (4 * metrics.density);
 		rct1.setBackgroundColor(Color.RED);
 		rct2.setBackgroundColor(Color.BLUE);
 	    super.onCreate(savedInstanceState);

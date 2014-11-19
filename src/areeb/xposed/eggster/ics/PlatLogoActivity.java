@@ -112,7 +112,7 @@ public class PlatLogoActivity extends Activity {
 		mContent.setImageResource(R.drawable.platlogoics);
 		mContent.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 		mContent.setOnTouchListener(new View.OnTouchListener() {
-			@Override
+			@SuppressLint("ClickableViewAccessibility") @Override
 			public boolean onTouch(View v, MotionEvent event) {
 				final int action = event.getAction();
 				if (action == MotionEvent.ACTION_DOWN) {

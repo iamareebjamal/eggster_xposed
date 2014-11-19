@@ -306,12 +306,12 @@ public class DessertCaseView extends FrameLayout {
 
             final int which = new Random().nextInt(100); 
             final Drawable d;
-            if (which < frq - 15) {
+            if (which < frq - 20) {
                 d = mDrawables.get(pick(RARE_PASTRIES));
-            } else if (which < frq - 20) {
+            } else if (which < frq - 25) {
                 d = mDrawables.get(pick(PASTRIES));
             } else {
-            	if (new Random().nextInt(10) < 8)
+            	if (new Random().nextInt(10) < 7)
             	d = mDrawables.get(pick(PASTRIES));
             	else
                 d = null;

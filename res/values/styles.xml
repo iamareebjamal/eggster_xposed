@@ -23,6 +23,9 @@
         <item name="android:listViewStyle">@style/Widget.ListView.Holo.Light</item>
         <item name="android:listSeparatorTextViewStyle">@style/Seperator</item>
     </style>
+    
+    <style name="Theme.Wallpaper" parent="@android:style/Theme.Wallpaper.NoTitleBar">
+    </style>
 
 
     <style name="Widget.ListView.Holo.Light" parent="@android:style/Widget.ListView">

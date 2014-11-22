@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="areeb.xposed.eggster"
-    android:versionCode="3"
-    android:versionName="1.2" >
+    android:versionCode="6"
+    android:versionName="1.4.1" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -37,7 +37,7 @@
         <activity
             android:name="areeb.xposed.eggster.gb.PlatLogoActivity"
             android:label="@string/title_activity_plat_logo"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
+            android:theme="@style/Theme.Wallpaper" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -45,7 +45,7 @@
         <activity
             android:name="areeb.xposed.eggster.hc.PlatLogoActivity"
             android:label="@string/title_activity_plat_logo"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
+            android:theme="@style/Theme.Wallpaper" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -53,7 +53,7 @@
         <activity
             android:name="areeb.xposed.eggster.ics.PlatLogoActivity"
             android:label="@string/title_activity_plat_logo"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
+            android:theme="@style/Theme.Wallpaper" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -61,7 +61,7 @@
         <activity
             android:name="areeb.xposed.eggster.ics.Nyandroid"
             android:label="@string/title_activity_plat_logo"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@style/Theme.Wallpaper" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -69,14 +69,14 @@
         <activity
             android:name="areeb.xposed.eggster.jb.PlatLogoActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
+            android:theme="@style/Theme.Wallpaper" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
             android:name="areeb.xposed.eggster.jb.BeanBag"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
+            android:theme="@style/Theme.Wallpaper" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -84,7 +84,7 @@
         <activity
             android:name="areeb.xposed.eggster.kk.PlatLogoActivity"
             android:label="@string/title_activity_plat_logo"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
+            android:theme="@style/Theme.Wallpaper" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -92,7 +92,7 @@
         <activity
             android:name="areeb.xposed.eggster.kk.DessertCase"
             android:label="@string/title_activity_plat_logo"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@style/Theme.Wallpaper" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -100,7 +100,7 @@
         <activity
             android:name="areeb.xposed.eggster.l.PlatLogoActivity"
             android:label="@string/title_activity_plat_logo"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
+            android:theme="@style/Theme.Wallpaper" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -108,7 +108,7 @@
         <activity
             android:name="areeb.xposed.eggster.lp.PlatLogoActivity"
             android:label="@string/title_activity_plat_logo"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar" >
+            android:theme="@style/Theme.Wallpaper" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>

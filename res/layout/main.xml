@@ -374,7 +374,7 @@
 	                    android:layout_centerVertical="true"
 	                    android:contentDescription="@string/hello_world"
 	                    android:onClick="lollipop"
-	                    android:src="@drawable/lollipop" />
+	                    android:src="@drawable/lollipop_test" />
 
 	                <LinearLayout
 	                    android:id="@+id/LinearLayout01"
@@ -393,7 +393,7 @@
 	                    android:layout_centerVertical="true"
 	                    android:layout_toRightOf="@+id/LinearLayout01"
 	                    android:padding="8dp"
-	                    android:text="@string/pref_header_lollipop"
+	                    android:text="@string/pref_header_lp"
 	                    android:textColor="#333333"
 	                    android:textStyle="bold" />
 

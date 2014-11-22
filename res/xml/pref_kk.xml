@@ -63,4 +63,25 @@
     	android:title="@string/pref_title_anim_int"
     />
     
+    <ListPreference
+        android:title="@string/pref_sysui_plat"
+        android:key="kk_sysui"
+        android:defaultValue="@string/pref_none"
+        android:dialogTitle="Choose System UI mode for the KitKat platlogo" 
+        android:entryValues="@array/SysUImodes"
+        android:entries="@array/SysUImodes"/>
+    
+    <areeb.xposed.eggster.CenterSeekBarPreference
+        android:defaultValue="50"
+		android:key="kk_freq"
+    	android:max="100"
+    	android:title="@string/pref_title_freq" />
+    
+    <CheckBoxPreference 
+        android:summaryOn="@string/pref_port_force" 
+        android:summaryOff="@string/pref_port_auto"
+        android:defaultValue="false" 
+        android:key="kk_force_port" 
+        android:title="@string/pref_title_portrit_mode"/>
+    
 </PreferenceScreen>

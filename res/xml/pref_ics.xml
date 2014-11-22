@@ -22,7 +22,27 @@
         android:singleLine="true"
         android:title="@string/pref_title_cats_int" />
 
-    
+    <ListPreference
+        android:title="@string/pref_sysui_plat"
+        android:key="ics_sysui_plat"
+        android:defaultValue="@string/pref_none"
+        android:dialogTitle="Choose System UI mode for the Ice Cream Sandwich platlogo" 
+        android:entryValues="@array/SysUImodes"
+        android:entries="@array/SysUImodes"/>    
   
-
+    <ListPreference
+        android:title="@string/pref_sysui"
+        android:key="ics_sysui"
+        android:defaultValue="@string/pref_none"
+        android:dialogTitle="Choose System UI mode for the Ice Cream Sandwich easter egg" 
+        android:entryValues="@array/SysUImodes"
+        android:entries="@array/SysUImodes"/>
+    
+    <CheckBoxPreference 
+        android:summaryOn="@string/pref_port_force" 
+        android:summaryOff="@string/pref_port_auto"
+        android:defaultValue="false" 
+        android:key="ics_force_port" 
+        android:title="@string/pref_title_portrit_mode"/>
+    
 </PreferenceScreen>

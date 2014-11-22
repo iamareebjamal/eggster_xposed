@@ -22,12 +22,18 @@ package areeb.xposed.eggster.ics;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.*;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.AnimationDrawable;
-import android.os.*;
+import android.os.Build;
+import android.os.Bundle;
 import android.util.AttributeSet;
-import android.view.*;
-import android.widget.*;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import areeb.xposed.eggster.R;
 
 import java.util.Random;
@@ -327,4 +333,20 @@ public class Nyandroid extends Activity {
         super.onResume();
         mBoard.startAnimation();
     }
+    
+    @Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+
+		Boolean forcePort = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("ics_force_port", false);
+
+		if (forcePort == true) {
+				
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			
+		}
+				
+	
+				
+	}
 }

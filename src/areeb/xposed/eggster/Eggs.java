@@ -25,6 +25,8 @@ import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
@@ -206,25 +208,27 @@ public class Eggs extends Activity {
 		switch (keycode){
 			case KeyEvent.KEYCODE_MENU :
 				toggleView(this.getWindow().getCurrentFocus());
-			
-		
 		}
-		
 		
 		return super.onKeyDown(keycode, e);
 	}
 	
-	public void toggleView(View view){
+public void toggleView(View view){
+		
+		final Animation inAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_out);
+		final Animation outAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in);
 		
 		if (logLayout.getVisibility() == View.GONE){
 			
 			logLayout.setVisibility(View.VISIBLE);
 			openLayout.setVisibility(View.GONE);
+			logLayout.startAnimation(inAnim);
 			
 		} else {
 			
 			logLayout.setVisibility(View.GONE);
 			openLayout.setVisibility(View.VISIBLE);
+			logLayout.startAnimation(outAnim);
 			
 		}
 		
@@ -490,8 +494,8 @@ public class Eggs extends Activity {
 		setColorFilter(icsImg, 138, 90, 90);
 		setColorFilter(jbImg, 255, 68, 68);
 		setColorFilter(kkImg, 230, 87, 87);
-		setColorFilter(lImg, 140, 70, 240);
-		setColorFilter(lpImg, 255, 203, 47);
+		setColorFilter(lImg, 255, 203, 47);
+		setColorFilter(lpImg, 255, 58, 118);
 
 	}
 

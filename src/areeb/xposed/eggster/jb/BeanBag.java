@@ -21,11 +21,13 @@
 
 package areeb.xposed.eggster.jb;
 
+
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -66,6 +68,22 @@ public class BeanBag extends Activity {
 	    	                   | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); 	// immerge
 	    		}	
 		FML.addView(board, 0);
+	}
+	
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+
+		Boolean forcePort = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("jb_force_port", false);
+
+		if (forcePort == true) {
+				
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			
+		}
+				
+
+				
 	}
 
 	@Override

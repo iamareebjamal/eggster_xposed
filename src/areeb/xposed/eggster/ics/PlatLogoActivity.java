@@ -22,6 +22,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,7 +35,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 import areeb.xposed.eggster.R;
-
 
 import com.nineoldandroids.view.ViewHelper;
 
@@ -85,13 +85,16 @@ public class PlatLogoActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
 		String daSys = pref.getString("ics_sysui_plat", getString(R.string.pref_none));
+		
+		if (daSys.equals(getString(R.string.pref_none)))
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
 		if (daSys.equals(getString(R.string.pref_translucent))) {
 			super.setTheme(R.style.Wallpaper_TranslucentDecor);
 		}
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		if (daSys == getString(R.string.pref_none))
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
 		
 		mZzz = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
 		String icsToast = pref.getString("ics_toast_text", getString(R.string.pref_default_ics_text));
@@ -112,7 +115,7 @@ public class PlatLogoActivity extends Activity {
 		mContent.setImageResource(R.drawable.platlogoics);
 		mContent.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 		mContent.setOnTouchListener(new View.OnTouchListener() {
-			@SuppressLint("ClickableViewAccessibility") @Override
+			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				final int action = event.getAction();
 				if (action == MotionEvent.ACTION_DOWN) {
@@ -133,5 +136,21 @@ public class PlatLogoActivity extends Activity {
 		});
 		setContentView(mContent);
 		
+	}
+	
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+
+		Boolean forcePort = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("ics_force_port", false);
+
+		if (forcePort == true) {
+				
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			
+		}
+				
+	
+				
 	}
 }

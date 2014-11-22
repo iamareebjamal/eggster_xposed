@@ -12,7 +12,20 @@
         android:singleLine="true"
         android:title="@string/pref_title_toast_text" />
 
+    <ListPreference
+        android:title="@string/pref_sysui"
+        android:key="hc_sysui"
+        android:defaultValue="@string/pref_none"
+        android:dialogTitle="Choose System UI mode for HoneyComb" 
+        android:entryValues="@array/SysUImodes"
+        android:entries="@array/SysUImodes"/>
     
+    <CheckBoxPreference 
+        android:summaryOn="@string/pref_port_force" 
+        android:summaryOff="@string/pref_port_auto"
+        android:defaultValue="false" 
+        android:key="hc_force_port" 
+        android:title="@string/pref_title_portrit_mode"/>
   
 
 </PreferenceScreen>

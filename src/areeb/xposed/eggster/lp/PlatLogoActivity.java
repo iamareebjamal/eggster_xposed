@@ -7,10 +7,18 @@ import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -22,12 +30,13 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import areeb.xposed.eggster.Eggs;
 import areeb.xposed.eggster.R;
+import areeb.xposed.eggster.R.style;
 
 
 @SuppressLint("ClickableViewAccessibility") 
 public class PlatLogoActivity extends Activity {
-
-	boolean firstClickDone = false;
+	int tapatap;
+	SharedPreferences.Editor edit;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -39,9 +48,11 @@ public class PlatLogoActivity extends Activity {
 		final RelativeLayout pop = new RelativeLayout(this);
 		final ImageView stick    = new ImageView(this);
 		final ImageView lollipopLight 	 = new ImageView(this);
-		final String[] materialPalette 	 = {"E51C23", "E91E63", "9C27B0", "673AB7", "3F51B5", "5677FC", "03A9F4", "00BCD4", "009688", "259B24", "8BC34A", "CDDC39", "FFEB3B", "FFC107", "FF9800", "FF5722", "795548", "607D8B"};	//hex codes of the Material Design colors. You can find the palette at google.com/design
+		final String[] materialPalette 	 = {"9C27B0", "BA68C8", "FF9800", "FFB74D", "F06292", "F8BBD0", "AFB42B", "CDDC39", "FFEB3B", "FFF176", "795548", "A1887F"};	//hex codes of the Material Design colors. You can find the palette at google.com/design
 		final ImageView lightClickEffect = new ImageView(this);
 
+		edit = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).edit();
+		
 		RelativeLayout container = new RelativeLayout(this);
 
 		lollipop.setImageResource(R.drawable.lollipop_circle);
@@ -71,8 +82,11 @@ public class PlatLogoActivity extends Activity {
 		LogoLP.addRule(RelativeLayout.CENTER_IN_PARENT);
 		logo.setLayoutParams(LogoLP);
 
+		int length = 5;
+		if(getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString("lp_sysui", getString(R.string.pref_none)).equals("Immersive Mode"))
+			length = 50;
 		@SuppressWarnings("deprecation")
-		LayoutParams StickLP = new LayoutParams(LayoutParams.WRAP_CONTENT, (getWindowManager().getDefaultDisplay().getHeight() / 2) - lollipop.getBottom() + 5);
+		LayoutParams StickLP = new LayoutParams(LayoutParams.WRAP_CONTENT, (getWindowManager().getDefaultDisplay().getHeight() / 2) - lollipop.getBottom() + length);
 		StickLP.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
 		StickLP.addRule(RelativeLayout.CENTER_HORIZONTAL);
 		stick.setLayoutParams(StickLP);
@@ -97,53 +111,118 @@ public class PlatLogoActivity extends Activity {
 
 		setContentView(container);
 
+		final Context ctx = this;
 		//Decide if the color should be purely random or between the palette
-		if (getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("purely_random", false))
+		if (getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("lp_purely_random", false))
 			Eggs.setColorFilter(lollipop, new Random().nextInt(255), new Random().nextInt(255), new Random().nextInt(255));	//lollipop color is purely random
 		else			
 			colorizeHex(lollipop, materialPalette[new Random().nextInt(materialPalette.length)]);	//lollipop color is randomly picked from the material palette
 
-		ViewPropertyAnimator.animate(pop).scaleX(1).scaleY(1).setDuration(1800).setInterpolator(new DecelerateInterpolator()).setStartDelay(1000).start();
-
+		ViewPropertyAnimator.animate(pop).scaleX(1).scaleY(1).setDuration(500).setInterpolator(new DecelerateInterpolator()).setStartDelay(800).start();
 		pop.setClickable(true);
 		pop.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub	
-				if (!firstClickDone) {
-					firstClickDone = true;
+				if (tapatap==0) {
 					ViewPropertyAnimator.animate(pop).scaleX(4.2F).scaleY(4.2F).setDuration(700).setInterpolator(new DecelerateInterpolator()).start();
-					ViewPropertyAnimator.animate(logo).alpha(1).setDuration(700).setStartDelay(750).start();
-					ViewPropertyAnimator.animate(stick).translationYBy(pop.getMeasuredHeight()*2.1F).alpha(1).setDuration(1700).setStartDelay(1000).start();
+					ViewPropertyAnimator.animate(logo).alpha(1).setDuration(700).setStartDelay(500).start();
+					ViewPropertyAnimator.animate(stick).translationYBy(pop.getMeasuredHeight()*2.1F).alpha(1).setDuration(1000).setStartDelay(1000).start();
 				} else {
 					lightning.startTransition(200);				//illuminati weren't here
-					if (getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("purely_random", false))
+					if (getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("lp_purely_random", false))
 						Eggs.setColorFilter(lollipop, new Random().nextInt(255), new Random().nextInt(255), new Random().nextInt(255));	//lollipop color is purely random
 					else
 						colorizeHex(lollipop, materialPalette[new Random().nextInt(materialPalette.length)]);
 				}
+				tapatap++;
 			}
 		});
-		if(Build.VERSION.SDK_INT>10){
+		pop.setOnLongClickListener(new View.OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(View arg0) {
+				if(tapatap<5||Build.VERSION.SDK_INT<14){
+					pop.callOnClick();
+					return false;
+				}
+				try{
+					Intent i = new Intent(Intent.ACTION_MAIN);
+					i.setComponent(new ComponentName("com.jrummyapps.lollipopland", "com.jrummyapps.lollipopland.GameActivity"));
+					startActivity(i);
+					finish();
+				} catch(ActivityNotFoundException e){
+					if (getApplicationContext().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("lp_game_install", true) == true) {
+						AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
+						alert.setTitle("Pop missing");
+						alert.setMessage("To add the Lollipop Land game to the Easter Egg, you'll have to download a small app from play store. Would you like to do that?");
+						alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface arg0, int arg1) {
+										// TODO Auto-generated method stub
+										Uri uri = Uri.parse("market://details?id=com.jrummyapps.lollipopland");
+										Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+										startActivity(intent);
+									}
+								});
+						alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface arg0, int arg1) {
+										// TODO Auto-generated method stub
+										arg0.dismiss();
+									}
+								});
+						alert.setNeutralButton("Never", new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface arg0, int arg1) {
+										// TODO Auto-generated method stub
+										edit.putBoolean("lp_game_install", false);
+										edit.apply();
+									}
+								});
+						alert.show();
+
+					} else {
+						pop.callOnClick();
+					}
+				}
+				return true;
+			}
+		});
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
-			String sysUIMode = (getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString("lollipopSysUI", getString(R.string.pref_none)));
+			String sysUIMode = (getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString("lp_sysui", getString(R.string.pref_none)));
 		
-			if (sysUIMode.equals(getString(R.string.pref_immerge)))
-				container.setSystemUiVisibility(
-						View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-						| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-						| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-						| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-						| View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-						| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-						);
-		
-			if (sysUIMode.equals(getString(R.string.pref_translucent)))	{
-				getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			}
+			if (Build.VERSION.SDK_INT >= 19 && sysUIMode.equals("Immersive Mode")) {
+		        container.setSystemUiVisibility(
+		                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+		                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+		                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+		                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION		// hide nav bar
+		                | View.SYSTEM_UI_FLAG_FULLSCREEN			// hide status bar
+		                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);	//Immersive
+		        } else if (Build.VERSION.SDK_INT >= 19 && sysUIMode.equals("Translucent Mode")) 
+		        	{
+		                	super.setTheme(style.Wallpaper_TranslucentDecor);
+		        	}
 		}
+	
+	
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+
+		Boolean forcePort = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("lp_force_port", false);
+
+		if (forcePort == true) {
+				
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			
+		}
+				
 	}
 
 	public static void colorizeHex(ImageView iv, String hex) {

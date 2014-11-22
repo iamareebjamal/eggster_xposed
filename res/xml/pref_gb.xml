@@ -13,10 +13,28 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_title_toast_text" />
+    
     <CheckBoxPreference 
         android:summaryOn="@string/pref_transbg" 
-        android:summaryOff="@string/pref_blackbg" 
+        android:summaryOff="@string/pref_blackbg"
         android:defaultValue="false" 
         android:key="gb_transp_bg" 
-        android:title="Translucid Background"/>
+        android:title="Translucent Background"/>
+    
+    <ListPreference
+        android:title="@string/pref_sysui"
+        android:key="gb_sysui"
+        android:defaultValue="@string/pref_none"
+        android:dialogTitle="Choose System UI mode for GingerBread" 
+        android:entryValues="@array/SysUImodes"
+        android:entries="@array/SysUImodes"/>
+    
+    <CheckBoxPreference 
+        android:summaryOn="@string/pref_port_force" 
+        android:summaryOff="@string/pref_port_auto"
+        android:defaultValue="false" 
+        android:key="gb_force_port" 
+        android:title="@string/pref_title_portrit_mode"/>
+    
+    
 </PreferenceScreen>

@@ -8,9 +8,9 @@
         android:entries="@array/SysUImodes"/>
     
     <CheckBoxPreference 
-        android:summaryOn="Easter Egg forced to portrait mode" 
-        android:summaryOff="Easter Egg will auto-rotate"
+        android:summaryOn="@string/pref_port_force" 
+        android:summaryOff="@string/pref_port_auto"
         android:defaultValue="false" 
         android:key="l_force_port" 
-        android:title="Force Portrait Mode"/>
+        android:title="@string/pref_title_portrit_mode"/>
 </PreferenceScreen>

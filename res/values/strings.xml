@@ -3,7 +3,7 @@
 
     <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">Eggster</string>
-    <string name="app_ver">v 1.2</string>
+    <string name="app_ver">v 1.4.1</string>
     <string name="dev">Developer</string>
     <string name="dev_name">Areeb Jamal (iamareebjamal)</string>
     <string name="support_thread">Support Thread</string>

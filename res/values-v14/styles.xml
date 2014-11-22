@@ -21,5 +21,8 @@
         <item name="android:windowNoTitle">true</item>
         <item name="switchStyle">@style/Widget.Holo.Light.CompoundButton.Switch</item>
     </style>
+    
+    <style name="Theme.Wallpaper" parent="@android:style/Theme.Holo.Wallpaper.NoTitleBar">
+    </style>
 
 </resources>

@@ -40,19 +40,26 @@ public class PrefSettings extends PreferenceActivity {
 	 */
 	
 	private static final boolean ALWAYS_SIMPLE_PREFS = false;
+	private static final int ICS = 11;
+	private static final int KK = 19;
 	
 	@Override
-	protected boolean isValidFragment(String fragmentName){
-		
-		//Fix FC by vulnerability fixing code
-		
-		if (GBPreferenceFragment.class.getName().equals(fragmentName) || HCPreferenceFragment.class.getName().equals(fragmentName) || ICSPreferenceFragment.class.getName().equals(fragmentName) || JBPreferenceFragment.class.getName().equals(fragmentName) || KKPreferenceFragment.class.getName().equals(fragmentName) || ALPreferenceFragment.class.getName().equals(fragmentName) || ABPreferenceFragment.class.getName().equals(fragmentName))
-		{
+	protected boolean isValidFragment(String fragmentName) {
+
+		// Fix FC by vulnerability fixing code
+
+		if (GBPreferenceFragment.class.getName().equals(fragmentName)
+				|| HCPreferenceFragment.class.getName().equals(fragmentName)
+				|| ICSPreferenceFragment.class.getName().equals(fragmentName)
+				|| JBPreferenceFragment.class.getName().equals(fragmentName)
+				|| KKPreferenceFragment.class.getName().equals(fragmentName)
+				|| ALPreferenceFragment.class.getName().equals(fragmentName)
+				|| LPPreferenceFragment.class.getName().equals(fragmentName)
+				|| ABPreferenceFragment.class.getName().equals(fragmentName)) {
 			return true;
-			
+
 		}
-		
-		
+
 		return false;
 	}
 	
@@ -134,10 +141,19 @@ public class PrefSettings extends PreferenceActivity {
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_kk);
 		
+		// Add L preferences, and a corresponding header.
 		fakeHeader = new PreferenceCategory(this);
 		fakeHeader.setTitle(getString(R.string.pref_header_l).toUpperCase());
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_l);
+		
+		// Add LP preferences, and a corresponding header.
+		fakeHeader = new PreferenceCategory(this);
+		fakeHeader.setTitle(getString(R.string.pref_header_lp).toUpperCase());
+		getPreferenceScreen().addPreference(fakeHeader);
+		addPreferencesFromResource(R.xml.pref_lp);
+		
+		
 
 		fakeHeader = new PreferenceCategory(this);
 		fakeHeader.setTitle(getString(R.string.pref_header_about).toUpperCase());
@@ -153,7 +169,7 @@ public class PrefSettings extends PreferenceActivity {
 		bindPreferenceSummaryToValue(findPreference("hc_sysui"));
 		bindPreferenceSummaryToValue(findPreference("ics_toast_text"));
 		bindPreferenceSummaryToValue(findPreference("ics_sysui_plat"));
-		bindPreferenceSummaryToValue(findPreference("ics_sysui"));		
+		bindPreferenceSummaryToValue(findPreference("ics_sysui"));
 		bindPreferenceSummaryToValue(findPreference("number_of_cats"));
 		bindPreferenceSummaryToValue(findPreference("jb_text_1"));
 		bindPreferenceSummaryToValue(findPreference("jb_text_2"));
@@ -170,6 +186,12 @@ public class PrefSettings extends PreferenceActivity {
 		bindPreferenceSummaryToValue(findPreference("kk_text_size"));
 		bindPreferenceSummaryToValue(findPreference("kk_sysui"));
 		bindPreferenceSummaryToValue(findPreference("andl_sysui"));
+		bindPreferenceSummaryToValue(findPreference("lp_sysui"));
+		
+		hidePreference(KK, findPreference("gb_sysui"), findPreference("hc_sysui"), findPreference("ics_sysui_plat"), findPreference("ics_sysui"), findPreference("jb_sysui_plat"), findPreference("jb_sysui"), findPreference("kk_sysui"), findPreference("andl_sysui"), findPreference("lp_sysui"));
+		
+		
+		
 		final Preference pref = findPreference("kk_freq");
 		
 		if (p == 50)
@@ -209,6 +231,8 @@ public class PrefSettings extends PreferenceActivity {
 				return false;
 			}
 		});
+		
+		hidePreference(ICS, findPreference("kk_freq"));
 		
 	}
 	
@@ -255,20 +279,15 @@ public class PrefSettings extends PreferenceActivity {
 	 */
 	
 	private static boolean isSimplePreferences(Context context) {
-		return ALWAYS_SIMPLE_PREFS
-				|| Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
-				|| !isOk(context);
+		return ALWAYS_SIMPLE_PREFS||Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB||!isOk(context);
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public void onBuildHeaders(List<Header> target) {
-		if (!isSimplePreferences(this)) {
-			
-			
+		if (!isSimplePreferences(this))
 			loadHeadersFromResource(R.xml.pref_egg_headers, target);
-		}
 	}
 
 	/**
@@ -318,6 +337,10 @@ public class PrefSettings extends PreferenceActivity {
 			sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, preference.getContext().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt(preference.getKey(), ((SeekBarPreference) preference).getDefaultValue()));
 			
 		} else if (preference instanceof CenterSeekBarPreference) {
+			
+			//Display default value if no preference chosen
+			
+			
 			sBindPreferenceSummaryToValueListener.onPreferenceChange(preference, preference.getContext().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt(preference.getKey(), ((CenterSeekBarPreference) preference).getDefaultValue()));
 		} else {
 			
@@ -350,7 +373,10 @@ public class PrefSettings extends PreferenceActivity {
 			// updated to reflect the new value, per the Android Design
 			// guidelines.
 			bindPreferenceSummaryToValue(findPreference("gb_toast_text"));
-			bindPreferenceSummaryToValue(findPreference("gb_sysui"));			
+			bindPreferenceSummaryToValue(findPreference("gb_sysui"));
+			
+			hidePreference(KK, findPreference("gb_sysui"));
+			
 		}
 	}
 
@@ -377,6 +403,8 @@ public class PrefSettings extends PreferenceActivity {
 			// guidelines.
 			bindPreferenceSummaryToValue(findPreference("hc_toast_text"));
 			bindPreferenceSummaryToValue(findPreference("hc_sysui"));
+			
+			hidePreference(KK, findPreference("hc_sysui"));
 		}
 	}
 
@@ -403,6 +431,8 @@ public class PrefSettings extends PreferenceActivity {
 			bindPreferenceSummaryToValue(findPreference("number_of_cats"));
 			bindPreferenceSummaryToValue(findPreference("ics_sysui_plat"));
 			bindPreferenceSummaryToValue(findPreference("ics_sysui"));
+			
+			hidePreference(KK, findPreference("ics_sysui"), findPreference("ics_sysui_plat"));
 		}
 	}
 	
@@ -431,6 +461,8 @@ public class PrefSettings extends PreferenceActivity {
 			bindPreferenceSummaryToValue(findPreference("jb_size"));
 			bindPreferenceSummaryToValue(findPreference("jb_sysui_plat"));
 			bindPreferenceSummaryToValue(findPreference("jb_sysui"));
+			
+			hidePreference(KK, findPreference("jb_sysui"), findPreference("jb_sysui_plat"));
 			
 		}
 	}
@@ -466,6 +498,9 @@ public class PrefSettings extends PreferenceActivity {
 			bindPreferenceSummaryToValue(findPreference("kk_interpolator"));
 			bindPreferenceSummaryToValue(findPreference("kk_text_size"));
 			bindPreferenceSummaryToValue(findPreference("kk_sysui"));
+			
+			hidePreference(KK, findPreference("kk_sysui"));
+			
 			final Preference pref = findPreference("kk_freq");
 			
 			int p = getActivity().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("kk_freq", 50);
@@ -506,6 +541,8 @@ public class PrefSettings extends PreferenceActivity {
 					return false;
 				}
 			});
+			
+			hidePreference(ICS, findPreference("kk_freq"));
 		}
 	}
 	
@@ -528,7 +565,34 @@ public class PrefSettings extends PreferenceActivity {
 			// to their values. When their values change, their summaries are
 			// updated to reflect the new value, per the Android Design
 			// guidelines.
-			bindPreferenceSummaryToValue(findPreference("andl_sysui"));			
+			bindPreferenceSummaryToValue(findPreference("andl_sysui"));	
+			
+			hidePreference(KK, findPreference("andl_sysui"));
+		}
+	}
+	
+	/**
+	 * This fragment shows Lollipop preferences only. It is used when the
+	 * activity is showing a two-pane settings UI.
+	 */
+	@TargetApi(Build.VERSION_CODES.KITKAT)
+	public static class LPPreferenceFragment extends PreferenceFragment {
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+
+			PreferenceManager prefMgr = getPreferenceManager();
+			setPreferenceName(prefMgr);
+			
+			addPreferencesFromResource(R.xml.pref_lp);
+
+			// Bind the summaries of EditText/List/Dialog/Ringtone preferences
+			// to their values. When their values change, their summaries are
+			// updated to reflect the new value, per the Android Design
+			// guidelines.
+			bindPreferenceSummaryToValue(findPreference("lp_sysui"));	
+			
+			hidePreference(KK, findPreference("lp_sysui"));
 		}
 	}
 	
@@ -557,6 +621,25 @@ public class PrefSettings extends PreferenceActivity {
 		
 		prefMgr.setSharedPreferencesName("preferenceggs");
 		prefMgr.setSharedPreferencesMode(Context.MODE_PRIVATE);
+		
+	}
+	
+	public static void hidePreference(int limit, Preference... pref){
+		
+		
+		
+		if (Build.VERSION.SDK_INT < limit){
+		
+			for (int i = 0; i < pref.length; i++){
+				
+				Preference local = pref[i];
+				local.setEnabled(false);
+				local.setSummary("Requires higher Android version");
+									   
+				
+			}
+		
+		}
 		
 	}
 	

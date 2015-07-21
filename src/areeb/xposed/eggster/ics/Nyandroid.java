@@ -315,7 +315,7 @@ public class Nyandroid extends Activity {
        } 
         
         if (lol.equals(getString(R.string.pref_translucent))) {
-        	setTheme(R.style.Wallpaper_TranslucentDecor);
+        	//setTheme(R.style.Wallpaper_TranslucentDecor);
         }
         
         setContentView(mBoard);

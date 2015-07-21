@@ -78,7 +78,7 @@ public class PlatLogoActivity extends Activity {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);	//Immersive
         } else if (Build.VERSION.SDK_INT >= 19 && sysUIMode.equals("Translucent Mode")) 
         	{
-                	super.setTheme(style.Wallpaper_TranslucentDecor);
+                	//super.setTheme(style.Wallpaper_TranslucentDecor);
         	}
         
         

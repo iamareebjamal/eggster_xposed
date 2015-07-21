@@ -16,13 +16,14 @@
 package areeb.xposed.eggster;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -32,10 +33,11 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import org.jraf.android.backport.switchwidget.Switch;
+
 
 @SuppressLint("WorldReadableFiles")
-public class Eggs extends Activity {
+public class Eggs extends ActionBarActivity
+{
 
 	SharedPreferences pref;
 	SharedPreferences.Editor edit;
@@ -49,7 +51,7 @@ public class Eggs extends Activity {
 	ImageView openLayout;
 	RelativeLayout logLayout;
 
-	Switch GB_Check, HC_Check, ICS_Check, JB_Check, KK_Check, L_Check, LP_Check;
+	SwitchCompat GB_Check, HC_Check, ICS_Check, JB_Check, KK_Check, L_Check, LP_Check;
 
 	int GB = 0;
 	int HC = 1;
@@ -62,7 +64,7 @@ public class Eggs extends Activity {
 	String[] versionName = { "Gingerbread", "Honeycomb", "Ice Cream Sandwich",
 			"Jelly Bean", "Kitkat", "Android L Preview", "Lollipop" };
 	String[] versionSName = { "GB", "HC", "ICS", "JB", "KK", "L", "LP" };
-	int[] versionCode = { 10, 11, 14, 16, 19, 20, 21};	// Yeah it's actually this way. L preview API level was just "L", while now that it's lollipop it's "20"
+	int[] versionCode = { 10, 11, 14, 16, 19, 20, 21};
 
 	@SuppressLint("CommitPrefEdits")
 	@SuppressWarnings("deprecation")
@@ -72,21 +74,20 @@ public class Eggs extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		pref = getSharedPreferences("easter_preference",
-				Context.MODE_WORLD_READABLE);
+		pref = getSharedPreferences("easter_preference", Context.MODE_WORLD_READABLE);
 		edit = pref.edit();
 
 		enabled = pref.getBoolean("enabled", false);
 		current_egg = pref.getString("egg_name", "");
 
 		
-		GB_Check = (Switch) findViewById(R.id.gbCheck);
-		HC_Check = (Switch) findViewById(R.id.hcCheck);
-		ICS_Check = (Switch) findViewById(R.id.icsCheck);
-		JB_Check = (Switch) findViewById(R.id.jbCheck);
-		KK_Check = (Switch) findViewById(R.id.kkCheck);
-		L_Check = (Switch) findViewById(R.id.ldpCheck);
-		LP_Check = (Switch) findViewById(R.id.lollipopCheck);
+		GB_Check = (SwitchCompat) findViewById(R.id.gbCheck);
+		HC_Check = (SwitchCompat) findViewById(R.id.hcCheck);
+		ICS_Check = (SwitchCompat) findViewById(R.id.icsCheck);
+		JB_Check = (SwitchCompat) findViewById(R.id.jbCheck);
+		KK_Check = (SwitchCompat) findViewById(R.id.kkCheck);
+		L_Check = (SwitchCompat) findViewById(R.id.ldpCheck);
+		LP_Check = (SwitchCompat) findViewById(R.id.lollipopCheck);
 
 		gbImg = (ImageView) findViewById(R.id.gbImg);
 		hcImg = (ImageView) findViewById(R.id.hcImg);
@@ -168,7 +169,7 @@ public class Eggs extends Activity {
 		L_Check.setOnCheckedChangeListener(toggleIt(L));
 		LP_Check.setOnCheckedChangeListener(toggleIt(LP));
 		
-		Switch logCheck = (Switch) findViewById(R.id.logCheck);
+		SwitchCompat logCheck = (SwitchCompat) findViewById(R.id.logCheck);
 		
 		Boolean log = pref.getBoolean("log", false);
 		

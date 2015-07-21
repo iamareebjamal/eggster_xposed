@@ -2,4 +2,7 @@
 <resources>
     <color name="transparent">#00000000</color>
     <color name="holo_light">#fff3f3f3</color>
+    <color name="color_light">#ff8218ff</color>
+    <color name="color_lighter">#a88218ff</color>
+    <color name="color_dark">#ff6c18d8</color>
 </resources>

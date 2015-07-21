@@ -1,39 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:background="@drawable/app_bg"
+	android:background="@drawable/app"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
 	android:padding="0dp"
     android:orientation="vertical">
-	
-	<LinearLayout
-		android:layout_width="fill_parent"
-		android:layout_height="48dp"
-		android:gravity="center_vertical"
-		android:background="@drawable/abs"
-		android:orientation="horizontal" >
 
-		<ImageView
-			android:id="@+id/homeImage"
-			android:layout_width="40dp"
-			android:layout_height="40dp"
-			android:layout_marginLeft="5dp"
-			android:padding="3.0dip"
-			android:contentDescription="@string/hello"
-			android:src="@drawable/ic_launcher" />
-
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:gravity="center_vertical"
-			android:textSize="18.0sp"
-			android:padding="0.0dip"
-			android:textColor="@android:color/black"
-			android:text="@string/app_name" />
-
-
-	</LinearLayout>
-	
-	<RelativeLayout
+    <RelativeLayout
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent" >
 
@@ -92,7 +64,7 @@
 	                    android:layout_toLeftOf="@+id/gbCheck"
 	                    android:background="#55333333" />
 
-	                <org.jraf.android.backport.switchwidget.Switch
+	                <android.support.v7.widget.SwitchCompat
 	                    android:id="@+id/gbCheck"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
@@ -144,7 +116,7 @@
 	                    android:layout_toLeftOf="@+id/hcCheck"
 	                    android:background="#55333333" />
 
-	                <org.jraf.android.backport.switchwidget.Switch
+	                <android.support.v7.widget.SwitchCompat
 	                    android:id="@+id/hcCheck"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
@@ -196,7 +168,7 @@
 	                    android:layout_toLeftOf="@+id/icsCheck"
 	                    android:background="#55333333" />
 
-	                <org.jraf.android.backport.switchwidget.Switch
+	                <android.support.v7.widget.SwitchCompat
 	                    android:id="@+id/icsCheck"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
@@ -248,7 +220,7 @@
 	                    android:layout_toLeftOf="@+id/jbCheck"
 	                    android:background="#55333333" />
 
-	                <org.jraf.android.backport.switchwidget.Switch
+	                <android.support.v7.widget.SwitchCompat
 	                    android:id="@+id/jbCheck"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
@@ -300,7 +272,7 @@
 	                    android:layout_toLeftOf="@+id/kkCheck"
 	                    android:background="#55333333" />
 
-	                <org.jraf.android.backport.switchwidget.Switch
+	                <android.support.v7.widget.SwitchCompat
 	                    android:id="@+id/kkCheck"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
@@ -352,7 +324,7 @@
 	                    android:layout_toLeftOf="@+id/ldpCheck"
 	                    android:background="#55333333" />
 
-	                <org.jraf.android.backport.switchwidget.Switch
+	                <android.support.v7.widget.SwitchCompat
 	                    android:id="@+id/ldpCheck"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
@@ -406,7 +378,7 @@
 	                    android:background="#55333333" >
 	                </LinearLayout>
 
-	                <org.jraf.android.backport.switchwidget.Switch
+	                <android.support.v7.widget.SwitchCompat
 	                    android:id="@+id/lollipopCheck"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
@@ -455,7 +427,7 @@
 	            android:contentDescription="@string/hello_world"
 	            android:src="@drawable/expander_open_holo_light" />
 
-	        <org.jraf.android.backport.switchwidget.Switch
+	        <android.support.v7.widget.SwitchCompat
 	            android:id="@+id/logCheck"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
@@ -501,7 +473,7 @@
 	            android:onClick="settings" />
 
 	    </RelativeLayout>
-	    
+
 	</RelativeLayout>
     
 </LinearLayout>

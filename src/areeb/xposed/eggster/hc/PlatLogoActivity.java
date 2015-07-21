@@ -43,7 +43,7 @@ public class PlatLogoActivity extends Activity {
         SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
 		String SysUImode = pref.getString("hc_sysui", getString(R.string.pref_none));
 		if (SysUImode.equals("Translucent Mode")) {
-		        setTheme(R.style.Wallpaper_TranslucentDecor);
+		        //setTheme(R.style.Wallpaper_TranslucentDecor);
 		            }
         super.onCreate(savedInstanceState);
         

@@ -19,7 +19,6 @@
 package areeb.xposed.eggster;
 
 
-
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.callMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;

@@ -7,8 +7,9 @@
     <string name="pref_header_ics_short">ICS</string>
     <string name="pref_header_jb">Jelly Bean</string>
     <string name="pref_header_kk">KitKat</string>
-    <string name="pref_header_l">Android L Preview</string>
+    <string name="pref_header_l">L Preview</string>
     <string name="pref_header_lp">Lollipop</string>
+    <string name="pref_header_mp">M Preview</string>
     <string name="pref_header_about">About</string>
     
     

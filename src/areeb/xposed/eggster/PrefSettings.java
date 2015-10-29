@@ -14,6 +14,13 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatCheckedTextView;
+import android.support.v7.widget.AppCompatRadioButton;
+import android.support.v7.widget.AppCompatSpinner;
+import android.util.AttributeSet;
+import android.view.View;
+import android.support.v7.widget.AppCompatEditText;
 
 import java.util.List;
 
@@ -55,6 +62,7 @@ public class PrefSettings extends PreferenceActivity {
 				|| KKPreferenceFragment.class.getName().equals(fragmentName)
 				|| ALPreferenceFragment.class.getName().equals(fragmentName)
 				|| LPPreferenceFragment.class.getName().equals(fragmentName)
+                || MPPreferenceFragment.class.getName().equals(fragmentName)
 				|| ABPreferenceFragment.class.getName().equals(fragmentName)) {
 			return true;
 
@@ -62,26 +70,53 @@ public class PrefSettings extends PreferenceActivity {
 
 		return false;
 	}
-	
+
 
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
+            super.onPostCreate(savedInstanceState);
 
-		
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
-		
-		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		
-		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		}
-		
-		setupSimplePreferencesScreen();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            }
+
+
+
+            setupSimplePreferencesScreen();
+
 				
 	}
+
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs){
+        final View result = super.onCreateView(name, context, attrs);
+        if(result!=null)
+            return result;
+
+        if(Build.VERSION.SDK_INT<Build.VERSION_CODES.LOLLIPOP){
+            switch(name){
+                case "EditText":
+                    return  new AppCompatEditText(context, attrs);
+                case "Spinner":
+                    return new AppCompatSpinner(context, attrs);
+                case "CheckBox":
+                    return new AppCompatCheckBox(context, attrs);
+                case "RadioButton":
+                    return new AppCompatRadioButton(context, attrs);
+                case "CheckedTextView":
+                    return new AppCompatCheckedTextView(context, attrs);
+            }
+        }
+        return null;
+    }
+
 		
 	/**
 	 * Shows the simplified settings UI if the device configuration if the
@@ -152,8 +187,13 @@ public class PrefSettings extends PreferenceActivity {
 		fakeHeader.setTitle(getString(R.string.pref_header_lp).toUpperCase());
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_lp);
-		
-		
+
+        // Add MP preferences, and a corresponding header.
+        fakeHeader = new PreferenceCategory(this);
+        fakeHeader.setTitle(getString(R.string.pref_header_mp).toUpperCase());
+        getPreferenceScreen().addPreference(fakeHeader);
+        addPreferencesFromResource(R.xml.pref_mp);
+
 
 		fakeHeader = new PreferenceCategory(this);
 		fakeHeader.setTitle(getString(R.string.pref_header_about).toUpperCase());
@@ -187,8 +227,9 @@ public class PrefSettings extends PreferenceActivity {
 		bindPreferenceSummaryToValue(findPreference("kk_sysui"));
 		bindPreferenceSummaryToValue(findPreference("andl_sysui"));
 		bindPreferenceSummaryToValue(findPreference("lp_sysui"));
+        bindPreferenceSummaryToValue(findPreference("mp_sysui"));
 		
-		hidePreference(KK, findPreference("gb_sysui"), findPreference("hc_sysui"), findPreference("ics_sysui_plat"), findPreference("ics_sysui"), findPreference("jb_sysui_plat"), findPreference("jb_sysui"), findPreference("kk_sysui"), findPreference("andl_sysui"), findPreference("lp_sysui"));
+		hidePreference(KK, findPreference("gb_sysui"), findPreference("hc_sysui"), findPreference("ics_sysui_plat"), findPreference("ics_sysui"), findPreference("jb_sysui_plat"), findPreference("jb_sysui"), findPreference("kk_sysui"), findPreference("andl_sysui"), findPreference("lp_sysui"), findPreference("mp_sysui"));
 		
 		
 		
@@ -595,6 +636,31 @@ public class PrefSettings extends PreferenceActivity {
 			hidePreference(KK, findPreference("lp_sysui"));
 		}
 	}
+
+    /**
+     * This fragment shows M Preview preferences only. It is used when the
+     * activity is showing a two-pane settings UI.
+     */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public static class MPPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            PreferenceManager prefMgr = getPreferenceManager();
+            setPreferenceName(prefMgr);
+
+            addPreferencesFromResource(R.xml.pref_mp);
+
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+            bindPreferenceSummaryToValue(findPreference("mp_sysui"));
+
+            hidePreference(KK, findPreference("mp_sysui"));
+        }
+    }
 	
 	/**
 	 * This fragment shows About preferences only. It is used when the

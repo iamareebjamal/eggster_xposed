@@ -90,7 +90,7 @@ public class PlatLogoActivity extends Activity {
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
 		if (daSys.equals(getString(R.string.pref_translucent))) {
-			//super.setTheme(R.style.Wallpaper_TranslucentDecor);
+			super.setTheme(R.style.Wallpaper_TranslucentDecor);
 		}
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);

@@ -1,0 +1,18 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    
+    <ListPreference
+        android:title="@string/pref_sysui"
+        android:key="mp_sysui"
+        android:defaultValue="@string/pref_none"
+        android:dialogTitle="Choose System UI mode for the M Preview Platlogo"
+        android:entryValues="@array/SysUImodes"
+        android:entries="@array/SysUImodes"/>
+    
+    <CheckBoxPreference 
+        android:summaryOn="@string/pref_port_force"
+        android:summaryOff="@string/pref_port_auto"
+        android:defaultValue="false"
+        android:key="mp_force_port"
+        android:title="@string/pref_title_portrit_mode"/>
+</PreferenceScreen>

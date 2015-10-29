@@ -43,7 +43,7 @@ public class EggsPoached implements IXposedHookLoadPackage, IXposedHookZygoteIni
 
 	Activity mActivity;
 
-	XSharedPreferences xpref = new XSharedPreferences("areeb.xposed.eggster", "easter_preference");
+	static XSharedPreferences xpref = new XSharedPreferences("areeb.xposed.eggster", "easter_preference");
 	Boolean enabled;
 	String chosenEgg;
 
@@ -52,14 +52,14 @@ public class EggsPoached implements IXposedHookLoadPackage, IXposedHookZygoteIni
 	private static final String HOOKED_PACKAGE = "com.cosmic.mods", HOOKED_CLASS = "com.cosmic.mods.PlatLogoActivity", HOOK_CLASS = "com.android.internal.app.PlatLogoActivity", HOOK_METHOD = "onCreate";
 
 
-	int GB = 0, HC = 1, ICS = 2, JB = 3, KK = 4, L = 5, LP = 6;
+	int GB = 0, HC = 1, ICS = 2, JB = 3, KK = 4, L = 5, LP = 6, MP = 7;
 
-	String[] versionName = {"Gingerbread", "Honeycomb", "Ice Cream Sandwich", "Jelly Bean", "Kitkat", "Android L Preview", "Lollipop"}, versionSName = {"GB", "HC", "ICS", "JB", "KK", "L", "LP"};
-	int[] versionCode = {10, 11, 14, 16, 19, 20, 21};
+	String[] versionName = {"Gingerbread", "Honeycomb", "Ice Cream Sandwich", "Jelly Bean", "Kitkat", "L Preview", "Lollipop", "M Preview"}, versionSName = {"GB", "HC", "ICS", "JB", "KK", "L", "LP", "MP"};
+	int[] versionCode = {10, 11, 14, 16, 19, 20, 21, 22};
 
 
 	private static final String PACKAGE = "areeb.xposed.eggster";
-	private static final String[] platActs = {"areeb.xposed.eggster.gb.PlatLogoActivity", "areeb.xposed.eggster.hc.PlatLogoActivity", "areeb.xposed.eggster.ics.PlatLogoActivity", "areeb.xposed.eggster.jb.PlatLogoActivity", "areeb.xposed.eggster.kk.PlatLogoActivity", "areeb.xposed.eggster.l.PlatLogoActivity", "areeb.xposed.eggster.lp.PlatLogoActivity"};
+	private static final String[] platActs = {"areeb.xposed.eggster.gb.PlatLogoActivity", "areeb.xposed.eggster.hc.PlatLogoActivity", "areeb.xposed.eggster.ics.PlatLogoActivity", "areeb.xposed.eggster.jb.PlatLogoActivity", "areeb.xposed.eggster.kk.PlatLogoActivity", "areeb.xposed.eggster.l.PlatLogoActivity", "areeb.xposed.eggster.lp.PlatLogoActivity", "areeb.xposed.eggster.mp.PlatLogoActivity"};
 
 	private static final int version = Build.VERSION.SDK_INT;
 	String CURRENT_VERSION;
@@ -121,6 +121,10 @@ public class EggsPoached implements IXposedHookLoadPackage, IXposedHookZygoteIni
 					CURRENT_VERSION = versionSName[LP];
 
 				}
+                else if (version >= versionCode[MP])
+                {
+                    CURRENT_VERSION = versionSName[MP];
+                }
 
 				xpref.reload();
 				enabled = xpref.getBoolean("enabled", true);
@@ -171,6 +175,10 @@ public class EggsPoached implements IXposedHookLoadPackage, IXposedHookZygoteIni
 					chosenAct = platActs[LP];
 
 				}
+                else if (chosenEgg.equals(versionSName[MP]))
+                {
+                    chosenAct = platActs[MP];
+                }
 
 
 				if (enabled == true)
@@ -267,7 +275,7 @@ public class EggsPoached implements IXposedHookLoadPackage, IXposedHookZygoteIni
 	}
 	
 	
-	public void logIt(String string){
+	public static void logIt(String string){
 		
 		xpref.reload();
 		Boolean log = xpref.getBoolean("log", false);

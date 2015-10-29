@@ -27,6 +27,10 @@
     <header
         android:fragment="areeb.xposed.eggster.PrefSettings$LPPreferenceFragment"
         android:title="@string/pref_header_lp" />
+
+    <header
+        android:fragment="areeb.xposed.eggster.PrefSettings$MPPreferenceFragment"
+        android:title="@string/pref_header_mp" />
     
     <header
         android:fragment="areeb.xposed.eggster.PrefSettings$ABPreferenceFragment"

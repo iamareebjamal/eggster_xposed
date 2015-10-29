@@ -32,7 +32,6 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import areeb.xposed.eggster.Eggs;
 import areeb.xposed.eggster.R;
-import areeb.xposed.eggster.R.style;
 
 
 @SuppressLint("ClickableViewAccessibility") 
@@ -40,12 +39,15 @@ public class PlatLogoActivity extends Activity {
 	int tapatap;
 	SharedPreferences.Editor edit;
     ImageView lightClickEffect;
-
+    float fact = 1.7F;
     @SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+
+
+
 		final ImageView lollipop = new ImageView(this);
 		final ImageView logo 	 = new ImageView(this);
 		final RelativeLayout pop = new RelativeLayout(this);
@@ -83,7 +85,6 @@ public class PlatLogoActivity extends Activity {
 		int length = 5;
 		if(getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString("lp_sysui", getString(R.string.pref_none)).equals("Immersive Mode"))
 			length = 50;
-		@SuppressWarnings("deprecation")
         float scale = getResources().getDisplayMetrics().density;
         int width = (int) (35*scale + 0.5f);
 		LayoutParams StickLP = new LayoutParams(width, (getWindowManager().getDefaultDisplay().getHeight() / 2) - lollipop.getBottom() + length);
@@ -108,6 +109,28 @@ public class PlatLogoActivity extends Activity {
 		ViewHelper.setScaleX(pop, 0);
 		ViewHelper.setScaleY(pop, 0);
 
+        String sysUIMode = (getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString("lp_sysui", getString(R.string.pref_none)));
+
+        if (sysUIMode.equals(getString(R.string.pref_none)))
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        if (sysUIMode.equals(getString(R.string.pref_translucent))) {
+            getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            fact = 1.5F;
+        } else if (sysUIMode.equals(getString(R.string.pref_immerge)))
+            container.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); // immerge
+
 		setContentView(container);
 
 		final Context ctx = this;
@@ -126,7 +149,7 @@ public class PlatLogoActivity extends Activity {
 				if (tapatap==0) {
 					ViewPropertyAnimator.animate(pop).scaleX(3.7F).scaleY(3.7F).setDuration(700).setInterpolator(new DecelerateInterpolator()).start();
 					ViewPropertyAnimator.animate(logo).alpha(1).setDuration(700).setStartDelay(700).start();
-					ViewPropertyAnimator.animate(stick).translationYBy(pop.getMeasuredHeight()*1.7F).alpha(1).setDuration(1000).setStartDelay(1000).start();
+					ViewPropertyAnimator.animate(stick).translationYBy(pop.getMeasuredHeight()*fact).alpha(1).setDuration(1000).setStartDelay(1000).start();
 				} else {
                     int index = 2*(new Random().nextInt(materialPalette.length/2));
 
@@ -162,6 +185,7 @@ public class PlatLogoActivity extends Activity {
                         finish();
                     } catch (ActivityNotFoundException er) {
                         if (getApplicationContext().getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("lp_game_install", true) == true) {
+
                             AlertDialog.Builder alert = new AlertDialog.Builder(ctx);
                             alert.setTitle("Pop missing");
                             alert.setMessage("To add the Lollipop Land game to the Easter Egg, you'll have to download a small app from play store. Would you like to do that?");
@@ -202,22 +226,8 @@ public class PlatLogoActivity extends Activity {
 				return true;
 			}
 		});
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		
-			String sysUIMode = (getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getString("lp_sysui", getString(R.string.pref_none)));
-		
-			if (Build.VERSION.SDK_INT >= 19 && sysUIMode.equals("Immersive Mode")) {
-		        container.setSystemUiVisibility(
-		                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-		                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-		                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-		                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION		// hide nav bar
-		                | View.SYSTEM_UI_FLAG_FULLSCREEN			// hide status bar
-		                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);	//Immersive
-		        } else if (Build.VERSION.SDK_INT >= 19 && sysUIMode.equals("Translucent Mode")) 
-		        	{
-		                	//super.setTheme(style.Wallpaper_TranslucentDecor);
-		        	}
+
+
 		}
 	
 	

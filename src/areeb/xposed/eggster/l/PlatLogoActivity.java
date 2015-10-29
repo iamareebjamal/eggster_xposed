@@ -57,7 +57,7 @@ public class PlatLogoActivity extends Activity  {
 			getWindow().setFlags(
 					WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
 					WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-			getWindow().setFlags(
+			        getWindow().setFlags(
 					WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
 					WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 		} else if (sui.equals(getString(R.string.pref_immerge)))

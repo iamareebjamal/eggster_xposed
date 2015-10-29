@@ -346,10 +346,10 @@
 	                    android:layout_centerVertical="true"
 	                    android:contentDescription="@string/hello_world"
 	                    android:onClick="lollipop"
-	                    android:src="@drawable/lollipop_test" />
+	                    android:src="@drawable/lollipop" />
 
 	                <LinearLayout
-	                    android:id="@+id/LinearLayout01"
+	                    android:id="@+id/divider8"
 	                    android:layout_width="1dp"
 	                    android:layout_height="20dp"
 	                    android:layout_centerVertical="true"
@@ -363,7 +363,7 @@
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:layout_centerVertical="true"
-	                    android:layout_toRightOf="@+id/LinearLayout01"
+	                    android:layout_toRightOf="@+id/divider8"
 	                    android:padding="8dp"
 	                    android:text="@string/pref_header_lp"
 	                    android:textColor="#333333"
@@ -385,6 +385,60 @@
 	                    android:layout_alignParentRight="true"
 	                    android:layout_centerVertical="true" />
 	            </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:id="@+id/mpImg"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/hello_world"
+                        android:onClick="mpreview"
+                        android:src="@drawable/m_preview" />
+
+                    <LinearLayout
+                        android:id="@+id/divider9"
+                        android:layout_width="1dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/mpImg"
+                        android:background="#55333333"
+                        android:orientation="horizontal" >
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/divider9"
+                        android:padding="8dp"
+                        android:text="@string/pref_header_mp"
+                        android:textColor="#333333"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="1dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_toLeftOf="@+id/mpCheck"
+                        android:background="#55333333" >
+                    </LinearLayout>
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/mpCheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
 
 	        </LinearLayout>
 	    </ScrollView>

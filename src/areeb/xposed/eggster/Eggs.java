@@ -22,36 +22,37 @@ import android.content.SharedPreferences;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.nineoldandroids.view.ViewPropertyAnimator;
 
 
-@SuppressLint("WorldReadableFiles")
-public class Eggs extends ActionBarActivity
-{
+@SuppressLint({ "WorldReadableFiles", "NewApi" })
+public class Eggs extends AppCompatActivity {
+
+
 
 	SharedPreferences pref;
 	SharedPreferences.Editor edit;
 	Boolean enabled;
 	String current_egg;
 
-	ImageView gbImg, hcImg, icsImg, jbImg, kkImg, lImg, lpImg;
+	ImageView gbImg, hcImg, icsImg, jbImg, kkImg, lImg, lpImg, mpImg;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	ImageView openLayout;
 	RelativeLayout logLayout;
 
-	SwitchCompat GB_Check, HC_Check, ICS_Check, JB_Check, KK_Check, L_Check, LP_Check;
+	SwitchCompat GB_Check, HC_Check, ICS_Check, JB_Check, KK_Check, L_Check, LP_Check, MP_Check;
 
 	int GB = 0;
 	int HC = 1;
@@ -60,11 +61,12 @@ public class Eggs extends ActionBarActivity
 	int KK = 4;
 	int L = 5;
 	int LP = 6;
+    int MP = 7;
 
 	String[] versionName = { "Gingerbread", "Honeycomb", "Ice Cream Sandwich",
-			"Jelly Bean", "Kitkat", "Android L Preview", "Lollipop" };
-	String[] versionSName = { "GB", "HC", "ICS", "JB", "KK", "L", "LP" };
-	int[] versionCode = { 10, 11, 14, 16, 19, 20, 21};
+			"Jelly Bean", "Kitkat", "L Preview", "Lollipop", "M Preview" };
+	String[] versionSName = { "GB", "HC", "ICS", "JB", "KK", "L", "LP" , "MP"};
+	int[] versionCode = { 10, 11, 14, 16, 19, 20, 21, 22};
 
 	@SuppressLint("CommitPrefEdits")
 	@SuppressWarnings("deprecation")
@@ -74,7 +76,8 @@ public class Eggs extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		pref = getSharedPreferences("easter_preference", Context.MODE_WORLD_READABLE);
+		pref = getSharedPreferences("easter_preference",
+				Context.MODE_WORLD_READABLE);
 		edit = pref.edit();
 
 		enabled = pref.getBoolean("enabled", false);
@@ -88,6 +91,7 @@ public class Eggs extends ActionBarActivity
 		KK_Check = (SwitchCompat) findViewById(R.id.kkCheck);
 		L_Check = (SwitchCompat) findViewById(R.id.ldpCheck);
 		LP_Check = (SwitchCompat) findViewById(R.id.lollipopCheck);
+        MP_Check = (SwitchCompat) findViewById(R.id.mpCheck);
 
 		gbImg = (ImageView) findViewById(R.id.gbImg);
 		hcImg = (ImageView) findViewById(R.id.hcImg);
@@ -96,6 +100,7 @@ public class Eggs extends ActionBarActivity
 		kkImg = (ImageView) findViewById(R.id.kkImg);
 		lImg = (ImageView) findViewById(R.id.ldpImg);
 		lpImg = (ImageView) findViewById(R.id.lollipopImg);
+        mpImg = (ImageView) findViewById(R.id.mpImg);
 		
 		/*
 		 * int count = 4;
@@ -153,7 +158,11 @@ public class Eggs extends ActionBarActivity
 
 				LP_Check.setChecked(true);
 
-			}
+			} else if (current_egg.equals("MP")) {
+
+                MP_Check.setChecked(true);
+
+            }
 			
 		}
 
@@ -168,7 +177,8 @@ public class Eggs extends ActionBarActivity
 		KK_Check.setOnCheckedChangeListener(toggleIt(KK));
 		L_Check.setOnCheckedChangeListener(toggleIt(L));
 		LP_Check.setOnCheckedChangeListener(toggleIt(LP));
-		
+		MP_Check.setOnCheckedChangeListener(toggleIt(MP));
+
 		SwitchCompat logCheck = (SwitchCompat) findViewById(R.id.logCheck);
 		
 		Boolean log = pref.getBoolean("log", false);
@@ -215,22 +225,19 @@ public class Eggs extends ActionBarActivity
 	}
 	
 public void toggleView(View view){
+
 		
-		final Animation inAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_out);
-		final Animation outAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in);
-		
-		if (logLayout.getVisibility() == View.GONE){
+		if (openLayout.getVisibility() == View.VISIBLE){
 			
 			logLayout.setVisibility(View.VISIBLE);
 			openLayout.setVisibility(View.GONE);
-			logLayout.startAnimation(inAnim);
+            ViewPropertyAnimator.animate(logLayout).translationYBy(-logLayout.getHeight()).setDuration(200).setInterpolator(new DecelerateInterpolator()).start();
 			
 		} else {
-			
+
 			logLayout.setVisibility(View.GONE);
 			openLayout.setVisibility(View.VISIBLE);
-			logLayout.startAnimation(outAnim);
-			
+            ViewPropertyAnimator.animate(logLayout).translationYBy(logLayout.getHeight()).setDuration(200).setInterpolator(new DecelerateInterpolator()).start();
 		}
 		
 	}
@@ -246,8 +253,8 @@ public void toggleView(View view){
 
 	public OnCheckedChangeListener toggleIt(int ver) {
 
-		if (ver > 6)
-			return null;
+		if (ver > 7)
+			return null; //Return if greater than index
 
 		final int version = ver;
 
@@ -311,6 +318,9 @@ public void toggleView(View view){
 		if (LP_Check.isChecked() == true)
 			return true;
 
+        if(MP_Check.isChecked() == true)
+            return true;
+
 		return false;
 	}
 
@@ -339,7 +349,7 @@ public void toggleView(View view){
 	public void toggleEgg(int i) {
 
 		// Enable i
-		if (i > 6)
+		if (i > 7)
 			return; // Return if i is greater than array index
 
 		disableExcept(i);
@@ -351,7 +361,7 @@ public void toggleView(View view){
 
 	public void disableExcept(int i) {
 
-		if (i > 6)
+		if (i > 7)
 			return; // Return if i is greater than array index
 
 		for (int j = 0; j < i; j++) {
@@ -388,14 +398,19 @@ public void toggleView(View view){
 
 			} else if (versionSName[j].equals("LP")) {
 
-				// disable L
+				// disable LP
 				LP_Check.setChecked(false);
 
-			}
+			} else if (versionSName[j].equals("MP")) {
+
+                // disable MP
+                MP_Check.setChecked(false);
+
+            }
 
 		}
 
-		for (int j = 6; j > i; j--) {
+		for (int j = 7; j > i; j--) {
 
 			if (versionSName[j].equals("GB")) {
 
@@ -429,10 +444,15 @@ public void toggleView(View view){
 
 			} else if (versionSName[j].equals("LP")) {
 
-				// disable L
+				// disable LP
 				LP_Check.setChecked(false);
 
-			}
+			} else if (versionSName[j].equals("MP")) {
+
+                // disable MP
+                MP_Check.setChecked(false);
+
+            }
 
 		}
 
@@ -487,17 +507,24 @@ public void toggleView(View view){
 				areeb.xposed.eggster.lp.PlatLogoActivity.class));
 
 	}
+
+    public void mpreview(View view) {
+
+        startActivity(new Intent(this,
+                areeb.xposed.eggster.mp.PlatLogoActivity.class));
+
+    }
 	
 	public void colorize() {
 
 		setColorFilter(gbImg, 105, 206, 91);
-		setColorFilter(hcImg, 70, 161, 229);
+		setColorFilter(hcImg, 250, 120, 40);
 		setColorFilter(icsImg, 138, 90, 90);
 		setColorFilter(jbImg, 255, 68, 68);
-		setColorFilter(kkImg, 230, 87, 87);
-		setColorFilter(lImg, 255, 203, 47);
+		setColorFilter(kkImg, 160, 90, 50);
+		setColorFilter(lImg, 70, 161, 229);
 		setColorFilter(lpImg, 255, 58, 118);
-
+        setColorFilter(mpImg, 250, 140, 0);
 	}
 
 	public void decolorize() {
@@ -509,7 +536,7 @@ public void toggleView(View view){
 		setColorFilter(kkImg, 100, 100, 100);
 		setColorFilter(lImg, 100, 100, 100);
 		setColorFilter(lpImg, 100, 100, 100);
-		
+        setColorFilter(mpImg, 100, 100, 100);
 	}
 
 	public static void setColorFilter(ImageView iv, float redValue, float greenValue,

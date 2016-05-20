@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="pref_header_gb">GingerBread</string>
+    <string name="pref_header_hc">HoneyComb</string>
+    <string name="pref_header_ics">Ice Cream Sandwich</string>
+    <string name="pref_header_ics_short">ICS</string>
+    <string name="pref_header_jb">Jelly Bean</string>
+    <string name="pref_header_kk">KitKat</string>
+    <string name="pref_header_l">L Preview</string>
+    <string name="pref_header_lp">Lollipop</string>
+    <string name="pref_header_mp">M Preview</string>
+    <string name="pref_header_about">About</string>
+    
+    
+    <string name="pref_default_gb_text">Zombie Art by Jack Larson</string>
+    <string name="pref_default_hc_text">REZZZZZZZ&#8230;</string>
+    <string name="pref_default_ics_text">Android 4.0: Ice Cream Sandwich</string>
+    <string name="pref_default_jb_text_1">Android 4.3</string>
+    <string name="pref_default_jb_text_2">JELLY BEAN</string>
+    <string name="pref_default_ics_int">10</string>
+    <string name="pref_default_jb_int">20</string>
+    <string name="pref_default_kk_letter">K</string>
+    <string name="pref_default_kk_text">ANDROID 4.4.4</string>
+    <string name="pref_default_kk_clicks">6</string>
+    <string name="pref_default_kk_dur">500</string>
+    <string name="pref_default_kk_letter_size">300</string>
+    <string name="pref_title_toast_text">Toast Text</string>
+    <string name="pref_title_version_text">Version Name</string>
+    <string name="pref_title_version_num">Version Number</string>
+    <string name="pref_title_version_letter">Version Letter</string>
+    <string name="pref_title_jb_int">Number of Beans</string>
+    <string name="pref_title_cats_int">Number of Cats</string>
+    <string name="pref_title_clicks_int">Maximum Clicks</string>
+    <string name="pref_title_freq">Frequency of special pastries</string>
+    <string name="pref_let_interpol">Letter Interpolator</string>
+    <string name="pref_title_anim_int">Animation Duration</string>
+    <string name="pref_title_letter_size">Letter Size</string>
+    <string name="pref_title_text_size">Text Size</string>
+    <string name="pref_title_portrit_mode">Force Portrait Mode</string>
+    <string name="pref_title_color">Lollipop Color Randomness</string>
+    <string name="pref_sum_anim_int">Kitkat Tiles duration</string>
+    <string name="pref_def_anim">Decelerate</string>
+    <string name="pref_diag_anim_int">Higher the duration, slower the animation speed</string>
+    <string name="pref_none">Normal</string>
+    <string name="pref_immerge">Immersive Mode</string>
+    <string name="pref_translucent">Translucent Mode</string>
+    <string name="pref_sysui">System UI mode</string>
+    <string name="pref_sysui_plat">System UI mode (in the platlogo)</string>
+    <string name="pref_port_force">Easter Egg forced to portrait mode</string>
+    <string name="pref_port_auto">"Easter Egg will auto-rotate</string>
+    <string name="pref_color_random">Lollipop color will be random</string>
+    <string name="pref_color_palette">Lollipop color will be from Material Palette</string>
+    <string name="pref_transbg">Behind the image there is a dark, translucid background</string>
+    <string name="pref_blackbg">Behind the image there is a black background</string>
+    
+</resources>

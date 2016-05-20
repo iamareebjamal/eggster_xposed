@@ -28,7 +28,7 @@ public class DessertCaseDream extends DreamService {
     private DessertCaseView.RescalingContainer mContainer;
 
     @SuppressLint("NewApi")
-	@Override
+    @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
         setInteractive(false);

@@ -173,7 +173,7 @@ public class PlatLogoActivity extends Activity {
 
                     //TODO : Improve version handling
 
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         im.animate()
                                 .translationZ(20)
                                 .scaleX(1)
@@ -197,7 +197,7 @@ public class PlatLogoActivity extends Activity {
                     a.setStartDelay(1000);
                     a.start();
 
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         stick.animate()
                                 .translationZ(20)
                                 .alpha(1)

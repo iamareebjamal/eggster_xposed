@@ -22,12 +22,12 @@
 package areeb.xposed.eggster.jb;
 
 
-import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,71 +36,71 @@ import areeb.xposed.eggster.R;
 
 public class BeanBag extends Activity {
 
-	private Board board;
+    private Board board;
 
-	@SuppressLint({ "NewApi", "InlinedApi" })
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		SharedPreferences shr = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
-		String leMode = shr.getString("jb_sysui", getString(R.string.pref_none));
-		
-		if (leMode.equals(getString(R.string.pref_none)))
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            		
-		setContentView(R.layout.activity_bean_bag);		
-		board = new Board(this, null);
-		FrameLayout FML = (FrameLayout) findViewById(R.id.gameview);
-		
-		if (leMode.equals(getString(R.string.pref_translucent))) {
-		        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-		        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); }
-		
-	    		if (leMode.equals(getString(R.string.pref_immerge))) {
-	    			 FML.setSystemUiVisibility(
-	    	                   View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-	    	                   | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-	    	                   | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-	    	                   | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION 		// hide nav bar
-	    	                   | View.SYSTEM_UI_FLAG_FULLSCREEN 			// hide status bar
-	    	                   | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); 	// immerge
-	    		}	
-		FML.addView(board, 0);
-	}
-	
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
+    @SuppressLint({"NewApi", "InlinedApi"})
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		Boolean forcePort = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("jb_force_port", false);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        SharedPreferences shr = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+        String leMode = shr.getString("jb_sysui", getString(R.string.pref_none));
 
-		if (forcePort == true) {
-				
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			
-		}
-				
+        if (leMode.equals(getString(R.string.pref_none)))
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-				
-	}
+        setContentView(R.layout.activity_bean_bag);
+        board = new Board(this, null);
+        FrameLayout FML = (FrameLayout) findViewById(R.id.gameview);
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if (board != null) {
-			board.startAnimation();
-		}
-	}
+        if (leMode.equals(getString(R.string.pref_translucent))) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-		if (board != null) {
-			board.stopAnimation();
-		}
-	}
+        if (leMode.equals(getString(R.string.pref_immerge))) {
+            FML.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION        // hide nav bar
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN            // hide status bar
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);    // immerge
+        }
+        FML.addView(board, 0);
+    }
 
-	
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        Boolean forcePort = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("jb_force_port", false);
+
+        if (forcePort == true) {
+
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        }
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (board != null) {
+            board.startAnimation();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (board != null) {
+            board.stopAnimation();
+        }
+    }
+
+
 }

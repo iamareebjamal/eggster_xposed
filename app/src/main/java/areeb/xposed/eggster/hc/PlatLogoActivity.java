@@ -31,30 +31,30 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import areeb.xposed.eggster.R;
 
-@SuppressLint({ "ShowToast", "InlinedApi" })
+@SuppressLint({"ShowToast", "InlinedApi"})
 public class PlatLogoActivity extends Activity {
     Toast mToast;
     int BGCOLOR = 0xD0000000;
 
-   
-	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-	@Override
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
-		String SysUImode = pref.getString("hc_sysui", getString(R.string.pref_none));
-		if (SysUImode.equals("Translucent Mode")) {
-		        setTheme(R.style.Wallpaper_TranslucentDecor);
-		}
+        String SysUImode = pref.getString("hc_sysui", getString(R.string.pref_none));
+        if (SysUImode.equals("Translucent Mode")) {
+            setTheme(R.style.Wallpaper_TranslucentDecor);
+        }
         super.onCreate(savedInstanceState);
-        
+
         getWindow().getDecorView().setBackgroundColor(BGCOLOR);
-        
+
         String hcToast = pref.getString("hc_toast_text", getString(R.string.pref_default_hc_text));
         mToast = Toast.makeText(this, hcToast, Toast.LENGTH_SHORT);
 
-        if (SysUImode.equals(getString(R.string.pref_none))) 
-        		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        
+        if (SysUImode.equals(getString(R.string.pref_none)))
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         ImageView content = new ImageView(this);
 
         content.setImageResource(R.drawable.platlogo_hc);
@@ -62,29 +62,29 @@ public class PlatLogoActivity extends Activity {
         if (Build.VERSION.SDK_INT >= 19 && SysUImode.equals("Immersive Mode")) {
             content.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); 
-            }
-        setContentView(content);
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
-	
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
+        setContentView(content);
+    }
 
-		Boolean forcePort = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("hc_force_port", false);
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
-		if (forcePort == true) {
-				
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			
-		}
-	
-				
-	}
+        Boolean forcePort = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("hc_force_port", false);
+
+        if (forcePort == true) {
+
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        }
+
+
+    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

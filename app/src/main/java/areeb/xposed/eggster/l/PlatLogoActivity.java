@@ -1,7 +1,5 @@
 package areeb.xposed.eggster.l;
 
-import java.util.Random;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -21,8 +19,10 @@ import android.widget.FrameLayout.LayoutParams;
 import android.widget.TextView;
 import areeb.xposed.eggster.R;
 
-public class PlatLogoActivity extends Activity  {
-    @SuppressLint({ "NewApi", "InlinedApi" })
+import java.util.Random;
+
+public class PlatLogoActivity extends Activity {
+    @SuppressLint({"NewApi", "InlinedApi"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -71,9 +71,9 @@ public class PlatLogoActivity extends Activity  {
 
         label.gravity = Gravity.LEFT | Gravity.BOTTOM;
 
-        if (sui.equals(getString(R.string.pref_translucent))){
+        if (sui.equals(getString(R.string.pref_translucent))) {
 
-            if (ViewConfiguration.get(this).hasPermanentMenuKey() == false){
+            if (ViewConfiguration.get(this).hasPermanentMenuKey() == false) {
 
                 label.bottomMargin = 100;
 

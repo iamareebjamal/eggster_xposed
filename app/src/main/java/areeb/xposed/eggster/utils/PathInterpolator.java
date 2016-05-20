@@ -27,7 +27,6 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.InflateException;
 import android.view.animation.Interpolator;
-
 import areeb.xposed.eggster.R;
 
 /**

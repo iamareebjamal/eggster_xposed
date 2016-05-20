@@ -34,11 +34,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,13 +42,12 @@ import android.widget.Toast;
 import areeb.xposed.eggster.R;
 
 public class PlatLogoActivity extends Activity {
+    final Handler mHandler = new Handler();
     Toast mToast;
     ImageView mContent;
     int mCount;
     int mSize;
-    final Handler mHandler = new Handler();
 
-        
     private View makeView() {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -61,90 +56,85 @@ public class PlatLogoActivity extends Activity {
         view.setOrientation(LinearLayout.VERTICAL);
         view.setLayoutParams(
                 new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
                 ));
-        final int p = (int)(8 * metrics.density);
+        final int p = (int) (8 * metrics.density);
         view.setPadding(p, p, p, p);
-        
+
         SharedPreferences pref = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
         String jbVer = pref.getString("jb_text_1", getString(R.string.pref_default_jb_text_1));
         String jbName = pref.getString("jb_text_2", getString(R.string.pref_default_jb_text_2));
-        
+
         Typeface normal = Typeface.createFromAsset(getAssets(), "Roboto-Bold.ttf");
         Typeface light = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
 
-        
-       
-		
+
         int jbSize = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getInt("jb_size", 14);
-        
-        try{
-        	
-        
-        
-        if (String.valueOf(jbSize) != null && jbSize > 0 && String.valueOf(jbSize).matches("\\d*") && String.valueOf(jbSize).length() > 0) {
-			
-			mSize = jbSize;
-			
-		}
-        
-        } catch (NumberFormatException e){
-        	
-        	mSize = 14;
-        	e.printStackTrace();
-        	
+
+        try {
+
+
+            if (String.valueOf(jbSize) != null && jbSize > 0 && String.valueOf(jbSize).matches("\\d*") && String.valueOf(jbSize).length() > 0) {
+
+                mSize = jbSize;
+
+            }
+
+        } catch (NumberFormatException e) {
+
+            mSize = 14;
+            e.printStackTrace();
+
         }
-        
+
         final float size = mSize * metrics.density;
         final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
-        lp.bottomMargin = (int) (-1*metrics.density);
-        
-        
+        lp.bottomMargin = (int) (-1 * metrics.density);
+
 
         TextView tv = new TextView(this);
         if (light != null) tv.setTypeface(light);
-        tv.setTextSize(1.25f*size);
+        tv.setTextSize(1.25f * size);
         tv.setTextColor(0xFFFFFFFF);
-        tv.setShadowLayer(4*metrics.density, 0, 2*metrics.density, 0x66000000);
+        tv.setShadowLayer(4 * metrics.density, 0, 2 * metrics.density, 0x66000000);
         tv.setText(jbVer);
         view.addView(tv, lp);
-   
+
         tv = new TextView(this);
         if (normal != null) tv.setTypeface(normal);
         tv.setTextSize(size);
         tv.setTextColor(0xFFFFFFFF);
-        tv.setShadowLayer(4*metrics.density, 0, 2*metrics.density, 0x66000000);
+        tv.setShadowLayer(4 * metrics.density, 0, 2 * metrics.density, 0x66000000);
         tv.setText(jbName);
         view.addView(tv, lp);
 
         return view;
     }
 
-    @SuppressLint({ "ShowToast", "NewApi", "InlinedApi" })
-	@Override
+    @SuppressLint({"ShowToast", "NewApi", "InlinedApi"})
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
-        SharedPreferences shr = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
-		String leMode = shr.getString("jb_sysui_plat", getString(R.string.pref_none));
-		
-		
-		if (leMode.equals(getString(R.string.pref_none)))
-			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		if (leMode.equals(getString(R.string.pref_translucent))) {
-	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); }
-	
-    		
-    		
-		
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        SharedPreferences shr = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE);
+        String leMode = shr.getString("jb_sysui_plat", getString(R.string.pref_none));
+
+
+        if (leMode.equals(getString(R.string.pref_none)))
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        if (leMode.equals(getString(R.string.pref_translucent))) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
+
         mToast = Toast.makeText(this, "", Toast.LENGTH_LONG);
         mToast.setView(makeView());
 
@@ -154,9 +144,9 @@ public class PlatLogoActivity extends Activity {
         mContent = new ImageView(this);
         mContent.setImageResource(R.drawable.platlogo_alt);
         mContent.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        
-        
-        final int p = (int)(32 * metrics.density);
+
+
+        final int p = (int) (32 * metrics.density);
         mContent.setPadding(p, p, p, p);
 
         mContent.setOnClickListener(new View.OnClickListener() {
@@ -169,13 +159,13 @@ public class PlatLogoActivity extends Activity {
 
         mContent.setOnLongClickListener(new View.OnLongClickListener() {
             @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-			@Override
+            @Override
             public boolean onLongClick(View v) {
                 try {
                     startActivity(new Intent(Intent.ACTION_MAIN)
-                        .setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-                        //.addCategory("com.android.internal.category.PLATLOGO"));
-                        .setClassName("areeb.xposed.eggster","areeb.xposed.eggster.jb.BeanBag"));
+                            .setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                            //.addCategory("com.android.internal.category.PLATLOGO"));
+                            .setClassName("areeb.xposed.eggster", "areeb.xposed.eggster.jb.BeanBag"));
                 } catch (ActivityNotFoundException ex) {
                     android.util.Log.e("PlatLogoActivity", "Couldn't find a bag of beans.");
                 }
@@ -183,32 +173,31 @@ public class PlatLogoActivity extends Activity {
                 return true;
             }
         });
-        
+
         if (leMode.equals(getString(R.string.pref_immerge))) {
-    			 mContent.setSystemUiVisibility(
-    	                   View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-    	                   | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-    	                   | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-    	                   | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION 		// hide nav bar
-    	                   | View.SYSTEM_UI_FLAG_FULLSCREEN 			// hide status bar
-    	                   | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY); 	// immerge
-    		}
+            mContent.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION        // hide nav bar
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN            // hide status bar
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);    // immerge
+        }
         setContentView(mContent);
     }
-    
+
     @Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
-		Boolean forcePort = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("jb_force_port", false);
+        Boolean forcePort = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("jb_force_port", false);
 
-		if (forcePort == true) {
-				
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			
-		}
-				
+        if (forcePort == true) {
 
-				
-	}
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        }
+
+
+    }
 }

@@ -7,7 +7,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import areeb.xposed.eggster.lp.PlatLogoActivity;
 
 public class MainActivity extends AppCompatActivity {
 

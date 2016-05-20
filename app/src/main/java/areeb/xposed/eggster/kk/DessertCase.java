@@ -31,7 +31,7 @@ public class DessertCase extends Activity {
     DessertCaseView mView;
 
     @SuppressLint("NewApi")
-	@Override
+    @Override
     public void onStart() {
         super.onStart();
 
@@ -39,20 +39,21 @@ public class DessertCase extends Activity {
 
         DessertCaseView.RescalingContainer container = new DessertCaseView.RescalingContainer(this);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT){
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        
-        } else{
-     
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        } else {
+
             mView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            ); }
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            );
+        }
         container.setView(mView);
         container.setBackgroundColor(Color.parseColor("#EA000000"));
         setContentView(container);
@@ -73,18 +74,18 @@ public class DessertCase extends Activity {
         super.onPause();
         mView.stop();
     }
-    
+
     @Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
-		Boolean forcePort = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("kk_force_port", false);
+        Boolean forcePort = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("kk_force_port", false);
 
-		if (forcePort == true) {
-				
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			
-		}
-				
-	}
+        if (forcePort == true) {
+
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        }
+
+    }
 }

@@ -2,17 +2,17 @@ package areeb.xposed.eggster.utils;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.Size;
+import android.support.v4.graphics.drawable.DrawableCompat;
 
 public class Misc {
 
-    @ColorInt
-    public static int HSBtoColor(@Size(3) float[] hsb) {
-        return HSBtoColor(hsb[0], hsb[1], hsb[2]);
-    }
+    // TODO : Create general methods of loading drawables, setBackground, clipping views and translationZ
 
     @ColorInt
     public static int HSBtoColor(float h, float s, float b) {
@@ -75,5 +75,18 @@ public class Misc {
     public static void drawArc(Canvas c, float left, float top, float right, float bottom, float startAngle,
                         float sweepAngle, boolean useCenter, @NonNull Paint paint) {
         c.drawArc(new RectF(left, top, right, bottom), startAngle, sweepAngle, useCenter, paint);
+    }
+
+    public static void setTint(Drawable drawable, int color){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            drawable.setTintMode(PorterDuff.Mode.SRC_ATOP);
+            drawable.setTint(color);
+        } else {
+            Drawable wrappedDrawable = DrawableCompat.wrap(drawable);
+            wrappedDrawable = wrappedDrawable.mutate();
+            DrawableCompat.setTintMode(wrappedDrawable, PorterDuff.Mode.SRC_ATOP);
+            DrawableCompat.setTint(wrappedDrawable, color);
+            DrawableCompat.unwrap(wrappedDrawable);
+        }
     }
 }

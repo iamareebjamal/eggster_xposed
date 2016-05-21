@@ -115,6 +115,8 @@ public class PlatLogoActivity extends Activity {
                     outline.setOval(0, 0, view.getWidth(), view.getHeight());
                 }
             });
+        } else {
+            im.setBackgroundDrawable(platlogo);
         }
 
         im.setClickable(true);

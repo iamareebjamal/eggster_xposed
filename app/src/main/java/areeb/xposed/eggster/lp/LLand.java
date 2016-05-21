@@ -1,6 +1,7 @@
 package areeb.xposed.eggster.lp;
 
 import android.animation.TimeAnimator;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -13,6 +14,8 @@ import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,6 +28,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import areeb.xposed.eggster.R;
+import areeb.xposed.eggster.utils.Misc;
 
 
 import java.util.ArrayList;
@@ -160,7 +164,8 @@ public class LLand extends FrameLayout {
     public void setScoreField(TextView tv) {
         mScoreField = tv;
         if (tv != null) {
-            tv.setTranslationZ(PARAMS.HUD_Z);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                tv.setTranslationZ(PARAMS.HUD_Z);
             if (!(mAnimating && mPlaying)) {
                 tv.setTranslationY(-500);
             }
@@ -182,6 +187,8 @@ public class LLand extends FrameLayout {
 
     final float hsv[] = {0, 0, 0};
 
+    // TODO : Port to pre JB
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void reset() {
         L("reset");
         final Drawable sky = new GradientDrawable(
@@ -189,7 +196,10 @@ public class LLand extends FrameLayout {
                 SKIES[mTimeOfDay]
         );
         sky.setDither(true);
-        setBackground(sky);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+            setBackground(sky);
+        else
+            setBackgroundDrawable(sky);
 
         mFlipped = frand() > 0.5f;
         setScaleX(mFlipped ? -1 : 1);
@@ -212,17 +222,25 @@ public class LLand extends FrameLayout {
         boolean showingSun = (mTimeOfDay == DAY || mTimeOfDay == SUNSET) && frand() > 0.25;
         if (showingSun) {
             final Star sun = new Star(getContext());
-            sun.setBackgroundResource(R.drawable.sun);
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                sun.setBackgroundResource(R.drawable.sun);
+            } else {
+                Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.sun, null);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                    sun.setBackground(drawable);
+                else
+                    sun.setBackgroundDrawable(drawable);
+            }
+
             final int w = getResources().getDimensionPixelSize(R.dimen.sun_size);
             sun.setTranslationX(frand(w, mWidth-w));
             if (mTimeOfDay == DAY) {
                 sun.setTranslationY(frand(w, (mHeight * 0.66f)));
-                sun.getBackground().setTint(0);
+                Misc.setTint(sun.getBackground(), 0); // No tint mode
             } else {
                 sun.setTranslationY(frand(mHeight * 0.66f, mHeight - w));
-                sun.getBackground().setTintMode(PorterDuff.Mode.SRC_ATOP);
-                sun.getBackground().setTint(0xC0FF8000);
-
+                Misc.setTint(sun.getBackground(), 0xC0FF8000);
             }
             addView(sun, new LayoutParams(w, w));
         }
@@ -231,7 +249,15 @@ public class LLand extends FrameLayout {
             final float ff = frand();
             if ((dark && ff < 0.75f) || ff < 0.5f) {
                 final Star moon = new Star(getContext());
-                moon.setBackgroundResource(R.drawable.moon);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                    moon.setBackgroundResource(R.drawable.moon);
+                } else {
+                    Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.moon, null);
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                        moon.setBackground(drawable);
+                    else
+                        moon.setBackgroundDrawable(drawable);
+                }
                 moon.getBackground().setAlpha(dark ? 255 : 128);
                 moon.setScaleX(frand() > 0.5 ? -1 : 1);
                 moon.setRotation(moon.getScaleX() * frand(5, 30));
@@ -256,7 +282,8 @@ public class LLand extends FrameLayout {
                 s = new Building(getContext());
 
                 s.z = (float)i/N;
-                s.setTranslationZ(PARAMS.SCENERY_Z * (1+s.z));
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    s.setTranslationZ(PARAMS.SCENERY_Z * (1+s.z));
                 s.v = 0.85f * s.z; // buildings move proportional to their distance
                 hsv[0] = 175;
                 hsv[1] = 0.25f;
@@ -304,6 +331,8 @@ public class LLand extends FrameLayout {
         setScore(mScore + incr);
     }
 
+    // TODO : Port to Pre JB
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void start(boolean startPlaying) {
         L("start(startPlaying=%s)", startPlaying?"true":"false");
         if (startPlaying) {
@@ -314,8 +343,12 @@ public class LLand extends FrameLayout {
             mLastPipeTime = getGameTime() - PARAMS.OBSTACLE_PERIOD;
 
             if (mSplash != null && mSplash.getAlpha() > 0f) {
-                mSplash.setTranslationZ(PARAMS.HUD_Z);
-                mSplash.animate().alpha(0).translationZ(0).setDuration(400);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                    mSplash.setTranslationZ(PARAMS.HUD_Z);
+                    mSplash.animate().alpha(0).translationZ(0).setDuration(400);
+                } else {
+                    mSplash.animate().alpha(0).setDuration(400);
+                }
 
                 mScoreField.animate().translationY(0)
                         .setInterpolator(new DecelerateInterpolator())
@@ -457,7 +490,8 @@ public class LLand extends FrameLayout {
                     Gravity.TOP|Gravity.LEFT));
             s1.setTranslationX(mWidth+inset);
             s1.setTranslationY(-s1.h-yinset);
-            s1.setTranslationZ(PARAMS.OBSTACLE_Z*0.75f);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                s1.setTranslationZ(PARAMS.OBSTACLE_Z*0.75f);
             s1.animate()
                     .translationY(0)
                     .setStartDelay(d1)
@@ -471,7 +505,8 @@ public class LLand extends FrameLayout {
                     Gravity.TOP|Gravity.LEFT));
             p1.setTranslationX(mWidth);
             p1.setTranslationY(-PARAMS.OBSTACLE_WIDTH);
-            p1.setTranslationZ(PARAMS.OBSTACLE_Z);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                p1.setTranslationZ(PARAMS.OBSTACLE_Z);
             p1.setScaleX(0.25f);
             p1.setScaleY(0.25f);
             p1.animate()
@@ -492,7 +527,8 @@ public class LLand extends FrameLayout {
                     Gravity.TOP|Gravity.LEFT));
             s2.setTranslationX(mWidth+inset);
             s2.setTranslationY(mHeight+yinset);
-            s2.setTranslationZ(PARAMS.OBSTACLE_Z*0.75f);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                s2.setTranslationZ(PARAMS.OBSTACLE_Z*0.75f);
             s2.animate()
                     .translationY(mHeight-s2.h)
                     .setStartDelay(d2)
@@ -506,7 +542,8 @@ public class LLand extends FrameLayout {
                     Gravity.TOP|Gravity.LEFT));
             p2.setTranslationX(mWidth);
             p2.setTranslationY(mHeight);
-            p2.setTranslationZ(PARAMS.OBSTACLE_Z);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                p2.setTranslationZ(PARAMS.OBSTACLE_Z);
             p2.setScaleX(0.25f);
             p2.setScaleY(0.25f);
             p2.animate()
@@ -683,19 +720,32 @@ public class LLand extends FrameLayout {
         public Player(Context context) {
             super(context);
 
-            setBackgroundResource(R.drawable.android);
-            getBackground().setTintMode(PorterDuff.Mode.SRC_ATOP);
-            getBackground().setTint(0xFF00FF00);
-            setOutlineProvider(new ViewOutlineProvider() {
-                @Override
-                public void getOutline(View view, Outline outline) {
-                    final int w = view.getWidth();
-                    final int h = view.getHeight();
-                    final int ix = (int) (w * 0.3f);
-                    final int iy = (int) (h * 0.2f);
-                    outline.setRect(ix, iy, w - ix, h - iy);
-                }
-            });
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                setBackgroundResource(R.drawable.android);
+            } else {
+                Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.android, null);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                    setBackground(drawable);
+                else
+                    setBackgroundDrawable(drawable);
+            }
+            Misc.setTint(getBackground(), 0xFF00FF00);
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                setOutlineProvider(new ViewOutlineProvider() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    public void getOutline(View view, Outline outline) {
+                        final int w = view.getWidth();
+                        final int h = view.getHeight();
+                        final int ix = (int) (w * 0.3f);
+                        final int iy = (int) (h * 0.2f);
+                        outline.setRect(ix, iy, w - ix, h - iy);
+                    }
+                });
+            }
+
         }
 
         public void prepareCheckIntersections() {
@@ -743,11 +793,19 @@ public class LLand extends FrameLayout {
             dv = -PARAMS.BOOST_DV;
 
             animate().cancel();
-            animate()
-                    .scaleX(1.25f)
-                    .scaleY(1.25f)
-                    .translationZ(PARAMS.PLAYER_Z_BOOST)
-                    .setDuration(100);
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                animate()
+                        .scaleX(1.25f)
+                        .scaleY(1.25f)
+                        .translationZ(PARAMS.PLAYER_Z_BOOST)
+                        .setDuration(100);
+            } else {
+                animate()
+                        .scaleX(1.25f)
+                        .scaleY(1.25f)
+                        .setDuration(100);
+            }
             setScaleX(1.25f);
             setScaleY(1.25f);
         }
@@ -756,11 +814,19 @@ public class LLand extends FrameLayout {
             mBoosting = false;
 
             animate().cancel();
-            animate()
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .translationZ(PARAMS.PLAYER_Z)
-                    .setDuration(200);
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .translationZ(PARAMS.PLAYER_Z)
+                        .setDuration(200);
+            } else {
+                animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(200);
+            }
         }
     }
 
@@ -807,16 +873,29 @@ public class LLand extends FrameLayout {
         public Pop(Context context, float h) {
             super(context, h);
             int idx = 2*irand(0, POPS.length/2);
-            setBackgroundResource(POPS[idx]);
+            int res_id = POPS[idx];
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                setBackgroundResource(res_id);
+            } else {
+                Drawable drawable = VectorDrawableCompat.create(getResources(), res_id, null);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                    setBackground(drawable);
+                else
+                    setBackgroundDrawable(drawable);
+            }
             setScaleX(frand() < 0.5f ? -1 : 1);
             mRotate = POPS[idx+1] == 0 ? 0 : (frand() < 0.5f ? -1 : 1);
-            setOutlineProvider(new ViewOutlineProvider() {
-                @Override
-                public void getOutline(View view, Outline outline) {
-                    final int pad = (int) (getWidth() * 0.02f);
-                    outline.setOval(pad, pad, getWidth()-pad, getHeight()-pad);
-                }
-            });
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                setOutlineProvider(new ViewOutlineProvider() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    public void getOutline(View view, Outline outline) {
+                        final int pad = (int) (getWidth() * 0.02f);
+                        outline.setOval(pad, pad, getWidth()-pad, getHeight()-pad);
+                    }
+                });
+            }
         }
 
         public boolean intersects(Player p) {
@@ -851,28 +930,43 @@ public class LLand extends FrameLayout {
             super(context, h);
             mDrawShadow = drawShadow;
             mPaint.setColor(0xFFAAAAAA);
-            setBackground(null);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                setBackground(null);
+            else
+                setBackgroundDrawable(null);
         }
 
         @Override
         public void onAttachedToWindow() {
             super.onAttachedToWindow();
             setWillNotDraw(false);
-            setOutlineProvider(new ViewOutlineProvider() {
-                @Override
-                public void getOutline(View view, Outline outline) {
-                    outline.setRect(0, 0, getWidth(), getHeight());
-                }
-            });
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+
+                setOutlineProvider(new ViewOutlineProvider() {
+                    @Override
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    public void getOutline(View view, Outline outline) {
+                        outline.setRect(0, 0, getWidth(), getHeight());
+                    }
+                });
+            }
         }
+
         @Override
         public void onDraw(Canvas c) {
             final int w = c.getWidth();
             final int h = c.getHeight();
-            final GradientDrawable g = new GradientDrawable();
-            g.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
+            final GradientDrawable g;
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+                g = new GradientDrawable();
+                g.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
+                g.setColors(new int[] { 0xFFFFFFFF, 0xFFAAAAAA });
+            } else {
+                g = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[] { 0xFFFFFFFF, 0xFFAAAAAA });
+            }
+
             g.setGradientCenter(w * 0.75f, 0);
-            g.setColors(new int[] { 0xFFFFFFFF, 0xFFAAAAAA });
             g.setBounds(0, 0, w, h);
             g.draw(c);
             if (!mDrawShadow) return;
@@ -907,14 +1001,24 @@ public class LLand extends FrameLayout {
             w = irand(PARAMS.BUILDING_WIDTH_MIN, PARAMS.BUILDING_WIDTH_MAX);
             h = 0; // will be setup later, along with z
 
-            setTranslationZ(PARAMS.SCENERY_Z);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                setTranslationZ(PARAMS.SCENERY_Z);
         }
     }
 
     private class Cloud extends Scenery {
         public Cloud(Context context) {
             super(context);
-            setBackgroundResource(frand() < 0.01f ? R.drawable.cloud_off : R.drawable.cloud);
+            int res_id = frand() < 0.01f ? R.drawable.cloud_off : R.drawable.cloud;
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                setBackgroundResource(res_id);
+            } else {
+                Drawable drawable = VectorDrawableCompat.create(getResources(), res_id, null);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                    setBackground(drawable);
+                else
+                    setBackgroundDrawable(drawable);
+            }
             getBackground().setAlpha(0x40);
             w = h = irand(PARAMS.CLOUD_SIZE_MIN, PARAMS.CLOUD_SIZE_MAX);
             z = 0;
@@ -925,7 +1029,15 @@ public class LLand extends FrameLayout {
     private class Star extends Scenery {
         public Star(Context context) {
             super(context);
-            setBackgroundResource(R.drawable.star);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                setBackgroundResource(R.drawable.star);
+            } else {
+                Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.star, null);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                    setBackground(drawable);
+                else
+                    setBackgroundDrawable(drawable);
+            }
             w = h = irand(PARAMS.STAR_SIZE_MIN, PARAMS.STAR_SIZE_MAX);
             v = z = 0;
         }

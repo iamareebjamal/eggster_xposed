@@ -32,6 +32,16 @@
         </activity>
 
         <activity
+                android:name=".lp.LLandActivity"
+                android:label="PlatLogoActivity"
+                android:theme="@style/Theme.Wallpaper">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+            </intent-filter>
+        </activity>
+
+        <activity
                 android:name=".m.PlatLogoActivity"
                 android:label="PlatLogoActivity"
                 android:theme="@style/Theme.Wallpaper">

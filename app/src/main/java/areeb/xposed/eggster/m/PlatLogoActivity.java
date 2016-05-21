@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.*;
 import android.graphics.drawable.Drawable;
@@ -131,7 +132,10 @@ public class PlatLogoActivity extends Activity {
                     public boolean onLongClick(View v) {
                         if (mTapCount < 5) return false;
 
-                        Toast.makeText(getApplicationContext(), "Click M", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Intent.ACTION_MAIN).setFlags(
+                                Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                                .setClassName("areeb.xposed.eggster",
+                                        "areeb.xposed.eggster.m.MLandActivity"));
                         return true;
                     }
                 });

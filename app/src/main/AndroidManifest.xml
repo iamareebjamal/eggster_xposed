@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="areeb.xposed.eggster">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -31,6 +33,16 @@
 
         <activity
                 android:name=".m.PlatLogoActivity"
+                android:label="PlatLogoActivity"
+                android:theme="@style/Theme.Wallpaper">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".m.MLandActivity"
                 android:label="PlatLogoActivity"
                 android:theme="@style/Theme.Wallpaper">
             <intent-filter>

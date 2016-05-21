@@ -1231,6 +1231,7 @@ public class MLand extends FrameLayout {
         public void die() {
             mAlive = false;
             if (mScoreField != null) {
+                /*
                 mScoreField.setTextColor(0xFFFFFFFF);
                 mScoreField.getBackground().setColorFilter(0xFF666666, PorterDuff.Mode.SRC_ATOP);
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
@@ -1239,6 +1240,7 @@ public class MLand extends FrameLayout {
                     Drawable scorecard = VectorDrawableCompat.create(getResources(), R.drawable.scorecard_gameover, null);
                     mScoreField.setBackgroundDrawable(scorecard);
                 }
+                */
             }
         }
 

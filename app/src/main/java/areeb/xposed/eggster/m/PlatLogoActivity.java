@@ -135,7 +135,7 @@ public class PlatLogoActivity extends Activity {
                         startActivity(new Intent(Intent.ACTION_MAIN).setFlags(
                                 Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                                 .setClassName("areeb.xposed.eggster",
-                                        "areeb.xposed.eggster.lp.LLandActivity"));
+                                        "areeb.xposed.eggster.m.MLandActivity"));
                         return true;
                     }
                 });

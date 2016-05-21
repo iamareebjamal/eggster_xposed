@@ -13,4 +13,5 @@
         tools:showIn="@layout/activity_main"
         tools:context="areeb.xposed.eggster.MainActivity">
 
+
 </RelativeLayout>

@@ -27,6 +27,6 @@
         android:paddingEnd="12dp"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"
-        android:background="@drawable/scorecard"
+        android:background="@drawable/scorecard_m"
         android:elevation="@dimen/hud_z"
         />

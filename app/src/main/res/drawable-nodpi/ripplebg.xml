@@ -15,7 +15,7 @@ Copyright (C) 2014 The Android Open Source Project
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_focused="true">
-            <item><shape android:shape="oval"><solid android:color="#FFFFFF" /></shape></item>
+            <shape android:shape="oval"><solid android:color="#FFFFFF" /></shape>
     </item>
     <item>
         <shape android:shape="oval"><solid android:color="#AAAAAA" /></shape>

@@ -423,7 +423,15 @@ public class MLand extends FrameLayout {
         boolean showingSun = (mTimeOfDay == DAY || mTimeOfDay == SUNSET) && frand() > 0.25;
         if (showingSun) {
             final Star sun = new Star(getContext());
-            sun.setBackgroundResource(R.drawable.sun);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                sun.setBackgroundResource(R.drawable.sun);
+            } else {
+                Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.sun, null);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                    sun.setBackground(drawable);
+                else
+                    sun.setBackgroundDrawable(drawable);
+            }
             final int w = getResources().getDimensionPixelSize(R.dimen.sun_size);
             sun.setTranslationX(frand(w, mWidth-w));
             if (mTimeOfDay == DAY) {
@@ -441,7 +449,15 @@ public class MLand extends FrameLayout {
             final float ff = frand();
             if ((dark && ff < 0.75f) || ff < 0.5f) {
                 final Star moon = new Star(getContext());
-                moon.setBackgroundResource(R.drawable.moon);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                    moon.setBackgroundResource(R.drawable.moon);
+                } else {
+                    Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.moon, null);
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                        moon.setBackground(drawable);
+                    else
+                        moon.setBackgroundDrawable(drawable);
+                }
                 moon.getBackground().setAlpha(dark ? 255 : 128);
                 moon.setScaleX(frand() > 0.5 ? -1 : 1);
                 moon.setRotation(moon.getScaleX() * frand(5, 30));
@@ -1115,7 +1131,15 @@ public class MLand extends FrameLayout {
         public Player(Context context) {
             super(context);
 
-            setBackgroundResource(R.drawable.android_m);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                setBackgroundResource(R.drawable.android_m);
+            } else {
+                Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.android_m, null);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                    setBackground(drawable);
+                else
+                    setBackgroundDrawable(drawable);
+            }
             color = sColors[(sNextColor++%sColors.length)];
             Misc.setTint(getBackground(), color);
 
@@ -1299,7 +1323,16 @@ public class MLand extends FrameLayout {
 
         public Pop(Context context, float h) {
             super(context, h);
-            setBackgroundResource(R.drawable.mm_head);
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                setBackgroundResource(R.drawable.mm_head);
+            } else {
+                Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.mm_head, null);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                    setBackground(drawable);
+                else
+                    setBackgroundDrawable(drawable);
+            }
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                 antenna =  context.getDrawable(pick(ANTENNAE));
@@ -1487,7 +1520,16 @@ public class MLand extends FrameLayout {
         public Cactus(Context context) {
             super(context);
 
-            setBackgroundResource(pick(CACTI));
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                setBackgroundResource(pick(CACTI));
+            } else {
+                Drawable drawable = VectorDrawableCompat.create(getResources(), pick(CACTI), null);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                    setBackground(drawable);
+                else
+                    setBackgroundDrawable(drawable);
+            }
+
             w = h = irand(PARAMS.BUILDING_WIDTH_MAX / 4, PARAMS.BUILDING_WIDTH_MAX / 2);
         }
     }
@@ -1498,7 +1540,16 @@ public class MLand extends FrameLayout {
         public Mountain(Context context) {
             super(context);
 
-            setBackgroundResource(pick(MOUNTAINS));
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                setBackgroundResource(pick(MOUNTAINS));
+            } else {
+                Drawable drawable = VectorDrawableCompat.create(getResources(), pick(MOUNTAINS), null);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                    setBackground(drawable);
+                else
+                    setBackgroundDrawable(drawable);
+            }
+
             w = h = irand(PARAMS.BUILDING_WIDTH_MAX / 2, PARAMS.BUILDING_WIDTH_MAX);
             z = 0;
         }
@@ -1506,7 +1557,16 @@ public class MLand extends FrameLayout {
     private class Cloud extends Scenery {
         public Cloud(Context context) {
             super(context);
-            setBackgroundResource(frand() < 0.01f ? R.drawable.cloud_off : R.drawable.cloud);
+            int res_id = frand() < 0.01f ? R.drawable.cloud_off : R.drawable.cloud;
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                setBackgroundResource(res_id);
+            } else {
+                Drawable drawable = VectorDrawableCompat.create(getResources(), res_id, null);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                    setBackground(drawable);
+                else
+                    setBackgroundDrawable(drawable);
+            }
             getBackground().setAlpha(0x40);
             w = h = irand(PARAMS.CLOUD_SIZE_MIN, PARAMS.CLOUD_SIZE_MAX);
             z = 0;
@@ -1517,7 +1577,15 @@ public class MLand extends FrameLayout {
     private class Star extends Scenery {
         public Star(Context context) {
             super(context);
-            setBackgroundResource(R.drawable.star);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                setBackgroundResource(R.drawable.star);
+            } else {
+                Drawable drawable = VectorDrawableCompat.create(getResources(), R.drawable.star, null);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                    setBackground(drawable);
+                else
+                    setBackgroundDrawable(drawable);
+            }
             w = h = irand(PARAMS.STAR_SIZE_MIN, PARAMS.STAR_SIZE_MAX);
             v = z = 0;
         }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <string name="pref_header_gb">GingerBread</string>
     <string name="pref_header_hc">HoneyComb</string>
     <string name="pref_header_ics">Ice Cream Sandwich</string>
@@ -11,8 +11,8 @@
     <string name="pref_header_lp">Lollipop</string>
     <string name="pref_header_mp">M Preview</string>
     <string name="pref_header_about">About</string>
-    
-    
+
+
     <string name="pref_default_gb_text">Zombie Art by Jack Larson</string>
     <string name="pref_default_hc_text">REZZZZZZZ&#8230;</string>
     <string name="pref_default_ics_text">Android 4.0: Ice Cream Sandwich</string>
@@ -53,5 +53,5 @@
     <string name="pref_color_palette">Lollipop color will be from Material Palette</string>
     <string name="pref_transbg">Behind the image there is a dark, translucid background</string>
     <string name="pref_blackbg">Behind the image there is a black background</string>
-    
+
 </resources>

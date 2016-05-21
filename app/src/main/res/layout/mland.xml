@@ -15,17 +15,19 @@
      limitations under the License.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:orientation="vertical"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
         >
+
     <areeb.xposed.eggster.eggs.mm.MLand
             android:id="@+id/world"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
     </areeb.xposed.eggster.eggs.mm.MLand>
+
     <FrameLayout
             android:id="@+id/welcome"
             android:layout_width="match_parent"
@@ -34,73 +36,80 @@
             android:background="#a0000000"
             android:clickable="true"
             >
+
         <FrameLayout
-            android:id="@+id/play_button"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:background="@drawable/ripplebg"
-            android:focusable="true"
-            android:onClick="startButtonPressed"
-            >
+                android:id="@+id/play_button"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:background="@drawable/ripplebg"
+                android:focusable="true"
+                android:onClick="startButtonPressed"
+                >
+
             <ImageView
-                android:id="@+id/play_button_image"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:scaleType="fitCenter"
-                android:layout_gravity="center"
-                tools:ignore="MissingPrefix"
-                />
+                    android:id="@+id/play_button_image"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center"
+                    tools:ignore="MissingPrefix"
+                    />
+
             <TextView
-                android:id="@+id/play_button_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:alpha="0"
-                android:textSize="40dp"
-                android:textColor="#000000"
-                />
+                    android:id="@+id/play_button_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:alpha="0"
+                    android:textSize="40dp"
+                    android:textColor="#000000"
+                    />
         </FrameLayout>
     </FrameLayout>
+
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|center_horizontal"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:id="@+id/player_setup"
-        >
-        <ImageButton
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:id="@+id/player_minus_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="10dp"
-            android:scaleType="centerInside"
-            android:onClick="playerMinus"
-            app:srcCompat="@drawable/minus"
-            tools:ignore="MissingPrefix"
-            />
-        <LinearLayout
-            android:id="@+id/scores"
             android:layout_width="wrap_content"
-            android:layout_height="64dp"
-            android:padding="12dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
             android:orientation="horizontal"
-            android:clipToPadding="false"
+            android:gravity="center_vertical"
+            android:id="@+id/player_setup"
             >
-        </LinearLayout>
+
         <ImageButton
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:id="@+id/player_plus_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:padding="10dp"
-            android:scaleType="centerInside"
-            android:onClick="playerPlus"
-            app:srcCompat="@drawable/plus"
-            tools:ignore="MissingPrefix"
-            />
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:id="@+id/player_minus_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="10dp"
+                android:scaleType="centerInside"
+                android:onClick="playerMinus"
+                app:srcCompat="@drawable/minus"
+                tools:ignore="MissingPrefix"
+                />
+
+        <LinearLayout
+                android:id="@+id/scores"
+                android:layout_width="wrap_content"
+                android:layout_height="64dp"
+                android:padding="12dp"
+                android:orientation="horizontal"
+                android:clipToPadding="false"
+                >
+        </LinearLayout>
+
+        <ImageButton
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:id="@+id/player_plus_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="10dp"
+                android:scaleType="centerInside"
+                android:onClick="playerPlus"
+                app:srcCompat="@drawable/plus"
+                tools:ignore="MissingPrefix"
+                />
     </LinearLayout>
 </FrameLayout>

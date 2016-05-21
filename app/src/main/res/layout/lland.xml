@@ -16,11 +16,13 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
         >
+
     <areeb.xposed.eggster.eggs.lp.LLand
             android:id="@+id/world"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
     </areeb.xposed.eggster.eggs.lp.LLand>
+
     <TextView
             android:id="@+id/score"
             android:layout_width="wrap_content"
@@ -36,6 +38,7 @@
             android:paddingBottom="8dp"
             android:background="@drawable/scorecard"
             />
+
     <TextView
             android:id="@+id/welcome"
             android:layout_width="wrap_content"

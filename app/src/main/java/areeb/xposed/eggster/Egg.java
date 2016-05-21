@@ -66,7 +66,7 @@ public enum Egg {
         return "areeb.xposed.eggster.eggs." + getId().toLowerCase() + ".PlatLogoActivity";
     }
 
-    public String getDrawable(){
+    public String getDrawable() {
         return "dessert_" + name.toLowerCase();
     }
 }

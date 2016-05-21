@@ -26,7 +26,7 @@ public class EggAdapter extends ArrayAdapter<Egg> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         final Egg egg = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view

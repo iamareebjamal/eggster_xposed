@@ -73,12 +73,12 @@ public class Misc {
     }
 
     public static void drawArc(Canvas c, float left, float top, float right, float bottom, float startAngle,
-                        float sweepAngle, boolean useCenter, @NonNull Paint paint) {
+                               float sweepAngle, boolean useCenter, @NonNull Paint paint) {
         c.drawArc(new RectF(left, top, right, bottom), startAngle, sweepAngle, useCenter, paint);
     }
 
-    public static void setTint(Drawable drawable, int color){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+    public static void setTint(Drawable drawable, int color) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             drawable.setTintMode(PorterDuff.Mode.SRC_ATOP);
             drawable.setTint(color);
         } else {
@@ -90,7 +90,7 @@ public class Misc {
         }
     }
 
-    public static void translateZ(){
+    public static void translateZ() {
 
     }
 }

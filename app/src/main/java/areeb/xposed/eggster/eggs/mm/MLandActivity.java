@@ -28,7 +28,7 @@ public class MLandActivity extends Activity {
         }
 
         // Vector Fixes
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             ImageView play = (ImageView) findViewById(R.id.play_button_image);
             Drawable playImg = VectorDrawableCompat.create(getResources(), R.drawable.play, null);
             play.setImageDrawable(playImg);

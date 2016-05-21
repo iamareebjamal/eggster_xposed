@@ -44,18 +44,18 @@ public class PlatLogoActivity extends Activity {
         final DisplayMetrics dm = getResources().getDisplayMetrics();
         final float dp = dm.density;
         final int size = (int)
-                (Math.min(Math.min(dm.widthPixels, dm.heightPixels), 600*dp) - 100*dp);
+                (Math.min(Math.min(dm.widthPixels, dm.heightPixels), 600 * dp) - 100 * dp);
 
         final View im = new View(this);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             im.setTranslationZ(20);
 
         im.setScaleX(0.5f);
         im.setScaleY(0.5f);
         im.setAlpha(0f);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             im.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -75,7 +75,7 @@ public class PlatLogoActivity extends Activity {
         fgPaint.setColor(Misc.HSBtoColor(hue, 0.5f, 1f));
         final Drawable M;
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             M = ContextCompat.getDrawable(this, R.drawable.platlogo_m);
         } else {
             M = VectorDrawableCompat.create(getResources(), R.drawable.platlogo_m, getTheme());
@@ -83,10 +83,12 @@ public class PlatLogoActivity extends Activity {
 
         final Drawable platlogo = new Drawable() {
             @Override
-            public void setAlpha(int alpha) { }
+            public void setAlpha(int alpha) {
+            }
 
             @Override
-            public void setColorFilter(@Nullable ColorFilter colorFilter) { }
+            public void setColorFilter(@Nullable ColorFilter colorFilter) {
+            }
 
             @Override
             public int getOpacity() {
@@ -103,7 +105,7 @@ public class PlatLogoActivity extends Activity {
             }
         };
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             im.setBackground(new RippleDrawable(
                     ColorStateList.valueOf(0xFFFFFFFF),
                     platlogo,
@@ -180,7 +182,7 @@ public class PlatLogoActivity extends Activity {
     public void showMarshmallow(View im) {
         final Drawable fg;
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             fg = getDrawable(R.drawable.platlogo_mm);
         } else {
             fg = VectorDrawableCompat.create(getResources(), R.drawable.platlogo_mm, getTheme());

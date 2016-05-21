@@ -22,7 +22,6 @@ import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 import areeb.xposed.eggster.R;
 import areeb.xposed.eggster.utils.PathInterpolator;
 
@@ -232,7 +231,7 @@ public class PlatLogoActivity extends Activity {
                         }
                     });
                 } else {
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
                         im.setBackground(makeRipple());
                     else
                         im.setBackgroundDrawable(makeRipple());

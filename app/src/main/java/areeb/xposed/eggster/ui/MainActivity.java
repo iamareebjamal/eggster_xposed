@@ -1,13 +1,9 @@
 package areeb.xposed.eggster.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
 import areeb.xposed.eggster.Egg;
 import areeb.xposed.eggster.R;
@@ -28,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         ListView eggList = (ListView) findViewById(R.id.egg_list);
 
         ArrayList<Egg> eggs = new ArrayList<>();
-        for(Egg e : Egg.values()){
+        for (Egg e : Egg.values()) {
             eggs.add(e);
             Log.d("Eggster", e.getName() + " " + e.getDrawable());
         }

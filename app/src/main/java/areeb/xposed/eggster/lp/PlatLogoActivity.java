@@ -16,6 +16,7 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.FrameLayout;
@@ -136,7 +137,7 @@ public class PlatLogoActivity extends Activity {
 
         final Drawable platlogo;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            platlogo = getResources().getDrawable(R.drawable.platlogo_lp);
+            platlogo = ContextCompat.getDrawable(this, R.drawable.platlogo_lp);
         } else {
             platlogo = VectorDrawableCompat.create(getResources(), R.drawable.platlogo_lp, getTheme());
         }
@@ -249,7 +250,10 @@ public class PlatLogoActivity extends Activity {
                         }
                     });
                 } else {
-                    im.setBackground(makeRipple());
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                        im.setBackground(makeRipple());
+                    else
+                        im.setBackgroundDrawable(makeRipple());
                 }
                 mTapCount++;
             }

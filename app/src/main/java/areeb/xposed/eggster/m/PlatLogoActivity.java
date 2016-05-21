@@ -1,11 +1,28 @@
 package areeb.xposed.eggster.m;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.res.ColorStateList;
+import android.graphics.*;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.animation.PathInterpolator;
+import android.support.annotation.Nullable;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.widget.FrameLayout;
-
-//import android.annotation.Nullable;
+import android.widget.Toast;
+import areeb.xposed.eggster.R;
+import areeb.xposed.eggster.utils.Misc;
+import areeb.xposed.eggster.utils.PathInterpolator;
 
 public class PlatLogoActivity extends Activity {
     FrameLayout mLayout;
@@ -21,7 +38,7 @@ public class PlatLogoActivity extends Activity {
         setContentView(mLayout);
     }
 
-    /*
+
     @Override
     public void onAttachedToWindow() {
         final DisplayMetrics dm = getResources().getDisplayMetrics();
@@ -30,23 +47,40 @@ public class PlatLogoActivity extends Activity {
                 (Math.min(Math.min(dm.widthPixels, dm.heightPixels), 600*dp) - 100*dp);
 
         final View im = new View(this);
-        im.setTranslationZ(20);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            im.setTranslationZ(20);
+
         im.setScaleX(0.5f);
         im.setScaleY(0.5f);
         im.setAlpha(0f);
-        im.setOutlineProvider(new ViewOutlineProvider() {
-            @Override
-            public void getOutline(View view, Outline outline) {
-                final int pad = (int) (8 * dp);
-                outline.setOval(pad, pad, view.getWidth() - pad, view.getHeight() - pad);
-            }
-        });
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            im.setOutlineProvider(new ViewOutlineProvider() {
+                @Override
+                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                public void getOutline(View view, Outline outline) {
+                    final int pad = (int) (8 * dp);
+                    outline.setOval(pad, pad, view.getWidth() - pad, view.getHeight() - pad);
+                }
+            });
+        }
+
         final float hue = (float) Math.random();
         final Paint bgPaint = new Paint();
-        bgPaint.setColor(Color.HSBtoColor(hue, 0.4f, 1f));
+
+        // TODO : Check for color
+        bgPaint.setColor(Misc.HSBtoColor(hue, 0.4f, 1f));
         final Paint fgPaint = new Paint();
-        fgPaint.setColor(Color.HSBtoColor(hue, 0.5f, 1f));
-        final Drawable M = getDrawable(com.android.internal.R.drawable.platlogo_m);
+        fgPaint.setColor(Misc.HSBtoColor(hue, 0.5f, 1f));
+        final Drawable M;
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            M = ContextCompat.getDrawable(this, R.drawable.platlogo_m);
+        } else {
+            M = VectorDrawableCompat.create(getResources(), R.drawable.platlogo_m, getTheme());
+        }
+
         final Drawable platlogo = new Drawable() {
             @Override
             public void setAlpha(int alpha) { }
@@ -63,21 +97,26 @@ public class PlatLogoActivity extends Activity {
             public void draw(Canvas c) {
                 final float r = c.getWidth() / 2f;
                 c.drawCircle(r, r, r, bgPaint);
-                c.drawArc(0, 0, 2 * r, 2 * r, 135, 180, false, fgPaint);
+                Misc.drawArc(c, 0, 0, 2 * r, 2 * r, 135, 180, false, fgPaint);
                 M.setBounds(0, 0, c.getWidth(), c.getHeight());
                 M.draw(c);
             }
         };
-        im.setBackground(new RippleDrawable(
-                ColorStateList.valueOf(0xFFFFFFFF),
-                platlogo,
-                null));
-        im.setOutlineProvider(new ViewOutlineProvider() {
-            @Override
-            public void getOutline(View view, Outline outline) {
-                outline.setOval(0, 0, view.getWidth(), view.getHeight());
-            }
-        });
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            im.setBackground(new RippleDrawable(
+                    ColorStateList.valueOf(0xFFFFFFFF),
+                    platlogo,
+                    null));
+            im.setOutlineProvider(new ViewOutlineProvider() {
+                @Override
+                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                public void getOutline(View view, Outline outline) {
+                    outline.setOval(0, 0, view.getWidth(), view.getHeight());
+                }
+            });
+        }
+
         im.setClickable(true);
         im.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,33 +129,7 @@ public class PlatLogoActivity extends Activity {
                     public boolean onLongClick(View v) {
                         if (mTapCount < 5) return false;
 
-                        final ContentResolver cr = getContentResolver();
-                        if (Settings.System.getLong(cr, Settings.System.EGG_MODE, 0)
-                                == 0) {
-                            // For posterity: the moment this user unlocked the easter egg
-                            try {
-                                Settings.System.putLong(cr,
-                                        Settings.System.EGG_MODE,
-                                        System.currentTimeMillis());
-                            } catch (RuntimeException e) {
-                                Log.e("PlatLogoActivity", "Can't write settings", e);
-                            }
-                        }
-                        im.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    startActivity(new Intent(Intent.ACTION_MAIN)
-                                            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    | Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                                    | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-                                            .addCategory("com.android.internal.category.PLATLOGO"));
-                                } catch (ActivityNotFoundException ex) {
-                                    Log.e("PlatLogoActivity", "No more eggs.");
-                                }
-                                finish();
-                            }
-                        });
+                        Toast.makeText(getApplicationContext(), "Click M", Toast.LENGTH_SHORT).show();
                         return true;
                     }
                 });
@@ -159,7 +172,14 @@ public class PlatLogoActivity extends Activity {
     }
 
     public void showMarshmallow(View im) {
-        final Drawable fg = getDrawable(com.android.internal.R.drawable.platlogo);
+        final Drawable fg;
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            fg = getDrawable(R.drawable.platlogo_mm);
+        } else {
+            fg = VectorDrawableCompat.create(getResources(), R.drawable.platlogo_mm, getTheme());
+        }
+
         fg.setBounds(0, 0, im.getWidth(), im.getHeight());
         fg.setAlpha(0);
         im.getOverlay().add(fg);
@@ -169,5 +189,5 @@ public class PlatLogoActivity extends Activity {
         fadeIn.setDuration(300);
         fadeIn.start();
     }
-*/
+
 }

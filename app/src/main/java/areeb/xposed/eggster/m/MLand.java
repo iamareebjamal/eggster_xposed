@@ -91,12 +91,12 @@ public class MLand extends FrameLayout {
             BOOST_DV = res.getDimensionPixelSize(R.dimen.boost_dv);
             PLAYER_HIT_SIZE = res.getDimensionPixelSize(R.dimen.player_hit_size);
             PLAYER_SIZE = res.getDimensionPixelSize(R.dimen.player_size);
-            OBSTACLE_WIDTH = res.getDimensionPixelSize(R.dimen.obstacle_width);
-            OBSTACLE_STEM_WIDTH = res.getDimensionPixelSize(R.dimen.obstacle_stem_width);
-            OBSTACLE_GAP = res.getDimensionPixelSize(R.dimen.obstacle_gap);
+            OBSTACLE_WIDTH = res.getDimensionPixelSize(R.dimen.obstacle_width_m);
+            OBSTACLE_STEM_WIDTH = res.getDimensionPixelSize(R.dimen.obstacle_stem_width_m);
+            OBSTACLE_GAP = res.getDimensionPixelSize(R.dimen.obstacle_gap_m);
             OBSTACLE_MIN = res.getDimensionPixelSize(R.dimen.obstacle_height_min);
             BUILDING_HEIGHT_MIN = res.getDimensionPixelSize(R.dimen.building_height_min);
-            BUILDING_WIDTH_MIN = res.getDimensionPixelSize(R.dimen.building_width_min);
+            BUILDING_WIDTH_MIN = res.getDimensionPixelSize(R.dimen.building_width_min_m);
             BUILDING_WIDTH_MAX = res.getDimensionPixelSize(R.dimen.building_width_max);
             CLOUD_SIZE_MIN = res.getDimensionPixelSize(R.dimen.cloud_size_min);
             CLOUD_SIZE_MAX = res.getDimensionPixelSize(R.dimen.cloud_size_max);
@@ -110,7 +110,7 @@ public class MLand extends FrameLayout {
             OBSTACLE_Z = res.getDimensionPixelSize(R.dimen.obstacle_z);
             PLAYER_Z = res.getDimensionPixelSize(R.dimen.player_z);
             PLAYER_Z_BOOST = res.getDimensionPixelSize(R.dimen.player_z_boost);
-            HUD_Z = res.getDimensionPixelSize(R.dimen.hud_z);
+            HUD_Z = res.getDimensionPixelSize(R.dimen.hud_z_m);
 
             // Sanity checking
             if (OBSTACLE_MIN <= OBSTACLE_WIDTH / 2) {

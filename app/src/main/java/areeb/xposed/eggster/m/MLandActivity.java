@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import areeb.xposed.eggster.R;
 
 public class MLandActivity extends Activity {
     MLand mLand;

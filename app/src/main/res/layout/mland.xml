@@ -71,7 +71,7 @@
         android:id="@+id/player_setup"
         >
         <ImageButton
-            style="@android:style/Widget.Material.Button.Borderless"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:id="@+id/player_minus_button"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -90,7 +90,7 @@
             >
         </LinearLayout>
         <ImageButton
-            style="@android:style/Widget.Material.Button.Borderless"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:id="@+id/player_plus_button"
             android:layout_width="48dp"
             android:layout_height="48dp"

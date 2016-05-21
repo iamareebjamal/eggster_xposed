@@ -324,13 +324,9 @@ public class DessertCaseView extends FrameLayout {
 
             if (d != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-
                     v.getOverlay().add(d);
-
                 } else {
-
                     v.setImageDrawable(d);
-
                 }
             }
 

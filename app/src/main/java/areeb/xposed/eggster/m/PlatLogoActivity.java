@@ -182,7 +182,12 @@ public class PlatLogoActivity extends Activity {
 
         fg.setBounds(0, 0, im.getWidth(), im.getHeight());
         fg.setAlpha(0);
-        im.getOverlay().add(fg);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            im.getOverlay().add(fg);
+        } else {
+            im.setBackgroundDrawable(fg);
+        }
 
         final Animator fadeIn = ObjectAnimator.ofInt(fg, "alpha", 255);
         fadeIn.setInterpolator(mInterpolator);

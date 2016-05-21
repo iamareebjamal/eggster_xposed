@@ -1,9 +1,14 @@
 package areeb.xposed.eggster.m;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import areeb.xposed.eggster.R;
 
 public class MLandActivity extends Activity {
@@ -20,6 +25,21 @@ public class MLandActivity extends Activity {
         final int numControllers = mLand.getGameControllers().size();
         if (numControllers > 0) {
             mLand.setupPlayers(numControllers);
+        }
+
+        // Vector Fixes
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            ImageView play = (ImageView) findViewById(R.id.play_button_image);
+            Drawable playImg = VectorDrawableCompat.create(getResources(), R.drawable.play, null);
+            play.setImageDrawable(playImg);
+
+            ImageButton plus = (ImageButton) findViewById(R.id.player_plus_button);
+            Drawable plusImg = VectorDrawableCompat.create(getResources(), R.drawable.plus, null);
+            plus.setImageDrawable(plusImg);
+
+            ImageButton minus = (ImageButton) findViewById(R.id.player_minus_button);
+            Drawable minusImg = VectorDrawableCompat.create(getResources(), R.drawable.minus, null);
+            minus.setImageDrawable(minusImg);
         }
     }
 

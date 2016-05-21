@@ -50,8 +50,6 @@
                 android:layout_height="48dp"
                 android:scaleType="fitCenter"
                 android:layout_gravity="center"
-                app:tint="#000000"
-                app:srcCompat="@drawable/play"
                 tools:ignore="MissingPrefix"
                 />
             <TextView

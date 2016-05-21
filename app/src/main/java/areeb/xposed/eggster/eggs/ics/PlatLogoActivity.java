@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package areeb.xposed.eggster.ics;
+package areeb.xposed.eggster.eggs.ics;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -62,7 +62,7 @@ public class PlatLogoActivity extends Activity {
                 try {
                     startActivity(new Intent(Intent.ACTION_MAIN)
                             .setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-                            .setClassName("areeb.xposed.eggster", "areeb.xposed.eggster.ics.Nyandroid"));
+                            .setClassName("areeb.xposed.eggster", "areeb.xposed.eggster.eggs.ics.Nyandroid"));
                 } catch (ActivityNotFoundException ex) {
                     android.util.Log.e("PlatLogoActivity",
                             "Couldn't find platlogo screensaver.");

@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(Intent.ACTION_MAIN).setFlags(
                         Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                         .setClassName("areeb.xposed.eggster",
-                                "areeb.xposed.eggster.m.PlatLogoActivity"));
+                                "areeb.xposed.eggster.eggs.m.PlatLogoActivity"));
             }
         });
     }

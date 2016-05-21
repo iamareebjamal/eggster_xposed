@@ -19,7 +19,7 @@
 *  Contact: geopiskas@gmail.com & jamal.areeb@gmail.com
 */
 
-package areeb.xposed.eggster.jb;
+package areeb.xposed.eggster.eggs.jb;
 
 import android.annotation.TargetApi;
 import android.content.Context;

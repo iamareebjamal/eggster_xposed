@@ -1,4 +1,4 @@
-package areeb.xposed.eggster.lp;
+package areeb.xposed.eggster.eggs.lp;
 
 import android.app.Activity;
 import android.os.Bundle;

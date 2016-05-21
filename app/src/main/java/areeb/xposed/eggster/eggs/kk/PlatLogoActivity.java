@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package areeb.xposed.eggster.kk;
+package areeb.xposed.eggster.eggs.kk;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -269,7 +269,7 @@ public class PlatLogoActivity extends Activity {
                                 .setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                                 // .addCategory("com.android.internal.category.PLATLOGO"));
                                 .setClassName("areeb.xposed.eggster",
-                                        "areeb.xposed.eggster.kk.DessertCase"));
+                                        "areeb.xposed.eggster.eggs.kk.DessertCase"));
                     } catch (ActivityNotFoundException ex) {
                         android.util.Log.e("PlatLogoActivity",
                                 "Couldn't catch a break.");

@@ -19,7 +19,7 @@
 *  Contact: jamal.areeb@gmail.com
 */
 
-package areeb.xposed.eggster.jb;
+package areeb.xposed.eggster.eggs.jb;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -165,7 +165,7 @@ public class PlatLogoActivity extends Activity {
                     startActivity(new Intent(Intent.ACTION_MAIN)
                             .setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                             //.addCategory("com.android.internal.category.PLATLOGO"));
-                            .setClassName("areeb.xposed.eggster", "areeb.xposed.eggster.jb.BeanBag"));
+                            .setClassName("areeb.xposed.eggster", "areeb.xposed.eggster.eggs.jb.BeanBag"));
                 } catch (ActivityNotFoundException ex) {
                     android.util.Log.e("PlatLogoActivity", "Couldn't find a bag of beans.");
                 }

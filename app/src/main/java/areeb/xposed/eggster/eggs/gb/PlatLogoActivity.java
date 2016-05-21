@@ -1,4 +1,4 @@
-package areeb.xposed.eggster.gb;
+package areeb.xposed.eggster.eggs.gb;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

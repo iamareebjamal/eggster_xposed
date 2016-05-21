@@ -22,7 +22,7 @@
         </activity>
 
         <activity
-                android:name=".lp.PlatLogoActivity"
+                android:name=".eggs.lp.PlatLogoActivity"
                 android:label="PlatLogoActivity"
                 android:theme="@style/Theme.Wallpaper">
             <intent-filter>
@@ -32,7 +32,7 @@
         </activity>
 
         <activity
-                android:name=".lp.LLandActivity"
+                android:name=".eggs.lp.LLandActivity"
                 android:label="PlatLogoActivity"
                 android:theme="@style/Theme.Wallpaper">
             <intent-filter>
@@ -42,7 +42,7 @@
         </activity>
 
         <activity
-                android:name=".m.PlatLogoActivity"
+                android:name=".eggs.m.PlatLogoActivity"
                 android:label="PlatLogoActivity"
                 android:theme="@style/Theme.Wallpaper">
             <intent-filter>
@@ -52,7 +52,7 @@
         </activity>
 
         <activity
-                android:name=".m.MLandActivity"
+                android:name=".eggs.m.MLandActivity"
                 android:label="PlatLogoActivity"
                 android:theme="@style/Theme.Wallpaper">
             <intent-filter>

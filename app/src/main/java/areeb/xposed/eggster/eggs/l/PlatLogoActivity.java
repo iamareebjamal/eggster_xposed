@@ -1,4 +1,4 @@
-package areeb.xposed.eggster.l;
+package areeb.xposed.eggster.eggs.l;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -112,7 +112,7 @@ public class PlatLogoActivity extends Activity {
                         startActivity(new Intent(Intent.ACTION_MAIN).setFlags(
                                 Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                                 .setClassName("areeb.xposed.eggster",
-                                        "areeb.xposed.eggster.kk.DessertCase"));
+                                        "areeb.xposed.eggster.eggs.kk.DessertCase"));
 
                     } catch (ActivityNotFoundException ex) {
                         android.util.Log.e("PlatLogoActivity",

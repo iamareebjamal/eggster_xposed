@@ -59,6 +59,6 @@ public enum Eggs {
     }
 
     public String getPackage() {
-        return getPackage() + getId().toLowerCase() + ".PlatLogoActivity";
+        return getPackage() + ".eggs." + getId().toLowerCase() + ".PlatLogoActivity";
     }
 }

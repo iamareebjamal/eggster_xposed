@@ -1,4 +1,4 @@
-package areeb.xposed.eggster.m;
+package areeb.xposed.eggster.eggs.m;
 
 import android.animation.LayoutTransition;
 import android.animation.TimeAnimator;

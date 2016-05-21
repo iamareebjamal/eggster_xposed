@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package areeb.xposed.eggster.hc;
+package areeb.xposed.eggster.eggs.hc;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

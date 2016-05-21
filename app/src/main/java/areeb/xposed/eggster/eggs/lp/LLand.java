@@ -1,4 +1,4 @@
-package areeb.xposed.eggster.lp;
+package areeb.xposed.eggster.eggs.lp;
 
 import android.animation.TimeAnimator;
 import android.annotation.TargetApi;
@@ -10,7 +10,6 @@ import android.graphics.Matrix;
 import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;

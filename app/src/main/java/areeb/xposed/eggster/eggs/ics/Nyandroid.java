@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package areeb.xposed.eggster.ics;
+package areeb.xposed.eggster.eggs.ics;
 
 
 import android.annotation.SuppressLint;

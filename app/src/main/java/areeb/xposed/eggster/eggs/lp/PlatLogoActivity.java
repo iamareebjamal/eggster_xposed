@@ -1,4 +1,4 @@
-package areeb.xposed.eggster.lp;
+package areeb.xposed.eggster.eggs.lp;
 
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;

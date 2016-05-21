@@ -16,11 +16,11 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
         >
-    <areeb.xposed.eggster.lp.LLand
+    <areeb.xposed.eggster.eggs.lp.LLand
             android:id="@+id/world"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-    </areeb.xposed.eggster.lp.LLand>
+    </areeb.xposed.eggster.eggs.lp.LLand>
     <TextView
             android:id="@+id/score"
             android:layout_width="wrap_content"

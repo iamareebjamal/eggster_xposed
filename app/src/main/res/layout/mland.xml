@@ -21,11 +21,11 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
         >
-    <areeb.xposed.eggster.eggs.m.MLand
+    <areeb.xposed.eggster.eggs.mm.MLand
             android:id="@+id/world"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-    </areeb.xposed.eggster.eggs.m.MLand>
+    </areeb.xposed.eggster.eggs.mm.MLand>
     <FrameLayout
             android:id="@+id/welcome"
             android:layout_width="match_parent"

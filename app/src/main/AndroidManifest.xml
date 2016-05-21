@@ -11,13 +11,103 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".MainActivity"
-                android:label="@string/title_activity_main"
+                android:name=".ui.MainActivity"
+                android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".eggs.gb.PlatLogoActivity"
+                android:label="PlatLogoActivity"
+                android:theme="@style/Theme.Wallpaper">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".eggs.hc.PlatLogoActivity"
+                android:label="PlatLogoActivity"
+                android:theme="@style/Theme.Wallpaper">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".eggs.ics.PlatLogoActivity"
+                android:label="PlatLogoActivity"
+                android:theme="@style/Theme.Wallpaper">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".eggs.ics.Nyandroid"
+                android:label="PlatLogoActivity"
+                android:theme="@style/Theme.Wallpaper">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".eggs.jb.PlatLogoActivity"
+                android:label="PlatLogoActivity"
+                android:theme="@style/Theme.Wallpaper">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".eggs.jb.BeanBag"
+                android:label="PlatLogoActivity"
+                android:theme="@style/Theme.Wallpaper">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".eggs.kk.PlatLogoActivity"
+                android:label="PlatLogoActivity"
+                android:theme="@style/Theme.Wallpaper">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".eggs.kk.DessertCase"
+                android:label="PlatLogoActivity"
+                android:theme="@style/Theme.Wallpaper">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".eggs.l.PlatLogoActivity"
+                android:label="PlatLogoActivity"
+                android:theme="@style/Theme.Wallpaper">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
             </intent-filter>
         </activity>
 
@@ -42,7 +132,7 @@
         </activity>
 
         <activity
-                android:name=".eggs.m.PlatLogoActivity"
+                android:name=".eggs.mm.PlatLogoActivity"
                 android:label="PlatLogoActivity"
                 android:theme="@style/Theme.Wallpaper">
             <intent-filter>
@@ -52,7 +142,7 @@
         </activity>
 
         <activity
-                android:name=".eggs.m.MLandActivity"
+                android:name=".eggs.mm.MLandActivity"
                 android:label="PlatLogoActivity"
                 android:theme="@style/Theme.Wallpaper">
             <intent-filter>

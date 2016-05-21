@@ -1,4 +1,4 @@
-package areeb.xposed.eggster.eggs.m;
+package areeb.xposed.eggster.eggs.mm;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -134,7 +134,8 @@ public class PlatLogoActivity extends Activity {
                         startActivity(new Intent(Intent.ACTION_MAIN).setFlags(
                                 Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                                 .setClassName("areeb.xposed.eggster",
-                                        "areeb.xposed.eggster.eggs.m.MLandActivity"));
+                                        "areeb.xposed.eggster.eggs.mm.MLandActivity"));
+                        finish();
                         return true;
                     }
                 });

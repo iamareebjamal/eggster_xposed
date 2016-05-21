@@ -2,36 +2,36 @@ package areeb.xposed.eggster;
 
 import android.os.Build;
 
-public enum Eggs {
+public enum Egg {
 
-    GINGERBREAD("GB"),
-    HONEYCOMB("HC"),
-    ICE_CREAM_SANDWICH("ICS"),
-    JELLY_BEAN("JB"),
-    KITKAT("KK"),
-    L_PREVIEW("L"),
-    LOLLIPOP("LP"),
-    M_PREVIEW("M"),
-    MARSHMALLOW("MM"),
-    N_PREVIEW("N");
+    GINGERBREAD("GB", "Gingerbread"),
+    HONEYCOMB("HC", "HoneyComb"),
+    ICE_CREAM_SANDWICH("ICS", "ICS"),
+    JELLY_BEAN("JB", "JellyBean"),
+    KITKAT("KK", "KitKat"),
+    L_PREVIEW("L", "L"),
+    LOLLIPOP("LP", "Lollipop"),
+    MARSHMALLOW("MM", "Marshmallow");
 
 
     public static int BUILD = Build.VERSION.SDK_INT;
+    private String name;
     private String id;
 
-    Eggs(String id) {
+    Egg(String id, String name) {
         this.id = id;
+        this.name = name;
     }
 
-    public static Eggs getEggFromId(String id) {
-        for (Eggs egg : Eggs.values()) {
+    public static Egg getEggFromId(String id) {
+        for (Egg egg : Egg.values()) {
             if (id.equals(egg.getId()))
                 return egg;
         }
         return null;
     }
 
-    public static Eggs getEggFromBuld(int build_no) {
+    public static Egg getEggFromBuild(int build_no) {
         if (build_no < Build.VERSION_CODES.HONEYCOMB)
             return GINGERBREAD;
         else if (build_no < Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -50,15 +50,23 @@ public enum Eggs {
             return GINGERBREAD;
     }
 
-    public static Eggs getSystemEgg() {
-        return getEggFromBuld(BUILD);
+    public static Egg getSystemEgg() {
+        return getEggFromBuild(BUILD);
     }
 
     public String getId() {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public String getPackage() {
-        return getPackage() + ".eggs." + getId().toLowerCase() + ".PlatLogoActivity";
+        return "areeb.xposed.eggster.eggs." + getId().toLowerCase() + ".PlatLogoActivity";
+    }
+
+    public String getDrawable(){
+        return "dessert_" + name.toLowerCase();
     }
 }

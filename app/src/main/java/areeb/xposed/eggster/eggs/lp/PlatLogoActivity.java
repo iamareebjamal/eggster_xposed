@@ -3,6 +3,7 @@ package areeb.xposed.eggster.eggs.lp;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Outline;
@@ -221,31 +222,12 @@ public class PlatLogoActivity extends Activity {
                         public boolean onLongClick(View v) {
                             if (mTapCount < 5) return false;
 
-                            Toast.makeText(getApplicationContext(), "Click", Toast.LENGTH_SHORT).show();
-                            /*
-                            final ContentResolver cr = getContentResolver();
-                            if (Settings.System.getLong(cr, Settings.System.EGG_MODE, 0)
-                                    == 0) {
-                                // For posterity: the moment this user unlocked the easter egg
-                                Settings.System.putLong(cr,
-                                        Settings.System.EGG_MODE,
-                                        System.currentTimeMillis());
-                            }
-                            im.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        startActivity(new Intent(Intent.ACTION_MAIN)
-                                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                                        | Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                                        | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-                                                .addCategory("com.android.internal.category.PLATLOGO"));
-                                    } catch (ActivityNotFoundException ex) {
-                                        Log.e("PlatLogoActivity", "No more eggs.");
-                                    }
-                                    finish();
-                                }
-                            });*/
+                            startActivity(new Intent(Intent.ACTION_MAIN).setFlags(
+                                    Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                                    .setClassName("areeb.xposed.eggster",
+                                            "areeb.xposed.eggster.eggs.lp.LLandActivity"));
+                            finish();
+
                             return true;
                         }
                     });

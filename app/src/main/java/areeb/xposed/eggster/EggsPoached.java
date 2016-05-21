@@ -34,7 +34,7 @@ public class EggsPoached implements IXposedHookZygoteInit {
         XC_MethodHook methodHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                Eggs egg = Eggs.getEggFromId(XPreferenceManager.getEasterEgg());
+                Egg egg = Egg.getEggFromId(XPreferenceManager.getEasterEgg());
 
                 if (XPreferenceManager.isEnabled() && egg != null) {
                     Activity platLogoActivity = (Activity) param.thisObject;

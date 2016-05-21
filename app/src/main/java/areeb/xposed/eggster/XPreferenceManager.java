@@ -18,7 +18,7 @@ public class XPreferenceManager {
 
     public static String getEasterEgg() {
         preferences.reload();
-        return preferences.getString("egg_name", Eggs.getSystemEgg().getId());
+        return preferences.getString("egg_name", Egg.getSystemEgg().getId());
     }
 
 

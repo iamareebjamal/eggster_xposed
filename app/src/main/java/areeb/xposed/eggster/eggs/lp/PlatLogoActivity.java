@@ -24,6 +24,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import areeb.xposed.eggster.R;
 import areeb.xposed.eggster.utils.PathInterpolator;
+import com.balysv.materialripple.MaterialRippleLayout;
 
 public class PlatLogoActivity extends Activity {
     final static int[] FLAVORS = {
@@ -48,9 +49,9 @@ public class PlatLogoActivity extends Activity {
         final ShapeDrawable popbg = new ShapeDrawable(new OvalShape());
         popbg.getPaint().setColor(FLAVORS[idx]);
 
-        if (Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             final RippleDrawable ripple = new RippleDrawable(
-                    ColorStateList.valueOf(FLAVORS[idx + 1]),
+                    ColorStateList.valueOf(FLAVORS[idx+1]),
                     popbg, null);
 
             return ripple;
@@ -158,13 +159,9 @@ public class PlatLogoActivity extends Activity {
 
         // Test for working
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-
             im.getOverlay().add(highlight);
-
         } else {
-
             im.setImageDrawable(highlight);
-
         }
 
         im.setOnClickListener(new View.OnClickListener() {
@@ -264,10 +261,22 @@ public class PlatLogoActivity extends Activity {
 
         mLayout.addView(im, new FrameLayout.LayoutParams(size, size, Gravity.CENTER));
 
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            MaterialRippleLayout.on(im)
+                    .rippleOverlay(true)
+                    .rippleColor(0xFFFFFF)
+                    .rippleAlpha(0.2f)
+                    .rippleRoundedCorners(size/3)
+                    .create();
+        }
+
         im.animate().scaleX(0.3f).scaleY(0.3f)
                 .setInterpolator(mInterpolator)
                 .setDuration(500)
                 .setStartDelay(800)
                 .start();
+
     }
+
+
 }

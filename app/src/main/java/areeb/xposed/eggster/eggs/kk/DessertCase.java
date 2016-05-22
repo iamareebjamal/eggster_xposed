@@ -16,21 +16,11 @@
 
 package areeb.xposed.eggster.eggs.kk;
 
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
 
 public class DessertCase extends Activity {
     DessertCaseView mView;
 
-    @SuppressLint("NewApi")
     @Override
     public void onStart() {
         super.onStart();
@@ -39,23 +29,8 @@ public class DessertCase extends Activity {
 
         DessertCaseView.RescalingContainer container = new DessertCaseView.RescalingContainer(this);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        } else {
-
-            mView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            );
-        }
         container.setView(mView);
-        container.setBackgroundColor(Color.parseColor("#EA000000"));
+
         setContentView(container);
     }
 
@@ -73,19 +48,5 @@ public class DessertCase extends Activity {
     public void onPause() {
         super.onPause();
         mView.stop();
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        Boolean forcePort = getSharedPreferences("preferenceggs", Context.MODE_PRIVATE).getBoolean("kk_force_port", false);
-
-        if (forcePort == true) {
-
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        }
-
     }
 }

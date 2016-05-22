@@ -51,7 +51,7 @@ public class PlatLogoActivity extends Activity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             final RippleDrawable ripple = new RippleDrawable(
-                    ColorStateList.valueOf(FLAVORS[idx+1]),
+                    ColorStateList.valueOf(FLAVORS[idx + 1]),
                     popbg, null);
 
             return ripple;
@@ -261,12 +261,12 @@ public class PlatLogoActivity extends Activity {
 
         mLayout.addView(im, new FrameLayout.LayoutParams(size, size, Gravity.CENTER));
 
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             MaterialRippleLayout.on(im)
                     .rippleOverlay(true)
                     .rippleColor(0xFFFFFF)
                     .rippleAlpha(0.2f)
-                    .rippleRoundedCorners(size/3)
+                    .rippleRoundedCorners(size / 3)
                     .create();
         }
 

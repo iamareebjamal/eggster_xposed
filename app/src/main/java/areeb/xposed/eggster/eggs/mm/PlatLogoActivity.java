@@ -15,7 +15,10 @@ import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
-import android.view.*;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.widget.FrameLayout;
 import areeb.xposed.eggster.R;
 import areeb.xposed.eggster.utils.Misc;
@@ -116,7 +119,7 @@ public class PlatLogoActivity extends Activity {
                 }
             });
         } else {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
                 im.setBackground(platlogo);
             else
                 im.setBackgroundDrawable(platlogo);
@@ -174,7 +177,7 @@ public class PlatLogoActivity extends Activity {
 
         mLayout.addView(im, new FrameLayout.LayoutParams(size, size, Gravity.CENTER));
 
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             MaterialRippleLayout.on(im)
                     .rippleOverlay(true)
                     .rippleColor(0xFFFFFF)

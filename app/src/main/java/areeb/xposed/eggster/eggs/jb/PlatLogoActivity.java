@@ -22,10 +22,8 @@
 package areeb.xposed.eggster.eggs.jb;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -39,10 +37,10 @@ import android.widget.Toast;
 import areeb.xposed.eggster.R;
 
 public class PlatLogoActivity extends Activity {
+    final Handler mHandler = new Handler();
     Toast mToast;
     ImageView mContent;
     int mCount;
-    final Handler mHandler = new Handler();
 
     private View makeView() {
         DisplayMetrics metrics = new DisplayMetrics();
@@ -55,7 +53,7 @@ public class PlatLogoActivity extends Activity {
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 ));
-        final int p = (int)(8 * metrics.density);
+        final int p = (int) (8 * metrics.density);
         view.setPadding(p, p, p, p);
 
         Typeface normal = Typeface.createFromAsset(getAssets(), "Roboto-Bold.ttf");
@@ -66,13 +64,13 @@ public class PlatLogoActivity extends Activity {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER_HORIZONTAL;
-        lp.bottomMargin = (int) (-4*metrics.density);
+        lp.bottomMargin = (int) (-4 * metrics.density);
 
         TextView tv = new TextView(this);
         if (light != null) tv.setTypeface(light);
-        tv.setTextSize(1.25f*size);
+        tv.setTextSize(1.25f * size);
         tv.setTextColor(0xFFFFFFFF);
-        tv.setShadowLayer(4*metrics.density, 0, 2*metrics.density, 0x66000000);
+        tv.setShadowLayer(4 * metrics.density, 0, 2 * metrics.density, 0x66000000);
         tv.setText("Android 4.3");
         view.addView(tv, lp);
 
@@ -80,7 +78,7 @@ public class PlatLogoActivity extends Activity {
         if (normal != null) tv.setTypeface(normal);
         tv.setTextSize(size);
         tv.setTextColor(0xFFFFFFFF);
-        tv.setShadowLayer(4*metrics.density, 0, 2*metrics.density, 0x66000000);
+        tv.setShadowLayer(4 * metrics.density, 0, 2 * metrics.density, 0x66000000);
         tv.setText("JELLY BEAN");
         view.addView(tv, lp);
 
@@ -101,7 +99,7 @@ public class PlatLogoActivity extends Activity {
         mContent.setImageResource(R.drawable.platlogo_alt);
         mContent.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
-        final int p = (int)(32 * metrics.density);
+        final int p = (int) (32 * metrics.density);
         mContent.setPadding(p, p, p, p);
 
         mContent.setOnClickListener(new View.OnClickListener() {

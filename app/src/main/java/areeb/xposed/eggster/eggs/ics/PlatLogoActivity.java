@@ -16,7 +16,6 @@
 package areeb.xposed.eggster.eggs.ics;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,12 +29,11 @@ import android.widget.Toast;
 import areeb.xposed.eggster.R;
 
 public class PlatLogoActivity extends Activity {
+    final Handler mHandler = new Handler();
     Toast mToast;
     ImageView mContent;
     Vibrator mZzz;
     int mCount;
-    final Handler mHandler = new Handler();
-
     Runnable mSuperLongPress = new Runnable() {
         public void run() {
             mCount++;
@@ -76,7 +74,7 @@ public class PlatLogoActivity extends Activity {
                     mContent.setPressed(true);
                     mHandler.removeCallbacks(mSuperLongPress);
                     mCount = 0;
-                    mHandler.postDelayed(mSuperLongPress, 2*ViewConfiguration.getLongPressTimeout());
+                    mHandler.postDelayed(mSuperLongPress, 2 * ViewConfiguration.getLongPressTimeout());
                 } else if (action == MotionEvent.ACTION_UP) {
                     if (mContent.isPressed()) {
                         mContent.setPressed(false);

@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import areeb.xposed.eggster.Egg;
 import areeb.xposed.eggster.R;
-import areeb.xposed.eggster.utils.Misc;
 
 import java.util.ArrayList;
 
@@ -55,7 +54,7 @@ public class EggAdapter extends ArrayAdapter<Egg> {
         textView.setText(egg.getName());
 
         imageView.setImageResource(egg.getDrawableRes(context));
-        if(color)
+        if (color)
             imageView.getDrawable().setColorFilter(ContextCompat.getColor(context, egg.getColorRes(context)), PorterDuff.Mode.SCREEN);
         else
             imageView.getDrawable().setColorFilter(ContextCompat.getColor(context, android.R.color.black), PorterDuff.Mode.SCREEN);

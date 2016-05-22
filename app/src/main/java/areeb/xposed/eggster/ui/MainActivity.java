@@ -3,7 +3,6 @@ package areeb.xposed.eggster.ui;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.ListView;
 import areeb.xposed.eggster.Egg;
 import areeb.xposed.eggster.R;

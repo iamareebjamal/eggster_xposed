@@ -74,7 +74,7 @@ public class PlatLogoActivity extends Activity {
         letter.setTextColor(0xFFFFFFFF);
         letter.setGravity(Gravity.CENTER);
         letter.setText("K");
-
+        
         final int p = (int) (4 * metrics.density);
 
         final TextView tv = new TextView(this);

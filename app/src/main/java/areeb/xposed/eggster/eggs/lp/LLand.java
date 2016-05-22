@@ -1,6 +1,5 @@
 package areeb.xposed.eggster.eggs.lp;
 
-import android.animation.TimeAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
@@ -18,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import areeb.xposed.eggster.R;
 import areeb.xposed.eggster.utils.Misc;
+import com.nineoldandroids.animation.TimeAnimator;
 
 import java.util.ArrayList;
 
@@ -154,8 +154,6 @@ public class LLand extends FrameLayout {
         }
     }
 
-    // TODO : Port to pre JB
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void reset() {
         L("reset");
         final Drawable sky = new GradientDrawable(
@@ -298,8 +296,6 @@ public class LLand extends FrameLayout {
         setScore(mScore + incr);
     }
 
-    // TODO : Port to Pre JB
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void start(boolean startPlaying) {
         L("start(startPlaying=%s)", startPlaying ? "true" : "false");
         if (startPlaying) {

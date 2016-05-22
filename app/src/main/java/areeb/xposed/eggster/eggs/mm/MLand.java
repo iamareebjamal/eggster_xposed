@@ -1,7 +1,6 @@
 package areeb.xposed.eggster.eggs.mm;
 
 import android.animation.LayoutTransition;
-import android.animation.TimeAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
@@ -21,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import areeb.xposed.eggster.R;
 import areeb.xposed.eggster.utils.Misc;
+import com.nineoldandroids.animation.TimeAnimator;
 
 import java.util.ArrayList;
 
@@ -349,8 +349,6 @@ public class MLand extends FrameLayout {
             mVibrator.vibrate(ms);
     }
 
-    // TODO : Pre JB
-    @TargetApi(16)
     public void reset() {
         L("reset");
         final Drawable sky = new GradientDrawable(
@@ -502,8 +500,6 @@ public class MLand extends FrameLayout {
         });
     }
 
-    // TODO : Pre JB
-    @TargetApi(16)
     public void start(boolean startPlaying) {
         L("start(startPlaying=%s)", startPlaying ? "true" : "false");
         if (startPlaying && mCountdown <= 0) {
@@ -1388,38 +1384,49 @@ public class MLand extends FrameLayout {
     private class Stem extends Obstacle {
         Paint mPaint = new Paint();
         Path mShadow = new Path();
-        GradientDrawable mGradient = new GradientDrawable();
+        GradientDrawable mGradient;
         boolean mDrawShadow;
         Path mJandystripe;
         Paint mPaint2;
         int id; // use this to track which pipes have been cleared
 
-        // TODO : Pre JB
-        @TargetApi(16)
         public Stem(Context context, float h, boolean drawShadow) {
             super(context, h);
             id = mCurrentPipeId;
 
             mDrawShadow = drawShadow;
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
                 setBackground(null);
             else
                 setBackgroundDrawable(null);
 
-            mGradient.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
-
             mPaint.setColor(0xFF000000);
             mPaint.setColorFilter(new PorterDuffColorFilter(0x22000000, PorterDuff.Mode.MULTIPLY));
 
             if (frand() < 0.01f) {
-                mGradient.setColors(new int[]{0xFFFFFFFF, 0xFFDDDDDD});
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+                    mGradient = new GradientDrawable();
+                    mGradient.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
+                    mGradient.setColors(new int[]{0xFFFFFFFF, 0xFFDDDDDD});
+                } else {
+                    mGradient = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{0xFFFFFFFF, 0xFFDDDDDD});
+                }
+
                 mJandystripe = new Path();
                 mPaint2 = new Paint();
                 mPaint2.setColor(0xFFFF0000);
                 mPaint2.setColorFilter(new PorterDuffColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY));
             } else {
                 //mPaint.setColor(0xFFA1887F);
-                mGradient.setColors(new int[]{0xFFBCAAA4, 0xFFA1887F});
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+                    mGradient = new GradientDrawable();
+                    mGradient.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
+                    mGradient.setColors(new int[]{0xFFBCAAA4, 0xFFA1887F});
+                } else {
+                    mGradient = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{0xFFBCAAA4, 0xFFA1887F});
+                }
             }
         }
 

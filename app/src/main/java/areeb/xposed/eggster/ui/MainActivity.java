@@ -1,8 +1,12 @@
 package areeb.xposed.eggster.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ListView;
 import areeb.xposed.eggster.Egg;
 import areeb.xposed.eggster.R;
@@ -30,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         EggAdapter eggAdapter = new EggAdapter(this, eggs);
         eggList.setAdapter(eggAdapter);
 
-        /*
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(Intent.ACTION_MAIN).setFlags(
                         Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                         .setClassName("areeb.xposed.eggster",
-                                "areeb.xposed.eggster.eggs.mm.PlatLogoActivity"));
+                                "areeb.xposed.eggster.eggs.n.PlatLogoActivity"));
             }
-        });*/
+        });
     }
 
 }

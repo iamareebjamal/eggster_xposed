@@ -17,6 +17,7 @@
 package areeb.xposed.eggster.eggs.kk;
 
 import android.app.Activity;
+import android.graphics.Color;
 
 public class DessertCase extends Activity {
     DessertCaseView mView;
@@ -30,6 +31,7 @@ public class DessertCase extends Activity {
         DessertCaseView.RescalingContainer container = new DessertCaseView.RescalingContainer(this);
 
         container.setView(mView);
+        container.setBackgroundColor(Color.BLACK);
 
         setContentView(container);
     }

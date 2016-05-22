@@ -8,16 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="Theme.Dialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorPrimary">@color/color_light</item>
-        <item name="colorPrimaryDark">@color/color_dark</item>
-        <item name="colorAccent">@color/color_light</item>
-        <item name="colorControlActivated">@color/color_light</item>
-        <item name="colorControlHighlight">@color/color_lighter</item>
-    </style>
-
     <style name="Theme.Wallpaper" parent="android:Theme.Wallpaper.NoTitleBar">
-        <item name="android:alertDialogTheme">@style/Theme.Dialog</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

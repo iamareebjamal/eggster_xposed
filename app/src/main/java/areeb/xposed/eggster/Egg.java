@@ -1,5 +1,7 @@
 package areeb.xposed.eggster;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 
 public enum Egg {
@@ -66,7 +68,19 @@ public enum Egg {
         return "areeb.xposed.eggster.eggs." + getId().toLowerCase() + ".PlatLogoActivity";
     }
 
-    public String getDrawable() {
+    public String getDrawableId() {
         return "dessert_" + name.toLowerCase();
+    }
+
+    public int getDrawableRes(Context context){
+        return context.getResources().getIdentifier(getDrawableId(), "drawable", "areeb.xposed.eggster");
+    }
+
+    public String getColorId(){
+        return "color_" + id.toLowerCase();
+    }
+
+    public int getColorRes(Context context){
+        return context.getResources().getIdentifier(getColorId(), "color", "areeb.xposed.eggster");
     }
 }

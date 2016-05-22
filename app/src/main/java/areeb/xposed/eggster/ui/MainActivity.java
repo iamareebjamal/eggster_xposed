@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Egg> eggs = new ArrayList<>();
         for (Egg e : Egg.values()) {
             eggs.add(e);
-            Log.d("Eggster", e.getName() + " " + e.getDrawable());
         }
 
         EggAdapter eggAdapter = new EggAdapter(this, eggs);

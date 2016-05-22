@@ -63,7 +63,7 @@ public class PlatLogoActivity extends Activity {
         mToast = Toast.makeText(this, "Android 4.0: Ice Cream Sandwich", Toast.LENGTH_SHORT);
 
         mContent = new ImageView(this);
-        mContent.setImageResource(R.drawable.platlogoics);
+        mContent.setImageResource(R.drawable.platlogo_ics);
         mContent.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
         mContent.setOnTouchListener(new View.OnTouchListener() {

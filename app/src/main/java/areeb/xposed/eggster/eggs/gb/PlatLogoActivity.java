@@ -18,7 +18,7 @@ public class PlatLogoActivity extends Activity {
 
         ImageView content = new ImageView(this);
         content.setBackgroundColor(0xFF000000);
-        content.setImageResource(R.drawable.platlogogb);
+        content.setImageResource(R.drawable.platlogo_gb);
         content.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         setContentView(content);

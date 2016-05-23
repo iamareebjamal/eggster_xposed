@@ -1,28 +1,21 @@
 package areeb.xposed.eggster.eggs.n;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.*;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewOutlineProvider;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import areeb.xposed.eggster.R;
-import areeb.xposed.eggster.utils.Misc;
 import areeb.xposed.eggster.utils.PathInterpolator;
 import com.balysv.materialripple.MaterialRippleLayout;
 
@@ -59,15 +52,15 @@ public class PlatLogoActivity extends Activity {
 
         final Drawable N;
 
-        N = ContextCompat.getDrawable(this, R.drawable.n);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            N = ContextCompat.getDrawable(this, R.drawable.platlogo_n);
             im.setImageDrawable(new RippleDrawable(
                     ColorStateList.valueOf(0xFFFFFFFF),
                     N,
                     null));
         } else {
-                im.setImageDrawable(N);
+            N = VectorDrawableCompat.create(getResources(), R.drawable.platlogo_n, null);
+            im.setImageDrawable(N);
         }
 
         im.setClickable(true);
@@ -124,7 +117,7 @@ public class PlatLogoActivity extends Activity {
                     .create();
         }
 
-        im.animate().scaleX(1.2f).scaleY(1.2f).alpha(1f)
+        im.animate().scaleX(1f).scaleY(1f).alpha(1f)
                 .setInterpolator(mInterpolator)
                 .setDuration(500)
                 .setStartDelay(800)

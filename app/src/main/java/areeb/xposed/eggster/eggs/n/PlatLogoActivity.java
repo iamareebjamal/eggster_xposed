@@ -59,7 +59,7 @@ public class PlatLogoActivity extends Activity {
 
         final Drawable N;
 
-        N = ContextCompat.getDrawable(this, R.drawable.platlogo_n);
+        N = ContextCompat.getDrawable(this, R.drawable.n);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             im.setImageDrawable(new RippleDrawable(
@@ -118,7 +118,6 @@ public class PlatLogoActivity extends Activity {
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             MaterialRippleLayout.on(im)
-                    .rippleOverlay(true)
                     .rippleColor(0xFFFFFF)
                     .rippleAlpha(0.2f)
                     .rippleRoundedCorners(size*3)

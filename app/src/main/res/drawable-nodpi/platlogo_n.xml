@@ -7,17 +7,17 @@
 
     <path
             android:fillColor="#805BBE"
-            android:pathData="M 162 116 L 19 116 L 19 450.495 L 161.872 390.431 " />
+            android:pathData="M 162 116 L 19 116 L 19 450.495 L 161.872 390.431 "/>
     <path
             android:fillColor="#805BBE"
-            android:pathData="M 352.319 390.672 L 495.319 390.672 L 495.319 56.672 L 352.446 116.489 " />
+            android:pathData="M 352.319 390.672 L 495.319 390.672 L 495.319 56.672 L 352.446 116.489 "/>
     <path
             android:fillColor="#58C4F6"
-            android:pathData="M 352.408 248.089 L 495.319 390.66 L 352.705 449.856 L 161.927 259.012 L 18.993 116.028 L 161.087 57.084 " />
+            android:pathData="M 352.408 248.089 L 495.319 390.66 L 352.705 449.856 L 161.927 259.012 L 18.993 116.028 L 161.087 57.084 "/>
     <path
             android:fillColor="#5F4590"
-            android:pathData="M 161.927 259.012 L 18.905 115.938 L 161.842 304.816 " />
+            android:pathData="M 161.927 259.012 L 18.905 115.938 L 161.842 304.816 "/>
     <path
             android:fillColor="#5F4590"
-            android:pathData="M 352.408 248.089 L 495.33 390.672 L 352.393 201.794 " />
+            android:pathData="M 352.408 248.089 L 495.33 390.672 L 352.393 201.794 "/>
 </vector>

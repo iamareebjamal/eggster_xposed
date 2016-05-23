@@ -37,28 +37,23 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import areeb.xposed.eggster.R;
-import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class DessertCaseView extends FrameLayout {
-    private static final String TAG = DessertCaseView.class.getSimpleName();
-
-    private static final boolean DEBUG = false;
-
+    public static final float SCALE = 0.25f; // natural display size will be SCALE*mCellSize
     static final int START_DELAY = 5000;
     static final int DELAY = 2000;
     static final int DURATION = 500;
-
+    private static final String TAG = DessertCaseView.class.getSimpleName();
+    private static final boolean DEBUG = false;
     private static final int TAG_POS = 0x2000001;
     private static final int TAG_SPAN = 0x2000002;
-
     private static final int[] PASTRIES = {
             R.drawable.dessert_kitkat,      // used with permission
             R.drawable.dessert_android,     // thx irina
     };
-
     private static final int[] RARE_PASTRIES = {
             R.drawable.dessert_cupcake,     // 2009
             R.drawable.dessert_donut,       // 2009
@@ -69,7 +64,6 @@ public class DessertCaseView extends FrameLayout {
             R.drawable.dessert_ics,         // 2011
             R.drawable.dessert_jellybean,   // 2012
     };
-
     private static final int[] XRARE_PASTRIES = {
             R.drawable.dessert_petitfour,   // the original and still delicious
 
@@ -87,57 +81,48 @@ public class DessertCaseView extends FrameLayout {
             R.drawable.dessert_dandroid,    // thx morrildl
             R.drawable.dessert_jandycane,   // thx nes
     };
-
     private static final int NUM_PASTRIES = PASTRIES.length + RARE_PASTRIES.length
             + XRARE_PASTRIES.length + XXRARE_PASTRIES.length;
-
-    private SparseArray<Drawable> mDrawables = new SparseArray<Drawable>(NUM_PASTRIES);
-
     private static final float[] MASK = {
-            0f,  0f,  0f,  0f, 255f,
-            0f,  0f,  0f,  0f, 255f,
-            0f,  0f,  0f,  0f, 255f,
-            1f,  0f,  0f,  0f, 0f
+            0f, 0f, 0f, 0f, 255f,
+            0f, 0f, 0f, 0f, 255f,
+            0f, 0f, 0f, 0f, 255f,
+            1f, 0f, 0f, 0f, 0f
     };
 
     private static final float[] ALPHA_MASK = {
-            0f,  0f,  0f,  0f, 255f,
-            0f,  0f,  0f,  0f, 255f,
-            0f,  0f,  0f,  0f, 255f,
-            0f,  0f,  0f,  1f, 0f
+            0f, 0f, 0f, 0f, 255f,
+            0f, 0f, 0f, 0f, 255f,
+            0f, 0f, 0f, 0f, 255f,
+            0f, 0f, 0f, 1f, 0f
     };
 
     private static final float[] WHITE_MASK = {
-            0f,  0f,  0f,  0f, 255f,
-            0f,  0f,  0f,  0f, 255f,
-            0f,  0f,  0f,  0f, 255f,
-            -1f,  0f,  0f,  0f, 255f
+            0f, 0f, 0f, 0f, 255f,
+            0f, 0f, 0f, 0f, 255f,
+            0f, 0f, 0f, 0f, 255f,
+            -1f, 0f, 0f, 0f, 255f
     };
-
-    public static final float SCALE = 0.25f; // natural display size will be SCALE*mCellSize
-
     private static final float PROB_2X = 0.33f;
     private static final float PROB_3X = 0.1f;
     private static final float PROB_4X = 0.01f;
-
+    private final Set<Point> mFreeList = new HashSet<Point>();
+    private final Handler mHandler = new Handler();
+    private final HashSet<View> tmpSet = new HashSet<View>();
+    float[] hsv = new float[]{0, 1f, .85f};
+    private SparseArray<Drawable> mDrawables = new SparseArray<Drawable>(NUM_PASTRIES);
     private boolean mStarted;
-
     private int mCellSize;
     private int mWidth, mHeight;
     private int mRows, mColumns;
     private View[] mCells;
-
-    private final Set<Point> mFreeList = new HashSet<Point>();
-
-    private final Handler mHandler = new Handler();
-
     private final Runnable mJuggle = new Runnable() {
         @Override
         public void run() {
             final int N = getChildCount();
 
             final int K = 1; //irand(1,3);
-            for (int i=0; i<K; i++) {
+            for (int i = 0; i < K; i++) {
                 final View child = getChildAt((int) (Math.random() * N));
                 place(child, true);
             }
@@ -172,7 +157,7 @@ public class DessertCaseView extends FrameLayout {
         }
         opts.inMutable = true;
         Bitmap loaded = null;
-        for (int[] list : new int[][] { PASTRIES, RARE_PASTRIES, XRARE_PASTRIES, XXRARE_PASTRIES }) {
+        for (int[] list : new int[][]{PASTRIES, RARE_PASTRIES, XRARE_PASTRIES, XXRARE_PASTRIES}) {
             for (int resid : list) {
                 opts.inBitmap = loaded;
                 loaded = BitmapFactory.decodeResource(res, resid, opts);
@@ -195,6 +180,18 @@ public class DessertCaseView extends FrameLayout {
         return a;
     }
 
+    static float frand() {
+        return (float) (Math.random());
+    }
+
+    static float frand(float a, float b) {
+        return (frand() * (b - a) + a);
+    }
+
+    static int irand(int a, int b) {
+        return (int) (frand(a, b));
+    }
+
     public void start() {
         if (!mStarted) {
             mStarted = true;
@@ -209,27 +206,26 @@ public class DessertCaseView extends FrameLayout {
     }
 
     int pick(int[] a) {
-        return a[(int)(Math.random()*a.length)];
+        return a[(int) (Math.random() * a.length)];
     }
 
     <T> T pick(T[] a) {
-        return a[(int)(Math.random()*a.length)];
+        return a[(int) (Math.random() * a.length)];
     }
 
     <T> T pick(SparseArray<T> sa) {
-        return sa.valueAt((int)(Math.random()*sa.size()));
+        return sa.valueAt((int) (Math.random() * sa.size()));
     }
 
-    float[] hsv = new float[] { 0, 1f, .85f };
     int random_color() {
 //        return 0xFF000000 | (int) (Math.random() * (float) 0xFFFFFF); // totally random
         final int COLORS = 12;
-        hsv[0] = irand(0,COLORS) * (360f/COLORS);
+        hsv[0] = irand(0, COLORS) * (360f / COLORS);
         return Color.HSVToColor(hsv);
     }
 
     @Override
-    protected synchronized void onSizeChanged (int w, int h, int oldw, int oldh) {
+    protected synchronized void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         if (mWidth == w && mHeight == h) return;
 
@@ -257,9 +253,9 @@ public class DessertCaseView extends FrameLayout {
         setTranslationX(0.5f * (mWidth - mCellSize * mColumns) * SCALE);
         setTranslationY(0.5f * (mHeight - mCellSize * mRows) * SCALE);
 
-        for (int j=0; j<mRows; j++) {
-            for (int i=0; i<mColumns; i++) {
-                mFreeList.add(new Point(i,j));
+        for (int j = 0; j < mRows; j++) {
+            for (int i = 0; i < mColumns; i++) {
+                mFreeList.add(new Point(i, j));
             }
         }
 
@@ -276,19 +272,23 @@ public class DessertCaseView extends FrameLayout {
         final Context ctx = getContext();
         final FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(mCellSize, mCellSize);
 
-        while (! mFreeList.isEmpty()) {
+        while (!mFreeList.isEmpty()) {
             Point pt = mFreeList.iterator().next();
             mFreeList.remove(pt);
-            final int i=pt.x;
-            final int j=pt.y;
+            final int i = pt.x;
+            final int j = pt.y;
 
-            if (mCells[j*mColumns+i] != null) continue;
+            if (mCells[j * mColumns + i] != null) continue;
             final ImageView v = new ImageView(ctx);
             v.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     place(v, true);
-                    postDelayed(new Runnable() { public void run() { fillFreeList(); } }, DURATION/2);
+                    postDelayed(new Runnable() {
+                        public void run() {
+                            fillFreeList();
+                        }
+                    }, DURATION / 2);
                 }
             });
 
@@ -310,7 +310,7 @@ public class DessertCaseView extends FrameLayout {
             }
             if (d != null) {
                 // TODO : Check if working
-                if(Build.VERSION.SDK_INT >= 18)
+                if (Build.VERSION.SDK_INT >= 18)
                     v.getOverlay().add(d);
                 else
                     v.setImageDrawable(d);
@@ -324,7 +324,7 @@ public class DessertCaseView extends FrameLayout {
                 v.setScaleX(0.5f * s);
                 v.setScaleY(0.5f * s);
                 v.setAlpha(0f);
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
                     v.animate().withLayer().scaleX(s).scaleY(s).alpha(1f).setDuration(animationLen);
                 else
                     v.animate().scaleX(s).scaleY(s).alpha(1f).setDuration(animationLen);
@@ -344,6 +344,7 @@ public class DessertCaseView extends FrameLayout {
                 v.setLayerType(View.LAYER_TYPE_HARDWARE, null);
                 v.buildLayer();
             }
+
             @Override
             public void onAnimationEnd(Animator animator) {
                 v.setLayerType(View.LAYER_TYPE_NONE, null);
@@ -351,7 +352,6 @@ public class DessertCaseView extends FrameLayout {
         };
     }
 
-    private final HashSet<View> tmpSet = new HashSet<View>();
     public synchronized void place(View v, Point pt, boolean animate) {
         final int i = pt.x;
         final int j = pt.y;
@@ -359,20 +359,20 @@ public class DessertCaseView extends FrameLayout {
         if (v.getTag(TAG_POS) != null) {
             for (final Point oc : getOccupied(v)) {
                 mFreeList.add(oc);
-                mCells[oc.y*mColumns + oc.x] = null;
+                mCells[oc.y * mColumns + oc.x] = null;
             }
         }
         int scale = 1;
         if (rnd < PROB_4X) {
-            if (!(i >= mColumns-3 || j >= mRows-3)) {
+            if (!(i >= mColumns - 3 || j >= mRows - 3)) {
                 scale = 4;
             }
         } else if (rnd < PROB_3X) {
-            if (!(i >= mColumns-2 || j >= mRows-2)) {
+            if (!(i >= mColumns - 2 || j >= mRows - 2)) {
                 scale = 3;
             }
         } else if (rnd < PROB_2X) {
-            if (!(i == mColumns-1 || j == mRows-1)) {
+            if (!(i == mColumns - 1 || j == mRows - 1)) {
                 scale = 2;
             }
         }
@@ -384,7 +384,7 @@ public class DessertCaseView extends FrameLayout {
 
         final Point[] occupied = getOccupied(v);
         for (final Point oc : occupied) {
-            final View squatter = mCells[oc.y*mColumns + oc.x];
+            final View squatter = mCells[oc.y * mColumns + oc.x];
             if (squatter != null) {
                 tmpSet.add(squatter);
             }
@@ -393,23 +393,29 @@ public class DessertCaseView extends FrameLayout {
         for (final View squatter : tmpSet) {
             for (final Point sq : getOccupied(squatter)) {
                 mFreeList.add(sq);
-                mCells[sq.y*mColumns + sq.x] = null;
+                mCells[sq.y * mColumns + sq.x] = null;
             }
             if (squatter != v) {
                 squatter.setTag(TAG_POS, null);
                 if (animate) {
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         squatter.animate().withLayer()
                                 .scaleX(0.5f).scaleY(0.5f).alpha(0)
                                 .setDuration(DURATION)
                                 .setInterpolator(new AccelerateInterpolator())
                                 .setListener(new Animator.AnimatorListener() {
-                                    public void onAnimationStart(Animator animator) { }
+                                    public void onAnimationStart(Animator animator) {
+                                    }
+
                                     public void onAnimationEnd(Animator animator) {
                                         removeView(squatter);
                                     }
-                                    public void onAnimationCancel(Animator animator) { }
-                                    public void onAnimationRepeat(Animator animator) { }
+
+                                    public void onAnimationCancel(Animator animator) {
+                                    }
+
+                                    public void onAnimationRepeat(Animator animator) {
+                                    }
                                 })
                                 .start();
                     } else {
@@ -418,12 +424,18 @@ public class DessertCaseView extends FrameLayout {
                                 .setDuration(DURATION)
                                 .setInterpolator(new AccelerateInterpolator())
                                 .setListener(new Animator.AnimatorListener() {
-                                    public void onAnimationStart(Animator animator) { }
+                                    public void onAnimationStart(Animator animator) {
+                                    }
+
                                     public void onAnimationEnd(Animator animator) {
                                         removeView(squatter);
                                     }
-                                    public void onAnimationCancel(Animator animator) { }
-                                    public void onAnimationRepeat(Animator animator) { }
+
+                                    public void onAnimationCancel(Animator animator) {
+                                    }
+
+                                    public void onAnimationRepeat(Animator animator) {
+                                    }
                                 })
                                 .start();
                     }
@@ -435,11 +447,11 @@ public class DessertCaseView extends FrameLayout {
         }
 
         for (final Point oc : occupied) {
-            mCells[oc.y*mColumns + oc.x] = v;
+            mCells[oc.y * mColumns + oc.x] = v;
             mFreeList.remove(oc);
         }
 
-        final float rot = (float)irand(0, 4) * 90f;
+        final float rot = (float) irand(0, 4) * 90f;
 
         if (animate) {
             v.bringToFront();
@@ -455,8 +467,8 @@ public class DessertCaseView extends FrameLayout {
             AnimatorSet set2 = new AnimatorSet();
             set2.playTogether(
                     ObjectAnimator.ofFloat(v, View.ROTATION, rot),
-                    ObjectAnimator.ofFloat(v, View.X, i* mCellSize + (scale-1) * mCellSize /2),
-                    ObjectAnimator.ofFloat(v, View.Y, j* mCellSize + (scale-1) * mCellSize /2)
+                    ObjectAnimator.ofFloat(v, View.X, i * mCellSize + (scale - 1) * mCellSize / 2),
+                    ObjectAnimator.ofFloat(v, View.Y, j * mCellSize + (scale - 1) * mCellSize / 2)
             );
             set2.setInterpolator(new DecelerateInterpolator());
             set2.setDuration(DURATION);
@@ -466,8 +478,8 @@ public class DessertCaseView extends FrameLayout {
             set1.start();
             set2.start();
         } else {
-            v.setX(i * mCellSize + (scale-1) * mCellSize /2);
-            v.setY(j * mCellSize + (scale-1) * mCellSize /2);
+            v.setX(i * mCellSize + (scale - 1) * mCellSize / 2);
+            v.setY(j * mCellSize + (scale - 1) * mCellSize / 2);
             v.setScaleX((float) scale);
             v.setScaleY((float) scale);
             v.setRotation(rot);
@@ -476,29 +488,17 @@ public class DessertCaseView extends FrameLayout {
 
     private Point[] getOccupied(View v) {
         final int scale = (Integer) v.getTag(TAG_SPAN);
-        final Point pt = (Point)v.getTag(TAG_POS);
+        final Point pt = (Point) v.getTag(TAG_POS);
         if (pt == null || scale == 0) return new Point[0];
 
         final Point[] result = new Point[scale * scale];
-        int p=0;
-        for (int i=0; i<scale; i++) {
-            for (int j=0; j<scale; j++) {
+        int p = 0;
+        for (int i = 0; i < scale; i++) {
+            for (int j = 0; j < scale; j++) {
                 result[p++] = new Point(pt.x + i, pt.y + j);
             }
         }
         return result;
-    }
-
-    static float frand() {
-        return (float)(Math.random());
-    }
-
-    static float frand(float a, float b) {
-        return (frand() * (b-a) + a);
-    }
-
-    static int irand(int a, int b) {
-        return (int)(frand(a, b));
     }
 
     @Override
@@ -545,9 +545,9 @@ public class DessertCaseView extends FrameLayout {
         }
 
         @Override
-        protected void onLayout (boolean changed, int left, int top, int right, int bottom) {
-            final float w = right-left;
-            final float h = bottom-top;
+        protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+            final float w = right - left;
+            final float h = bottom - top;
             final int w2 = (int) (w / mView.SCALE / 2);
             final int h2 = (int) (h / mView.SCALE / 2);
             final int cx = (int) (left + w * 0.5f);
@@ -555,15 +555,15 @@ public class DessertCaseView extends FrameLayout {
             mView.layout(cx - w2, cy - h2, cx + w2, cy + h2);
         }
 
+        public float getDarkness() {
+            return mDarkness;
+        }
+
         public void setDarkness(float p) {
             mDarkness = p;
             getDarkness();
             final int x = (int) (p * 0xff);
             setBackgroundColor(x << 24 & 0xFF000000);
-        }
-
-        public float getDarkness() {
-            return mDarkness;
         }
     }
 }

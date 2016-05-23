@@ -1406,7 +1406,7 @@ public class MLand extends FrameLayout {
 
             if (frand() < 0.01f) {
 
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     mGradient = new GradientDrawable();
                     mGradient.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
                     mGradient.setColors(new int[]{0xFFFFFFFF, 0xFFDDDDDD});
@@ -1420,7 +1420,7 @@ public class MLand extends FrameLayout {
                 mPaint2.setColorFilter(new PorterDuffColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY));
             } else {
                 //mPaint.setColor(0xFFA1887F);
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     mGradient = new GradientDrawable();
                     mGradient.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
                     mGradient.setColors(new int[]{0xFFBCAAA4, 0xFFA1887F});

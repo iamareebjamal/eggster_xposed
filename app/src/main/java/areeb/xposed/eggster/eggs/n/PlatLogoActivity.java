@@ -113,7 +113,7 @@ public class PlatLogoActivity extends Activity {
             MaterialRippleLayout.on(im)
                     .rippleColor(0xFFFFFF)
                     .rippleAlpha(0.2f)
-                    .rippleRoundedCorners(size*3)
+                    .rippleRoundedCorners(size * 3)
                     .create();
         }
 

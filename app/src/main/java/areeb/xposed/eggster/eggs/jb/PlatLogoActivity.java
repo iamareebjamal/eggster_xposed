@@ -106,7 +106,7 @@ public class PlatLogoActivity extends Activity {
             @Override
             public void onClick(View v) {
                 mToast.show();
-                mContent.setImageResource(R.drawable.platlogo);
+                mContent.setImageResource(R.drawable.platlogo_jb);
             }
         });
 

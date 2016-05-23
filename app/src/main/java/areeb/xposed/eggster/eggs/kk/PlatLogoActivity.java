@@ -19,7 +19,6 @@ package areeb.xposed.eggster.eggs.kk;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -74,7 +73,7 @@ public class PlatLogoActivity extends Activity {
         letter.setTextColor(0xFFFFFFFF);
         letter.setGravity(Gravity.CENTER);
         letter.setText("K");
-        
+
         final int p = (int) (4 * metrics.density);
 
         final TextView tv = new TextView(this);

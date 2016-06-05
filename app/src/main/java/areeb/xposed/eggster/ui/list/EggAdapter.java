@@ -3,6 +3,7 @@ package areeb.xposed.eggster.ui.list;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
@@ -35,9 +36,8 @@ public class EggAdapter extends ArrayAdapter<Egg> {
         // Get the data item for this position
         final Egg egg = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
+        if (convertView == null)
             convertView = LayoutInflater.from(context).inflate(R.layout.item_easter_egg, parent, false);
-        }
 
         final SwitchCompat switchCompat = (SwitchCompat) convertView.findViewById(R.id.egg_select);
 
@@ -48,16 +48,24 @@ public class EggAdapter extends ArrayAdapter<Egg> {
             }
         });
 
-        TextView textView = (TextView) convertView.findViewById(R.id.egg_title);
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.egg_image);
+        final TextView textView = (TextView) convertView.findViewById(R.id.egg_title);
+        final ImageView imageView = (ImageView) convertView.findViewById(R.id.egg_image);
 
-        textView.setText(egg.getName());
+        String name = egg.getName();
+        textView.setText(name);
 
         imageView.setImageResource(egg.getDrawableRes(context));
-        if (color)
-            imageView.getDrawable().setColorFilter(ContextCompat.getColor(context, egg.getColorRes(context)), PorterDuff.Mode.SCREEN);
-        else
-            imageView.getDrawable().setColorFilter(ContextCompat.getColor(context, android.R.color.black), PorterDuff.Mode.SCREEN);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && name.equals(Egg.N_PREVIEW.getName())){
+            convertView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    textView.setText(new String(Character.toChars(0x1F31A)));
+                    imageView.setImageResource(R.drawable.logo_nm);
+                    return false;
+                }
+            });
+        }
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

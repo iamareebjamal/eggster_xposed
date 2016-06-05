@@ -12,7 +12,8 @@ public enum Egg {
     KITKAT("KK", "KitKat"),
     L_PREVIEW("L", "L"),
     LOLLIPOP("LP", "Lollipop"),
-    MARSHMALLOW("MM", "Marshmallow");
+    MARSHMALLOW("MM", "Marshmallow"),
+    N_PREVIEW("N", "N");
 
 
     public static int BUILD = Build.VERSION.SDK_INT;
@@ -45,8 +46,10 @@ public enum Egg {
             return KITKAT;
         else if (build_no < Build.VERSION_CODES.M)
             return LOLLIPOP;
-        else if (build_no >= 23)
+        else if (build_no < 24)
             return MARSHMALLOW;
+        else if (build_no == 24)
+            return N_PREVIEW;
         else
             return GINGERBREAD;
     }
@@ -68,7 +71,7 @@ public enum Egg {
     }
 
     public String getDrawableId() {
-        return "dessert_" + name.toLowerCase();
+        return "logo_" + id.toLowerCase();
     }
 
     public int getDrawableRes(Context context) {

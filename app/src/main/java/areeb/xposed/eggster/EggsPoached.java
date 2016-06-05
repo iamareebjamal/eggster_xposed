@@ -41,14 +41,13 @@ public class EggsPoached implements IXposedHookZygoteInit {
                     Activity platLogoActivity = (Activity) param.thisObject;
 
                     Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                            Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
                     intent.setComponent(new ComponentName(PACKAGE_NAME, egg.getPackage()));
-
-                    Toast.makeText(platLogoActivity, "Done", Toast.LENGTH_SHORT).show();
 
                     try {
 
                         callMethod(platLogoActivity, "finish");
-                        platLogoActivity.finish(); //getting sure
                         callMethod(platLogoActivity, "startActivity", intent);
 
                         log("Success");

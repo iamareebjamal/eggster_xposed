@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import areeb.xposed.eggster.Egg;
 import areeb.xposed.eggster.R;
+import areeb.xposed.eggster.XPreferenceManager;
 
 import java.util.ArrayList;
 
@@ -85,10 +86,15 @@ public class EggAdapter extends ArrayAdapter<Egg> {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
 
-                if(checked)
+                if(checked) {
+                    XPreferenceManager.setEnabled(true);
+                    XPreferenceManager.setEasterEgg(getItem(position));
+
                     selected = position;
-                else
+                } else {
+                    XPreferenceManager.setEnabled(false);
                     selected = -1;
+                }
 
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable(){

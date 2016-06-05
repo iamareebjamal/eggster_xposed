@@ -2,10 +2,8 @@ package areeb.xposed.eggster.ui.list;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import areeb.xposed.eggster.Egg;
 import areeb.xposed.eggster.R;
-import areeb.xposed.eggster.XPreferenceManager;
+import areeb.xposed.eggster.preferences.PreferenceManager;
+import areeb.xposed.eggster.preferences.XPreferenceManager;
 
 import java.util.ArrayList;
 
@@ -25,13 +24,15 @@ public class EggAdapter extends ArrayAdapter<Egg> {
     private Context context;
     private ArrayList<Egg> eggs;
 
-    private int selected = -1;
+    private String selected = null;
 
 
     public EggAdapter(Context context, ArrayList<Egg> eggs) {
         super(context, 0, eggs);
         this.context = context;
         this.eggs = eggs;
+
+        selected = new PreferenceManager(context).getEasterEgg();
     }
 
     @Override
@@ -79,21 +80,24 @@ public class EggAdapter extends ArrayAdapter<Egg> {
         });
     }
 
-    private void switchHandler(View convertView, final int position){
+    private void switchHandler(View convertView, int position){
         final SwitchCompat switchCompat = (SwitchCompat) convertView.findViewById(R.id.egg_select);
+        final Egg egg = getItem(position);
 
         CompoundButton.OnCheckedChangeListener mListener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
 
-                if(checked) {
-                    XPreferenceManager.setEnabled(true);
-                    XPreferenceManager.setEasterEgg(getItem(position));
+                PreferenceManager preferenceManager = new PreferenceManager(context);
 
-                    selected = position;
+                if(checked) {
+                    preferenceManager.setEnabled(true);
+                    preferenceManager.setEasterEgg(egg);
+
+                    selected = egg.getId();
                 } else {
-                    XPreferenceManager.setEnabled(false);
-                    selected = -1;
+                    preferenceManager.setEnabled(false);
+                    selected = null;
                 }
 
                 Handler handler = new Handler();
@@ -101,13 +105,13 @@ public class EggAdapter extends ArrayAdapter<Egg> {
                     public void run() {
                         notifyDataSetChanged();
                     }
-                }, 200);
+                }, 170);
 
             }
         };
 
         switchCompat.setOnCheckedChangeListener(null);
-        if(selected == position){
+        if(egg.getId().equals(selected)){
             switchCompat.setChecked(true);
         } else {
             switchCompat.setChecked(false);

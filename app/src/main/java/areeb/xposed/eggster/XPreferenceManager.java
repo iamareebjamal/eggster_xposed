@@ -5,6 +5,7 @@ import de.robv.android.xposed.XSharedPreferences;
 public class XPreferenceManager {
 
     private static XSharedPreferences preferences = new XSharedPreferences(EggsPoached.PACKAGE_NAME, "easter_preference");
+    private static final String EGG_NAME = "egg_name";
 
     public static boolean isEnabled() {
         preferences.reload();
@@ -18,8 +19,11 @@ public class XPreferenceManager {
 
     public static String getEasterEgg() {
         preferences.reload();
-        return preferences.getString("egg_name", Egg.getSystemEgg().getId());
+        return preferences.getString(EGG_NAME, Egg.getSystemEgg().getId());
     }
 
+    public static void setEasterEgg(Egg egg){
+        preferences.edit().putString(EGG_NAME, egg.getId()).commit();
+    }
 
 }

@@ -34,19 +34,6 @@ public class MainActivity extends AppCompatActivity {
         EggAdapter eggAdapter = new EggAdapter(this, eggs);
         eggList.setAdapter(eggAdapter);
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Opening Platlogo", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                startActivity(new Intent(Intent.ACTION_MAIN).setFlags(
-                        Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-                        .setClassName("areeb.xposed.eggster",
-                                "areeb.xposed.eggster.eggs.n.PlatLogoActivity"));
-            }
-        });
     }
 
 }

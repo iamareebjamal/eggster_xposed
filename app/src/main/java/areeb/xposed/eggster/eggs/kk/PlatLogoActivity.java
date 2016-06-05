@@ -46,8 +46,8 @@ public class PlatLogoActivity extends Activity {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        Typeface bold = Typeface.createFromAsset(getAssets(), "Roboto-Bold.ttf");
-        Typeface light = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
+        Typeface bold = Typeface.create("sans-serif", Typeface.BOLD);
+        Typeface light = Typeface.create("sans-serif-light", Typeface.NORMAL);
 
         mContent = new FrameLayout(this);
         mContent.setBackgroundColor(0xC0000000);

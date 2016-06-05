@@ -56,8 +56,8 @@ public class PlatLogoActivity extends Activity {
         final int p = (int) (8 * metrics.density);
         view.setPadding(p, p, p, p);
 
-        Typeface normal = Typeface.createFromAsset(getAssets(), "Roboto-Bold.ttf");
-        Typeface light = Typeface.createFromAsset(getAssets(), "Roboto-Light.ttf");
+        Typeface light = Typeface.create("sans-serif-light", Typeface.NORMAL);
+        Typeface normal = Typeface.create("sans-serif", Typeface.BOLD);
 
         final float size = 14 * metrics.density;
         final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(

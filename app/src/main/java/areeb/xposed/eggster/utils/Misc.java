@@ -89,8 +89,4 @@ public class Misc {
             DrawableCompat.unwrap(wrappedDrawable);
         }
     }
-
-    public static void translateZ() {
-
-    }
 }

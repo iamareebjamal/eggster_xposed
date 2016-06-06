@@ -30,4 +30,5 @@ dependencies {
     compile 'com.android.support:design:23.2.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.balysv:material-ripple:1.0.2'
+    compile 'de.psdev.licensesdialog:licensesdialog:1.8.1'
 }

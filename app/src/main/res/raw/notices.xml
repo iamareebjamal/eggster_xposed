@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<notices>
+    <notice>
+        <name>Nine Old Androids</name>
+        <url>http://nineoldandroids.com/</url>
+        <copyright>Copyright (C) 2010 The Android Open Source Project</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Android Open Source Project</name>
+        <url>https://github.com/android/platform_frameworks_base/</url>
+        <copyright>Copyright (C) 2010 The Android Open Source Project</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Android Support Library</name>
+        <url>https://github.com/android/platform_frameworks_base/</url>
+        <copyright>Copyright (C) 2010 The Android Open Source Project</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Material Ripple Layout 1.0.2</name>
+        <url>https://github.com/balysv/material-ripple/</url>
+        <copyright>Copyright 2015 Balys Valentukevicius</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Vector Old</name>
+        <url>https://github.com/seven332/VectorOld</url>
+    </notice>
+</notices>

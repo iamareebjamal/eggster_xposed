@@ -1,6 +1,5 @@
 package areeb.xposed.eggster.preferences;
 
-import areeb.xposed.eggster.Egg;
 import areeb.xposed.eggster.EggsPoached;
 import de.robv.android.xposed.XSharedPreferences;
 

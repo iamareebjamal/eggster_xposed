@@ -1,4 +1,5 @@
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+            android:opacity="opaque">
     <item android:drawable="@color/colorPrimary"/>
     <item>
         <bitmap

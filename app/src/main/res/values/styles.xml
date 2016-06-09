@@ -13,7 +13,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.DarkActionBar" />
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.DarkActionBar"/>
 
     <style name="Theme.Wallpaper" parent="android:Theme.Wallpaper.NoTitleBar">
     </style>

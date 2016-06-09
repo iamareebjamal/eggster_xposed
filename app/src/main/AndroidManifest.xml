@@ -13,13 +13,13 @@
 
         <meta-data
                 android:name="xposedmodule"
-                android:value="true" />
+                android:value="true"/>
         <meta-data
                 android:name="xposeddescription"
-                android:value="Replace Easter Eggs present in Settings Menu to any of the 9 available ones." />
+                android:value="Replace Easter Eggs present in Settings Menu to any of the 9 available ones."/>
         <meta-data
                 android:name="xposedminversion"
-                android:value="30" />
+                android:value="30"/>
 
         <activity
                 android:name=".ui.MainActivity"

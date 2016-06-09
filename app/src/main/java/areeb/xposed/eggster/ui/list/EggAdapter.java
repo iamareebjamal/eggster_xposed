@@ -15,7 +15,6 @@ import android.widget.TextView;
 import areeb.xposed.eggster.Egg;
 import areeb.xposed.eggster.R;
 import areeb.xposed.eggster.preferences.PreferenceManager;
-import areeb.xposed.eggster.preferences.XPreferenceManager;
 
 import java.util.ArrayList;
 
@@ -49,7 +48,7 @@ public class EggAdapter extends ArrayAdapter<Egg> {
         return convertView;
     }
 
-    private void itemHandler(View convertView, final Egg egg){
+    private void itemHandler(View convertView, final Egg egg) {
         final TextView textView = (TextView) convertView.findViewById(R.id.egg_title);
         final ImageView imageView = (ImageView) convertView.findViewById(R.id.egg_image);
 
@@ -58,7 +57,7 @@ public class EggAdapter extends ArrayAdapter<Egg> {
 
         imageView.setImageResource(egg.getDrawableRes(context));
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && name.equals(Egg.N_PREVIEW.getName())){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && name.equals(Egg.N_PREVIEW.getName())) {
             convertView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -80,7 +79,7 @@ public class EggAdapter extends ArrayAdapter<Egg> {
         });
     }
 
-    private void switchHandler(View convertView, int position){
+    private void switchHandler(View convertView, int position) {
         final SwitchCompat switchCompat = (SwitchCompat) convertView.findViewById(R.id.egg_select);
         final Egg egg = getItem(position);
 
@@ -90,7 +89,7 @@ public class EggAdapter extends ArrayAdapter<Egg> {
 
                 PreferenceManager preferenceManager = new PreferenceManager(context);
 
-                if(checked) {
+                if (checked) {
                     preferenceManager.setEnabled(true);
                     preferenceManager.setEasterEgg(egg);
 
@@ -101,7 +100,7 @@ public class EggAdapter extends ArrayAdapter<Egg> {
                 }
 
                 Handler handler = new Handler();
-                handler.postDelayed(new Runnable(){
+                handler.postDelayed(new Runnable() {
                     public void run() {
                         notifyDataSetChanged();
                     }
@@ -111,7 +110,7 @@ public class EggAdapter extends ArrayAdapter<Egg> {
         };
 
         switchCompat.setOnCheckedChangeListener(null);
-        if(egg.getId().equals(selected)){
+        if (egg.getId().equals(selected)) {
             switchCompat.setChecked(true);
         } else {
             switchCompat.setChecked(false);

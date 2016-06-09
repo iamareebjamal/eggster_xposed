@@ -81,6 +81,14 @@ public class EggAdapter extends ArrayAdapter<Egg> {
 
     private void switchHandler(View convertView, int position) {
         final SwitchCompat switchCompat = (SwitchCompat) convertView.findViewById(R.id.egg_select);
+
+        if(!PreferenceManager.isModuleActive()){
+            switchCompat.setEnabled(false);
+            return;
+        } else {
+            switchCompat.setEnabled(true);
+        }
+
         final Egg egg = getItem(position);
 
         CompoundButton.OnCheckedChangeListener mListener = new CompoundButton.OnCheckedChangeListener() {

@@ -7,15 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
+import areeb.xposed.eggster.preferences.PreferenceManager;
 import areeb.xposed.eggster.preferences.XPreferenceManager;
-import de.robv.android.xposed.IXposedHookZygoteInit;
-import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.*;
+import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 import static de.robv.android.xposed.XposedHelpers.*;
 
-public class EggsPoached implements IXposedHookZygoteInit {
-
+public class EggsPoached implements IXposedHookZygoteInit, IXposedHookLoadPackage {
 
     public static final String PACKAGE_NAME = "areeb.xposed.eggster";
 
@@ -46,11 +45,8 @@ public class EggsPoached implements IXposedHookZygoteInit {
                     intent.setComponent(new ComponentName(PACKAGE_NAME, egg.getPackage()));
 
                     try {
-
                         callMethod(platLogoActivity, "finish");
                         callMethod(platLogoActivity, "startActivity", intent);
-
-                        log("Success");
 
                     } catch (ActivityNotFoundException ane) {
                         Toast.makeText((Context) callMethod(param.thisObject, "getApplicationContext"),
@@ -65,4 +61,11 @@ public class EggsPoached implements IXposedHookZygoteInit {
 
         findAndHookMethod(hookedClass, HOOK_METHOD, Bundle.class, methodHook);
     }
+
+    @Override
+    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
+        findAndHookMethod(PreferenceManager.class.getName(), loadPackageParam.classLoader,
+                "isModuleActive", XC_MethodReplacement.returnConstant(true));
+    }
+
 }

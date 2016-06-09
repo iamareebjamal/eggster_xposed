@@ -39,4 +39,8 @@ public class PreferenceManager {
         preferences.edit().putString(EGG_NAME, egg.getId()).commit();
     }
 
+    public static boolean isModuleActive(){
+        return false;
+    }
+
 }

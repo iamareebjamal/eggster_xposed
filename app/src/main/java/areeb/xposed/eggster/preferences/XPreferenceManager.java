@@ -1,11 +1,15 @@
 package areeb.xposed.eggster.preferences;
 
+import areeb.xposed.eggster.Egg;
 import areeb.xposed.eggster.EggsPoached;
 import de.robv.android.xposed.XSharedPreferences;
 
 public class XPreferenceManager {
 
     private static XSharedPreferences preferences = new XSharedPreferences(EggsPoached.PACKAGE_NAME, "easter_preference");
+    static {
+        preferences.makeWorldReadable();
+    }
 
     public static boolean isEnabled() {
         preferences.reload();
@@ -19,6 +23,6 @@ public class XPreferenceManager {
 
     public static String getEasterEgg() {
         preferences.reload();
-        return preferences.getString(PreferenceManager.EGG_NAME, null);
+        return preferences.getString(PreferenceManager.EGG_NAME, Egg.getSystemEgg().getId());
     }
 }

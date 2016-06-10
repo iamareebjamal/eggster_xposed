@@ -25,10 +25,12 @@ android {
 }
 
 dependencies {
-    provided fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:design:23.2.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.balysv:material-ripple:1.0.2'
     compile 'de.psdev.licensesdialog:licensesdialog:1.8.1'
+    provided 'de.robv.android.xposed:api:82'
+    provided 'de.robv.android.xposed:api:82:sources'
 }

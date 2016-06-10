@@ -64,7 +64,8 @@ public class EggsPoached implements IXposedHookZygoteInit, IXposedHookLoadPackag
 
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
-        findAndHookMethod(PreferenceManager.class.getName(), loadPackageParam.classLoader,
+        if (loadPackageParam.packageName.equals(PACKAGE_NAME))
+            findAndHookMethod(PreferenceManager.class.getName(), loadPackageParam.classLoader,
                 "isModuleActive", XC_MethodReplacement.returnConstant(true));
     }
 

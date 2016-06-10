@@ -27,7 +27,7 @@ public enum Egg {
 
     public static Egg getEggFromId(String id) {
         for (Egg egg : Egg.values()) {
-            if (id.equals(egg.getId()))
+            if (egg.getId().equals(id))
                 return egg;
         }
         return null;

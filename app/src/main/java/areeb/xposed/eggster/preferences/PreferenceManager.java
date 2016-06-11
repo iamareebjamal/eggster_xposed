@@ -10,6 +10,7 @@ public class PreferenceManager {
     public static final String EGG_NAME = "egg_name";
     public static final String ENABLED = "enabled";
     public static final String LOGGING = "log";
+
     private SharedPreferences preferences;
 
     public PreferenceManager(Context context) {
@@ -38,6 +39,10 @@ public class PreferenceManager {
 
     public void setEasterEgg(Egg egg) {
         preferences.edit().putString(EGG_NAME, egg.getId()).commit();
+    }
+
+    public void clear(){
+        preferences.edit().clear().commit();
     }
 
     public static boolean isModuleActive(){

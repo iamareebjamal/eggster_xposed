@@ -1,6 +1,8 @@
 package areeb.xposed.eggster.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         eggList.setAdapter(eggAdapter);
 
         handleActivation();
+        handleOldPreferences();
 
     }
 
@@ -102,6 +105,21 @@ public class MainActivity extends AppCompatActivity {
                 .setThemeResourceId(R.style.AppTheme_Dialog)
                 .build()
                 .show();
+    }
+
+    private void handleOldPreferences(){
+        SharedPreferences pref = getSharedPreferences("ver_info", Context.MODE_PRIVATE);
+        int ver = pref.getInt("version", 0);
+
+        if(ver<10){
+            new PreferenceManager(getApplicationContext()).clear(); // Remove old preferences
+        }
+
+        try {
+            pref.edit().putInt("version", getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);
+        } catch (PackageManager.NameNotFoundException n){
+            n.printStackTrace();
+        }
     }
 
 }

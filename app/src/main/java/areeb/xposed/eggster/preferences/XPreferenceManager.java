@@ -1,28 +1,28 @@
 package areeb.xposed.eggster.preferences;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import areeb.xposed.eggster.Egg;
 import areeb.xposed.eggster.EggsPoached;
-import de.robv.android.xposed.XSharedPreferences;
+import com.crossbowffs.remotepreferences.RemotePreferences;
 
 public class XPreferenceManager {
 
-    private static XSharedPreferences preferences = new XSharedPreferences(EggsPoached.PACKAGE_NAME, "easter_preference");
-    static {
-        preferences.makeWorldReadable();
+    private SharedPreferences preferences;
+
+    public XPreferenceManager(Context context){
+        preferences = new RemotePreferences(context, EggsPoached.PACKAGE_NAME, PreferenceManager.PREF_NAME);
     }
 
-    public static boolean isEnabled() {
-        preferences.reload();
+    public boolean isEnabled() {
         return preferences.getBoolean(PreferenceManager.ENABLED, true);
     }
 
-    public static boolean isLoggingEnable() {
-        preferences.reload();
+    public boolean isLoggingEnable() {
         return preferences.getBoolean(PreferenceManager.LOGGING, false);
     }
 
-    public static String getEasterEgg() {
-        preferences.reload();
+    public String getEasterEgg() {
         return preferences.getString(PreferenceManager.EGG_NAME, Egg.getSystemEgg().getId());
     }
 }

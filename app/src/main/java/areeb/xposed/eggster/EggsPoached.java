@@ -1,10 +1,7 @@
 package areeb.xposed.eggster;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
+import android.content.*;
 import android.os.Bundle;
 import android.widget.Toast;
 import areeb.xposed.eggster.preferences.PreferenceManager;
@@ -17,27 +14,29 @@ import static de.robv.android.xposed.XposedHelpers.*;
 public class EggsPoached implements IXposedHookZygoteInit, IXposedHookLoadPackage {
 
     public static final String PACKAGE_NAME = "areeb.xposed.eggster";
-
     private static final String HOOK_CLASS = "com.android.internal.app.PlatLogoActivity", HOOK_METHOD = "onCreate";
 
     private final Class<?> hookedClass = findClass(HOOK_CLASS, null);
+    private XPreferenceManager xpref;
 
-    public static void log(String string) {
-        if (XPreferenceManager.isLoggingEnable()) {
+    public void log(String string) {
+        if (xpref.isLoggingEnable()) {
             XposedBridge.log(string);
         }
     }
 
     @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
-
         XC_MethodHook methodHook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-                Egg egg = Egg.getEggFromId(XPreferenceManager.getEasterEgg());
 
-                if (XPreferenceManager.isEnabled() && egg != null) {
-                    Activity platLogoActivity = (Activity) param.thisObject;
+                Activity platLogoActivity = (Activity) param.thisObject;
+                xpref = new XPreferenceManager(platLogoActivity.getApplicationContext());
+
+                Egg egg = Egg.getEggFromId(xpref.getEasterEgg());
+                if (xpref.isEnabled() && egg != null) {
+
 
                     Intent intent = new Intent(Intent.ACTION_MAIN);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |

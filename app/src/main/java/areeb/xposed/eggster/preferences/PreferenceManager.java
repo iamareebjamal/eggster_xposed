@@ -6,13 +6,14 @@ import areeb.xposed.eggster.Egg;
 
 public class PreferenceManager {
 
+    public static final String PREF_NAME = "easter_preference";
     public static final String EGG_NAME = "egg_name";
     public static final String ENABLED = "enabled";
     public static final String LOGGING = "log";
     private SharedPreferences preferences;
 
     public PreferenceManager(Context context) {
-        preferences = context.getSharedPreferences("easter_preference", Context.MODE_WORLD_READABLE);
+        preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_WORLD_READABLE);
     }
 
     public boolean isEnabled() {

@@ -171,6 +171,11 @@
 
             </intent-filter>
         </activity>
+
+        <provider
+                android:authorities="areeb.xposed.eggster"
+                android:name=".preferences.XPreferenceProvider"
+                android:exported="true"/>
     </application>
 
 </manifest>

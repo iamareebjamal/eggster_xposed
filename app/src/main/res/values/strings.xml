@@ -3,5 +3,6 @@
     <string name="app_about">Eggster is an Xposed Module that allows you to change your default Easter Egg present
      in Settings>About Phone to any of the present Official Easter Eggs.\n\nHow to use:\n1. Enable the module in Xposed
      Settings\n2. Reboot your device\n3. Open the app and choose any Easter Egg\n\nRewritten with love from scratch. Use gently.
-    Be vary of bugs. Report nicely.\n\nDeveloped by iamareebjamal</string>
+    Be vary of bugs. Report nicely.\n\nDeveloped by iamareebjamal\nIcon by DDRipper\n\nTested by:\nCharsi Babu\nZangetsu\nAndroid-Fany\n
+    Divy Prakash Varshney\nShubham Varshney\nPriya Varshney</string>
 </resources>

@@ -31,6 +31,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ListView eggList;
+    private static int ayy; // lmao
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +110,19 @@ public class MainActivity extends AppCompatActivity {
         View view = getLayoutInflater().inflate(R.layout.about, null);
         // App Name
         ((TextView) view.findViewById(R.id.appName)).setText(getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME);
+        view.findViewById(R.id.aboutTv).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView tv = (TextView) view;
+
+                if(ayy < 5)
+                    tv.setText(tv.getText() + "\n\nThere sure are a lot of Varshneys in my life");
+                else if (ayy == 5)
+                    tv.setText(tv.getText() + "\n\nEnough of that now dude");
+                ayy++;
+            }
+        });
+
         populateContacts(view);
 
         Dialog dialog = new Dialog(this);

@@ -20,6 +20,11 @@
         <license>Apache Software License 2.0</license>
     </notice>
     <notice>
+        <name>Remote Preferences</name>
+        <url>https://github.com/apsun/RemotePreferences/</url>
+        <license>MIT License</license>
+    </notice>
+    <notice>
         <name>Material Ripple Layout 1.0.2</name>
         <url>https://github.com/balysv/material-ripple/</url>
         <copyright>Copyright 2015 Balys Valentukevicius</copyright>

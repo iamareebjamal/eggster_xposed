@@ -94,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.egg:
+                startActivity(new Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS));
+                return true;
             case R.id.licences:
                 showLicenses();
                 return true;

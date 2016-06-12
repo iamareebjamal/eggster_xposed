@@ -15,3 +15,11 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keep class areeb.xposed.eggster.preferences.PreferenceManager{
+    public static boolean isModuleActive();
+}
+
+-keep class areeb.xposed.eggster.EggsPoached {
+    public *;
+}

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Eggster</string>
+    <string name="app_about">Eggster is an Xposed Module that allows you to change your default Easter Egg present
+     in Settings>About Phone to any of the present Official Easter Eggs.</string>
 </resources>

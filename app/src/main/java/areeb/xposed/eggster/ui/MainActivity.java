@@ -1,21 +1,27 @@
 package areeb.xposed.eggster.ui;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.*;
+import android.widget.*;
+import areeb.xposed.eggster.BuildConfig;
 import areeb.xposed.eggster.Egg;
 import areeb.xposed.eggster.R;
 import areeb.xposed.eggster.preferences.PreferenceManager;
+import areeb.xposed.eggster.ui.list.Contact;
 import areeb.xposed.eggster.ui.list.EggAdapter;
 import de.psdev.licensesdialog.LicensesDialog;
 
@@ -91,11 +97,58 @@ public class MainActivity extends AppCompatActivity {
                 showLicenses();
                 return true;
             case R.id.about:
-                //showAbout();
+                showAbout();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showAbout(){
+
+        View view = getLayoutInflater().inflate(R.layout.about, null);
+        // App Name
+        ((TextView)view.findViewById(R.id.appName)).setText(getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME);
+        populateContacts(view);
+
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(view);
+        dialog.getWindow().setLayout(getResources().getDisplayMetrics().widthPixels, FrameLayout.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+    }
+
+    private void populateContacts(View view){
+        LinearLayout contactPanel = (LinearLayout) view.findViewById(R.id.contactPanel);
+        Contact[] contacts = Contact.getContacts();
+        for(final Contact c : contacts){
+            ImageView im = new ImageView(getApplicationContext());
+            im.setImageDrawable(VectorDrawableCompat.create(getResources(), c.resId, null));
+            im.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics());
+            im.setPadding(padding, padding, padding, padding);
+            setBorderlessBackground(im);
+            im.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Toast.makeText(getApplicationContext(), c.description, Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            });
+            contactPanel.addView(im);
+        }
+    }
+
+    private void setBorderlessBackground(View view){
+        int[] attrs = new int[]{R.attr.selectableItemBackground};
+        TypedArray typedArray = obtainStyledAttributes(attrs);
+        int backgroundResource = typedArray.getResourceId(0, 0);
+        view.setBackgroundResource(backgroundResource);
+        view.setClickable(true);
+        typedArray.recycle();
     }
 
     private void showLicenses() {
@@ -111,15 +164,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("ver_info", Context.MODE_PRIVATE);
         int ver = pref.getInt("version", 0);
 
-        if(ver<10){
+        if(ver<11){
             new PreferenceManager(getApplicationContext()).clear(); // Remove old preferences
         }
 
-        try {
-            pref.edit().putInt("version", getPackageManager().getPackageInfo(getPackageName(), 0).versionCode);
-        } catch (PackageManager.NameNotFoundException n){
-            n.printStackTrace();
-        }
+        pref.edit().putInt("version", BuildConfig.VERSION_CODE);
     }
 
 }

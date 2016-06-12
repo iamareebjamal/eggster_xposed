@@ -14,7 +14,7 @@ public class PreferenceManager {
     private SharedPreferences preferences;
 
     public PreferenceManager(Context context) {
-        preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_WORLD_READABLE);
+        preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
     public boolean isEnabled() {

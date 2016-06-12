@@ -56,6 +56,8 @@ public class EggAdapter extends ArrayAdapter<Egg> {
         textView.setText(name);
 
         imageView.setImageResource(egg.getDrawableRes(context));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            imageView.setElevation(0.5f);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && name.equals(Egg.N_PREVIEW.getName())) {
             convertView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -82,7 +84,7 @@ public class EggAdapter extends ArrayAdapter<Egg> {
     private void switchHandler(View convertView, int position) {
         final SwitchCompat switchCompat = (SwitchCompat) convertView.findViewById(R.id.egg_select);
 
-        if(!PreferenceManager.isModuleActive()){
+        if (!PreferenceManager.isModuleActive()) {
             switchCompat.setEnabled(false);
             return;
         } else {

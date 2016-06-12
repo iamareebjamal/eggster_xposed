@@ -16,12 +16,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/dialog_bg">
+
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_gravity="center"
                 android:padding="@dimen/activity_horizontal_margin">
+
             <TextView
                     android:id="@+id/appName"
                     android:layout_width="wrap_content"
@@ -39,6 +41,7 @@
                     android:text="@string/app_about"/>
         </LinearLayout>
     </ScrollView>
+
     <LinearLayout
             android:id="@+id/contactPanel"
             android:layout_width="match_parent"

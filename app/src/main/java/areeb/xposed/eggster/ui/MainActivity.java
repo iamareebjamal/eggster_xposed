@@ -1,19 +1,19 @@
 package areeb.xposed.eggster.ui;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.*;
 import android.widget.*;
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        handleOldPreferences();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -52,12 +53,11 @@ public class MainActivity extends AppCompatActivity {
         eggList.setAdapter(eggAdapter);
 
         handleActivation();
-        handleOldPreferences();
 
     }
 
-    private void handleActivation(){
-        if(!PreferenceManager.isModuleActive()){
+    private void handleActivation() {
+        if (!PreferenceManager.isModuleActive()) {
             Snackbar snackbar = Snackbar.make(eggList, "Xposed Module isn't enabled", Snackbar.LENGTH_INDEFINITE);
             PackageManager packageManager = getPackageManager();
 
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     PackageManager.MATCH_DEFAULT_ONLY);
             boolean isIntentSafe = activities.size() > 0;
 
-            if(isIntentSafe){
+            if (isIntentSafe) {
                 snackbar.setAction("Enable", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -104,11 +104,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void showAbout(){
+    private void showAbout() {
 
         View view = getLayoutInflater().inflate(R.layout.about, null);
         // App Name
-        ((TextView)view.findViewById(R.id.appName)).setText(getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME);
+        ((TextView) view.findViewById(R.id.appName)).setText(getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME);
         populateContacts(view);
 
         Dialog dialog = new Dialog(this);
@@ -119,10 +119,10 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void populateContacts(View view){
+    private void populateContacts(View view) {
         LinearLayout contactPanel = (LinearLayout) view.findViewById(R.id.contactPanel);
         Contact[] contacts = Contact.getContacts();
-        for(final Contact c : contacts){
+        for (Contact c : contacts) {
             ImageView im = new ImageView(getApplicationContext());
             im.setImageDrawable(VectorDrawableCompat.create(getResources(), c.resId, null));
             im.setLayoutParams(new LinearLayout.LayoutParams(
@@ -131,18 +131,47 @@ public class MainActivity extends AppCompatActivity {
             int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics());
             im.setPadding(padding, padding, padding, padding);
             setBorderlessBackground(im);
-            im.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
-                    Toast.makeText(getApplicationContext(), c.description, Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-            });
+            setClickHandlers(im, c);
+
             contactPanel.addView(im);
         }
     }
 
-    private void setBorderlessBackground(View view){
+    private void setClickHandlers(View view, final Contact c) {
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(getApplicationContext(), c.description, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = c.url;
+                Intent i;
+
+                if (url.startsWith("mailto:")) {
+                    String mail = url.replaceFirst("mailto:", "");
+                    i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    i.putExtra(Intent.EXTRA_EMAIL, mail);
+                } else {
+                    i = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse(url));
+                }
+
+                try {
+                    startActivity(i);
+                } catch (ActivityNotFoundException ane) {
+                    Toast.makeText(getApplicationContext(), "No app can handle it! Oooh!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void setBorderlessBackground(View view) {
         int[] attrs = new int[]{R.attr.selectableItemBackground};
         TypedArray typedArray = obtainStyledAttributes(attrs);
         int backgroundResource = typedArray.getResourceId(0, 0);
@@ -160,15 +189,15 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void handleOldPreferences(){
+    private void handleOldPreferences() {
         SharedPreferences pref = getSharedPreferences("ver_info", Context.MODE_PRIVATE);
         int ver = pref.getInt("version", 0);
 
-        if(ver<11){
+        if (ver < 11) {
             new PreferenceManager(getApplicationContext()).clear(); // Remove old preferences
         }
 
-        pref.edit().putInt("version", BuildConfig.VERSION_CODE);
+        pref.edit().putInt("version", BuildConfig.VERSION_CODE).commit();
     }
 
 }

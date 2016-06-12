@@ -17,6 +17,10 @@ public class PreferenceManager {
         preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
+    public static boolean isModuleActive() {
+        return false;
+    }
+
     public boolean isEnabled() {
         return preferences.getBoolean(ENABLED, true);
     }
@@ -41,12 +45,8 @@ public class PreferenceManager {
         preferences.edit().putString(EGG_NAME, egg.getId()).commit();
     }
 
-    public void clear(){
+    public void clear() {
         preferences.edit().clear().commit();
-    }
-
-    public static boolean isModuleActive(){
-        return false;
     }
 
 }

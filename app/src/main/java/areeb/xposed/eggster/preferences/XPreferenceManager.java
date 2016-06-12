@@ -10,7 +10,7 @@ public class XPreferenceManager {
 
     private SharedPreferences preferences;
 
-    public XPreferenceManager(Context context){
+    public XPreferenceManager(Context context) {
         preferences = new RemotePreferences(context, EggsPoached.PACKAGE_NAME, PreferenceManager.PREF_NAME);
     }
 

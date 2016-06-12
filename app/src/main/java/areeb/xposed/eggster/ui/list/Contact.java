@@ -6,13 +6,13 @@ public class Contact {
     public String url, description;
     public int resId;
 
-    public Contact(String url, String description, int resId){
+    public Contact(String url, String description, int resId) {
         this.url = url;
         this.description = description;
         this.resId = resId;
     }
 
-    public static Contact[] getContacts(){
+    public static Contact[] getContacts() {
         Contact[] contacts = {
                 new Contact("https://github.com/iamareebjamal/eggster_xposed",
                         "Source Code", R.drawable.ic_git),                      // Github

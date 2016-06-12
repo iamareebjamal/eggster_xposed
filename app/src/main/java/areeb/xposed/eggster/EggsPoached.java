@@ -1,7 +1,10 @@
 package areeb.xposed.eggster;
 
 import android.app.Activity;
-import android.content.*;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import areeb.xposed.eggster.preferences.PreferenceManager;
@@ -65,7 +68,7 @@ public class EggsPoached implements IXposedHookZygoteInit, IXposedHookLoadPackag
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
         if (loadPackageParam.packageName.equals(PACKAGE_NAME))
             findAndHookMethod(PreferenceManager.class.getName(), loadPackageParam.classLoader,
-                "isModuleActive", XC_MethodReplacement.returnConstant(true));
+                    "isModuleActive", XC_MethodReplacement.returnConstant(true));
     }
 
 }

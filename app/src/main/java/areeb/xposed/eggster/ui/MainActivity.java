@@ -1,10 +1,7 @@
 package areeb.xposed.eggster.ui;
 
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
@@ -31,7 +29,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ListView eggList;
-    private static int ayy; // lmao
+    private int ayy; // lmao
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +52,19 @@ public class MainActivity extends AppCompatActivity {
         eggList.setAdapter(eggAdapter);
 
         handleActivation();
+        handleWarnings();
+    }
 
+    private boolean isAppInstalled(String uri) {
+        PackageManager pm = getPackageManager();
+        boolean app_installed;
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            app_installed = false;
+        }
+        return app_installed;
     }
 
     private void handleActivation() {
@@ -80,6 +90,35 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
             snackbar.show();
+        }
+    }
+
+    private void handleWarnings(){
+        // Warning 1 : Android N-ify module
+        final PreferenceManager pref = new PreferenceManager(this);
+        if(isAppInstalled("tk.wasdennnoch.androidn_ify") && !pref.hasWarned()){
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Warning");
+            alert.setMessage("Android N-ify module detected!\n\nEggster is incompatible with above module" +
+                    " as they both target modification of Easter Egg and conflicts arise when that happens." +
+                    " And honestly, who loves conflicts? Even more disturbing is the fact the switch turning the" +
+                    " Easter Egg modification in N-ify module is currently broken (probably only on Marshmallow because" +
+                    " of the incompatibility of XSharedPreferences). So, you'll have to DISABLE it completely in" +
+                    " order for Eggster to work. Let's just cross our fingers and hope the issue resolves" +
+                    " soon.");
+            alert.setPositiveButton("IDK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    pref.setWarned(false);
+                }
+            });
+            alert.setNegativeButton("Got it!", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    pref.setWarned(true);
+                }
+            });
+            alert.show();
         }
     }
 
@@ -109,11 +148,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showAbout() {
-
-        View view = getLayoutInflater().inflate(R.layout.about, null);
+        ayy = 0;
+        final View root = getLayoutInflater().inflate(R.layout.about, null);
         // App Name
-        ((TextView) view.findViewById(R.id.appName)).setText(getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME);
-        view.findViewById(R.id.aboutTv).setOnClickListener(new View.OnClickListener() {
+        ((TextView) root.findViewById(R.id.appName)).setText(getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME);
+        root.findViewById(R.id.aboutTv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TextView tv = (TextView) view;
@@ -123,15 +162,16 @@ public class MainActivity extends AppCompatActivity {
                 else if (ayy == 5)
                     tv.setText(tv.getText() + "\n\nEnough of that now dude");
                 ayy++;
+                ((ScrollView) root.findViewById(R.id.scroll)).fullScroll(View.FOCUS_DOWN);
             }
         });
 
-        populateContacts(view);
+        populateContacts(root);
 
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.setContentView(view);
+        dialog.setContentView(root);
         dialog.getWindow().setLayout(getResources().getDisplayMetrics().widthPixels, FrameLayout.LayoutParams.WRAP_CONTENT);
         dialog.show();
     }
@@ -174,6 +214,7 @@ public class MainActivity extends AppCompatActivity {
                     i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
                     i.putExtra(Intent.EXTRA_EMAIL, mail);
+                    i.putExtra(Intent.EXTRA_SUBJECT, "Eggster Dev Request");
                 } else {
                     i = new Intent(Intent.ACTION_VIEW,
                             Uri.parse(url));

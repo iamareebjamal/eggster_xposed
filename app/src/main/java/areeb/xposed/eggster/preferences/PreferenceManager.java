@@ -10,6 +10,7 @@ public class PreferenceManager {
     public static final String EGG_NAME = "egg_name";
     public static final String ENABLED = "enabled";
     public static final String LOGGING = "log";
+    public static final String WARNED = "warned";
 
     private SharedPreferences preferences;
 
@@ -44,6 +45,10 @@ public class PreferenceManager {
     public void setEasterEgg(Egg egg) {
         preferences.edit().putString(EGG_NAME, egg.getId()).commit();
     }
+
+    public boolean hasWarned(){ return preferences.getBoolean(WARNED, false); }
+
+    public void setWarned(boolean warned){ preferences.edit().putBoolean(WARNED, warned).commit(); };
 
     public void clear() {
         preferences.edit().clear().commit();

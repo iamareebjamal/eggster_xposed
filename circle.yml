@@ -2,7 +2,7 @@
 
 general:
     artifacts:
-        - /home/ubuntu/zhcet-students/app/build/outputs/apk/
+        - /home/ubuntu/eggster_xposed/app/build/outputs/apk/
 
 dependencies:
     pre:
